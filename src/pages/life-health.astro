@@ -1,0 +1,239 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Life & Health Insurance | Hometown Insurance Agency">
+    <a href="#form-bottom" class="btn btn-red btn-pulse" slot="quote-button">Get a Quote</a>
+
+    <style>
+        .hero-wrapper {
+            position: relative;
+            background: url('https://static-asset.amac.us/wp-content/uploads/2026/02/10122755/health.jpg') no-repeat center center;
+            background-size: cover;
+            padding: 80px 0 140px 0;
+            color: white;
+            border-bottom: 8px solid var(--primary-red);
+        }
+        .hero-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0) 100%);
+            z-index: 1;
+        }
+        .hero-grid { align-items: start; }
+        .hero-content { padding-top: 20px; }
+        .hero-content h1 { font-size: 62px; line-height: 1.1; margin-bottom: 25px; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .hero-content p { color: #f8fafc; font-size: 24px; max-width: 600px; margin-bottom: 35px; text-shadow: 0 1px 5px rgba(0,0,0,0.5); }
+
+        .other-details-container { display: none; margin-top: 15px; }
+
+        .content-section { padding: 100px 0; background: white; }
+        .content-layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: 80px; align-items: start; }
+        .side-image { width: 100%; height: auto; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .benefit-card { background: var(--bg-light); border-radius: 12px; padding: 40px; margin-bottom: 30px; border-left: 6px solid var(--primary-red); }
+        .benefit-card h3 { font-size: 28px; margin-bottom: 15px; }
+        .benefit-card p { color: var(--text-gray); }
+
+        .action-divider {
+            height: 500px;
+            background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), url('https://static-asset.amac.us/wp-content/uploads/2026/02/11094502/worksite.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .cta-footer {
+            position: relative;
+            background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.4)), url('https://static-asset.amac.us/wp-content/uploads/2026/02/10131418/healthy-food.jpg') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        .cta-footer .container { position: relative; z-index: 2; display: flex; justify-content: center; }
+        .cta-footer .quote-card { width: 100%; max-width: 480px; }
+
+        @media (max-width: 992px) {
+            .hero-grid, .content-layout { grid-template-columns: 1fr; }
+            .hero-content { margin-top: 0; }
+        }
+    </style>
+
+    <div class="hero-wrapper">
+        <section class="container hero-grid">
+            <div class="hero-content">
+                <p class="hero-label" style="font-size: 20px;">
+                    <i class="fa-solid fa-heart-pulse" style="font-size: 28px;"></i> Protecting What Matters Most
+                </p>
+                <h1>Life & Health Insurance Solutions</h1>
+                <p>Providing the security and peace of mind you and your family deserve with comprehensive health and life coverage.</p>
+                <div class="hero-btns">
+                    <a href="#details" class="btn btn-white-outline" style="width: 250px;">Explore Benefits</a>
+                </div>
+            </div>
+
+            <div class="quote-card">
+                <h3>Insurance Quote Request</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Insurance Type Interested In</label>
+                        <select required onchange="toggleOtherField(this, 'other_details_top')">
+                            <option value="" disabled selected>Select an option...</option>
+                            <option>Auto Insurance</option>
+                            <option>Homeowners Insurance</option>
+                            <option>Condo/Renters Insurance</option>
+                            <option>Umbrella Insurance</option>
+                            <option>Boat & Yacht Insurance</option>
+                            <option>Flood Insurance</option>
+                            <option>Valuables/Collectibles</option>
+                            <option>Classic Car Insurance</option>
+                            <option>RV & Recreational</option>
+                            <option>Individual Health Insurance</option>
+                            <option>Group Health (Business)</option>
+                            <option>Voluntary Benefits (Dental and Vision)</option>
+                            <option>Disability Insurance</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div id="other_details_top" class="other-details-container">
+                        <div class="form-group">
+                            <label>Please specify:</label>
+                            <input type="text" placeholder="Enter details here">
+                        </div>
+                    </div>
+
+                    <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your Name" required></div>
+                    <div class="form-group"><label>Email Address</label><input type="email" placeholder="email@address.com" required></div>
+                    <div class="form-group"><label>Leave a message (optional)</label><textarea rows="2" placeholder="Tell us more..."></textarea></div>
+
+                    <div class="form-group">
+                        <label>How should we contact you?</label>
+                        <div class="radio-inline-container">
+                            <label><input type="radio" name="contact_top" value="email" checked onchange="toggleCallback(false, 'top')"> Email</label>
+                            <label><input type="radio" name="contact_top" value="phone" onchange="toggleCallback(true, 'top')"> Callback</label>
+                        </div>
+                    </div>
+
+                    <div id="callback_fields_top" class="callback-fields">
+                        <div class="form-group"><label>Phone Number</label><input type="tel"></div>
+                        <div class="form-group"><label>Best Day & Time</label><input type="text" placeholder="e.g. Monday Morning"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>How did you hear about us?</label>
+                        <select>
+                            <option value="" disabled selected>Please select...</option>
+                            <option>Google Search</option>
+                            <option>Facebook / Instagram</option>
+                            <option>Friend or Family Member</option>
+                            <option>Mailing / Flyer</option>
+                            <option>Local Event</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-red" style="width: 100%; margin-top: 10px;">Send Request</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <section id="details" class="container content-section">
+        <div class="content-layout">
+            <div>
+                <h2 style="font-size: 40px; margin-bottom: 30px;">Our Specialized Programs</h2>
+                <div class="benefit-card">
+                    <h3>Group Health Insurance</h3>
+                    <p>Let Hometown's team of employee benefit specialists assist your organization in developing a program that attracts and retains top talent while complying with all applicable laws.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>Voluntary Benefits</h3>
+                    <p>Supplementing your health insurance with the right mix of voluntary benefits is the key to a quality benefits package.</p>
+                </div>
+            </div>
+            <div>
+                <img src="https://static-asset.amac.us/wp-content/uploads/2026/02/10122225/doctor-patient.jpg" alt="Doctor and Patient" class="side-image">
+            </div>
+        </div>
+    </section>
+
+    <div class="action-divider"></div>
+
+    <div class="cta-footer" id="form-bottom">
+        <div class="container">
+            <div class="quote-card" style="text-align: left;">
+                <h3>Insurance Quote Request</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Insurance Type Interested In</label>
+                        <select required onchange="toggleOtherField(this, 'other_details_bot')">
+                            <option value="" disabled selected>Select an option...</option>
+                            <option>Auto Insurance</option>
+                            <option>Homeowners Insurance</option>
+                            <option>Condo/Renters Insurance</option>
+                            <option>Umbrella Insurance</option>
+                            <option>Boat & Yacht Insurance</option>
+                            <option>Flood Insurance</option>
+                            <option>Valuables/Collectibles</option>
+                            <option>Classic Car Insurance</option>
+                            <option>RV & Recreational</option>
+                            <option>Individual Health Insurance</option>
+                            <option>Group Health (Business)</option>
+                            <option>Voluntary Benefits (Dental and Vision)</option>
+                            <option>Disability Insurance</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div id="other_details_bot" class="other-details-container">
+                        <div class="form-group">
+                            <label>Please specify:</label>
+                            <input type="text" placeholder="Enter details here">
+                        </div>
+                    </div>
+
+                    <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your Name" required></div>
+                    <div class="form-group"><label>Email Address</label><input type="email" placeholder="email@address.com" required></div>
+                    <div class="form-group"><label>Leave a message (optional)</label><textarea rows="2" placeholder="Tell us more..."></textarea></div>
+
+                    <div class="form-group">
+                        <label>How should we contact you?</label>
+                        <div class="radio-inline-container">
+                            <label><input type="radio" name="contact_bot" value="email" checked onchange="toggleCallback(false, 'bot')"> Email</label>
+                            <label><input type="radio" name="contact_bot" value="phone" onchange="toggleCallback(true, 'bot')"> Callback</label>
+                        </div>
+                    </div>
+
+                    <div id="callback_fields_bot" class="callback-fields">
+                        <div class="form-group"><label>Phone Number</label><input type="tel"></div>
+                        <div class="form-group"><label>Best Day & Time</label><input type="text" placeholder="e.g. Wednesday Afternoon"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>How did you hear about us?</label>
+                        <select>
+                            <option value="" disabled selected>Please select...</option>
+                            <option>Google Search</option>
+                            <option>Facebook / Instagram</option>
+                            <option>Friend or Family Member</option>
+                            <option>Mailing / Flyer</option>
+                            <option>Local Event</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-red" style="width: 100%; margin-top: 10px;">Send Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script is:inline>
+        function toggleCallback(show, id) {
+            document.getElementById('callback_fields_' + id).style.display = show ? 'block' : 'none';
+        }
+
+        function toggleOtherField(selectElement, fieldId) {
+            const container = document.getElementById(fieldId);
+            container.style.display = (selectElement.value === 'Other') ? 'block' : 'none';
+        }
+    </script>
+</BaseLayout>

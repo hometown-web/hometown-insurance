@@ -1,0 +1,352 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Personal Protection | Hometown Insurance Agency">
+    <a href="#form-bottom" class="btn btn-red btn-pulse" slot="quote-button">Get a Quote</a>
+
+    <style>
+        .hero-wrapper {
+            position: relative;
+            background: url('https://static-asset.amac.us/wp-content/uploads/2026/02/10124555/condo.jpg') no-repeat center center;
+            background-size: cover;
+            padding: 60px 0 120px 0;
+            color: white;
+            border-bottom: 8px solid var(--primary-red);
+        }
+        .hero-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, rgba(15, 23, 42, 0.85) 20%, rgba(15, 23, 42, 0.4) 100%);
+            z-index: 1;
+        }
+        .hero-content { margin-top: 20px; }
+        .hero-content h1 { font-size: 62px; line-height: 1.1; margin-bottom: 25px; color: white; }
+        .hero-content p { color: #cbd5e1; font-size: 24px; max-width: 600px; margin-bottom: 35px; }
+
+        .coverage-section {
+            padding: 80px 0 40px 0;
+            background: white;
+            scroll-margin-top: 170px;
+        }
+        .coverage-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: start; }
+        .portrait-img { width: 100%; border-radius: 20px; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.25); }
+        .accordion { margin-top: 30px; }
+
+        .dd-section { padding: 40px 0 80px 0; background: #ffffff; }
+        .dd-card { background: #f8fafc; border-radius: 12px; padding: 40px; border-left: 6px solid var(--primary-red); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+
+        .special-section { padding: 100px 0; background: var(--bg-light); }
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
+        .special-card:hover { transform: none; border-color: #e2e8f0; }
+
+        .cta-footer {
+            position: relative;
+            background: url('https://static-asset.amac.us/wp-content/uploads/2026/02/10125737/RV.jpg') no-repeat 80% center;
+            background-size: cover;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        .cta-footer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.75));
+            z-index: 1;
+        }
+        .cta-footer .container { position: relative; z-index: 2; display: flex; justify-content: center; }
+        .cta-footer .quote-card { width: 100%; max-width: 500px; }
+
+        .other-details-container { display: none; }
+
+        @media (max-width: 992px) {
+            .hero-grid, .coverage-layout { grid-template-columns: 1fr; }
+            .hero-content { margin-top: 0; }
+        }
+    </style>
+
+    <div class="hero-wrapper">
+        <section class="container hero-grid">
+            <div class="hero-content">
+                <p class="hero-label" style="font-size: 20px;">
+                    <i class="fa-solid fa-shield-halved" style="font-size: 28px;"></i> Comprehensive Personal Security
+                </p>
+                <h1>Protecting What Matters Most to You</h1>
+                <p>From your home and auto to your family's future, Hometown Insurance Agency provides the customized coverage you need for peace of mind.</p>
+                <div class="hero-btns">
+                    <a href="#highlights" class="btn btn-white-outline">Explore Coverage Options</a>
+                </div>
+            </div>
+
+            <div class="quote-card">
+                <h3>Personal Quote Request</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Insurance Type Interested In</label>
+                        <select required onchange="toggleOtherField(this, 'other_details_top')">
+                            <option value="" disabled selected>Select an option...</option>
+                            <option>Auto Insurance</option>
+                            <option>Homeowners Insurance</option>
+                            <option>Condo/Renters Insurance</option>
+                            <option>Umbrella Insurance</option>
+                            <option>Boat & Yacht Insurance</option>
+                            <option>Flood Insurance</option>
+                            <option>Valuables/Collectibles</option>
+                            <option>Classic Car Insurance</option>
+                            <option>RV & Recreational</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div id="other_details_top" class="other-details-container">
+                        <div class="form-group">
+                            <label>Please specify:</label>
+                            <input type="text" placeholder="Enter details here">
+                        </div>
+                    </div>
+                    <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your Name" required></div>
+                    <div class="form-group"><label>Email Address</label><input type="email" placeholder="email@address.com" required></div>
+                    <div class="form-group"><label>Leave a message (optional)</label><textarea rows="2" placeholder="Tell us more..."></textarea></div>
+                    <div class="form-group">
+                        <label>How should we contact you?</label>
+                        <div class="radio-inline-container">
+                            <label><input type="radio" name="contact_method_top" value="email" checked onchange="toggleCallback('top', false)"> Email</label>
+                            <label><input type="radio" name="contact_method_top" value="phone" onchange="toggleCallback('top', true)"> Callback</label>
+                        </div>
+                    </div>
+                    <div id="callback_fields_top" class="callback-fields">
+                        <div class="form-group"><label>Phone Number</label><input type="tel"></div>
+                        <div class="form-group"><label>Best Day & Time</label><input type="text" placeholder="e.g. Monday Morning"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>How did you hear about us?</label>
+                        <select>
+                            <option value="" disabled selected>Please select...</option>
+                            <option>Google Search</option>
+                            <option>Facebook / Instagram</option>
+                            <option>Friend or Family Member</option>
+                            <option>Mailing / Flyer</option>
+                            <option>Local Event</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-red" style="width: 100%; margin-top: 10px;">Send Request</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <section id="highlights" class="container coverage-section">
+        <div class="coverage-layout">
+            <div class="portrait-frame">
+                <img src="https://static-asset.amac.us/wp-content/uploads/2026/02/10124929/family.jpg" alt="Happy Family" class="portrait-img">
+            </div>
+            <div>
+                <h2 style="font-size: 40px; margin-bottom: 20px;">Personal Coverage Highlights</h2>
+                <p>We offer a broad range of products to meet your unique lifestyle and protection needs.</p>
+
+                <div class="accordion">
+                    <div class="accordion-item active">
+                        <div class="accordion-header" onclick="toggleAccordion(this)"><h3>Home & Property</h3><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="accordion-content">
+                            <ul class="coverage-list">
+                                <li>Homeowners Insurance (Replacement Cost)</li>
+                                <li>Condo & Co-op Owner Policies</li>
+                                <li>Renters Insurance for Personal Belongings</li>
+                                <li>Flood Insurance (Even for non-waterfront)</li>
+                                <li>Valuable Articles (Jewelry, Fine Arts, Antiques)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)"><h3>Auto & Vehicle</h3><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="accordion-content">
+                            <ul class="coverage-list">
+                                <li>Standard Auto Insurance</li>
+                                <li>Classic & Collector Car Coverage</li>
+                                <li>Motorcycles & ATVs</li>
+                                <li>Recreational Vehicles (Winnebago, etc.)</li>
+                                <li>Boat & Yacht Insurance</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)"><h3>Liability & Life</h3><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="accordion-content">
+                            <ul class="coverage-list">
+                                <li>Personal Umbrella Liability (Excess Coverage)</li>
+                                <li>Individual Life Insurance</li>
+                                <li>Health Insurance Solutions</li>
+                                <li>Long-Term Care Planning</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="dd-section">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2 style="font-size: 44px;">Defensive Driving Resources</h2>
+                <p style="color: var(--text-gray);">Enhance your safety and lower your insurance costs.</p>
+            </div>
+            <div class="dd-card">
+                <div style="display: flex; align-items: flex-start; gap: 25px;">
+                    <i class="fa-solid fa-car-side" style="font-size: 48px; color: var(--primary-red); margin-top: 5px;"></i>
+                    <div>
+                        <h3 style="font-size: 26px; margin-bottom: 15px;">Defensive Driving Online Course</h3>
+                        <p style="font-size: 18px; margin-bottom: 20px;">
+                            Take the official online course via the
+                            <a href="https://empiresafetycouncil.com/" target="_blank" style="color: var(--primary-red); font-weight: 700; text-decoration: underline;">Empire Safety Council</a>.
+                        </p>
+                        <div style="background: var(--white); display: inline-block; padding: 15px 25px; border: 2px dashed var(--primary-red); border-radius: 8px; margin-bottom: 25px;">
+                            <span style="font-size: 18px; font-weight: 700; color: var(--dark-blue);">
+                                PROMO CODE: <span style="color: var(--primary-red);">HOME</span> — Lowest inclusive price of $34.95
+                            </span>
+                        </div>
+                        <p style="font-size: 16px; color: var(--text-gray); border-top: 1px solid #e2e8f0; margin-top: 10px; padding-top: 20px;">
+                            If you would like information about the online Defensive Driving course, please contact us by email
+                            <a href="mailto:service@hometowninsurance.com" style="color: var(--primary-red); font-weight: 600;">service@hometowninsurance.com</a>
+                            or call <a href="tel:6315890100" style="color: var(--primary-red); font-weight: 600;">631-589-0100</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="special-section">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h2 style="font-size: 44px;">Personal Protection Portfolio</h2>
+                <p style="color: var(--text-gray);">Comprehensive solutions for your assets and loved ones.</p>
+            </div>
+
+            <div class="benefits-grid">
+                <div class="special-card">
+                    <i class="fa-solid fa-car"></i>
+                    <div>
+                        <h3>Auto Insurance</h3>
+                        <p>Chances are, you've thought about protecting your car. It's one of your most valuable assets—make sure it's covered right.</p>
+                    </div>
+                </div>
+                <div class="special-card">
+                    <i class="fa-solid fa-house-chimney"></i>
+                    <div>
+                        <h3>Homeowners Insurance</h3>
+                        <p>The roof over your head represents your biggest investment. We ensure it's well protected against the unexpected.</p>
+                    </div>
+                </div>
+                <div class="special-card">
+                    <i class="fa-solid fa-umbrella"></i>
+                    <div>
+                        <h3>Umbrella Insurance</h3>
+                        <p>Protect yourself from financially devastating liability claims with high-limit excess coverage.</p>
+                    </div>
+                </div>
+                <div class="special-card">
+                    <i class="fa-solid fa-ship"></i>
+                    <div>
+                        <h3>Boat & Yacht</h3>
+                        <p>From the coastal waterways of Long Island to freshwater expanses, we have your marine adventures covered.</p>
+                    </div>
+                </div>
+                <div class="special-card">
+                    <i class="fa-solid fa-gem"></i>
+                    <div>
+                        <h3>Valuables</h3>
+                        <p>Specific coverage for rare or irreplaceable items such as collectibles, jewelry, and antiques.</p>
+                    </div>
+                </div>
+                <div class="special-card">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                    <div>
+                        <h3>Life & Health</h3>
+                        <p>Don't be under-insured for a single day. Let our team find the protection your family deserves.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="cta-footer" id="form-bottom">
+        <div class="container">
+            <div class="quote-card" style="max-width: 600px; margin: 0 auto; text-align: left;">
+                <h3>Personal Quote Request</h3>
+                <form>
+                    <div class="form-group">
+                        <label>What coverage do you need?</label>
+                        <select required onchange="toggleOtherField(this, 'other_details_bottom')">
+                            <option value="" disabled selected>Select an option...</option>
+                            <option>Auto & Homeowners Bundle</option>
+                            <option>Individual Homeowners</option>
+                            <option>Individual Auto</option>
+                            <option>Umbrella/Liability</option>
+                            <option>Recreational/Marine</option>
+                            <option>Life/Health</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div id="other_details_bottom" class="other-details-container">
+                        <div class="form-group">
+                            <label>Please specify:</label>
+                            <input type="text" placeholder="Enter details here">
+                        </div>
+                    </div>
+                    <div class="form-group"><label>Your Full Name</label><input type="text" placeholder="Full Name" required></div>
+                    <div class="form-group"><label>Email Address</label><input type="email" placeholder="email@address.com" required></div>
+                    <div class="form-group"><label>Leave a message (optional)</label><textarea rows="2" placeholder="Tell us more..."></textarea></div>
+                    <div class="form-group">
+                        <label>How should we contact you?</label>
+                        <div class="radio-inline-container">
+                            <label><input type="radio" name="contact_method_bot" value="email" checked onchange="toggleCallback('bot', false)"> Email</label>
+                            <label><input type="radio" name="contact_method_bot" value="phone" onchange="toggleCallback('bot', true)"> Callback</label>
+                        </div>
+                    </div>
+                    <div id="callback_fields_bot" class="callback-fields">
+                        <div class="form-group"><label>Phone Number</label><input type="tel"></div>
+                        <div class="form-group"><label>Best Day & Time</label><input type="text" placeholder="e.g. Wednesday Mornings"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>How did you hear about us?</label>
+                        <select>
+                            <option value="" disabled selected>Please select...</option>
+                            <option>Google Search</option>
+                            <option>Facebook / Instagram</option>
+                            <option>Friend or Family Member</option>
+                            <option>Mailing / Flyer</option>
+                            <option>Local Event</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-red" style="width: 100%; margin-top: 10px;">Send Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script is:inline>
+        function toggleCallback(prefix, show) {
+            document.getElementById('callback_fields_' + prefix).style.display = show ? 'block' : 'none';
+        }
+
+        function toggleOtherField(selectElement, fieldId) {
+            const otherField = document.getElementById(fieldId);
+            if (selectElement.value === 'Other') {
+                otherField.style.display = 'block';
+            } else {
+                otherField.style.display = 'none';
+            }
+        }
+
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const wasActive = item.classList.contains('active');
+            document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('active'));
+            if (!wasActive) item.classList.add('active');
+        }
+    </script>
+</BaseLayout>

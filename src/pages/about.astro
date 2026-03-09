@@ -1,31 +1,298 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<Layout>
-	<main class="font-sans text-gray-900">
-		<Nav />
+<BaseLayout title="About Our Agency | Hometown Insurance Agency">
 
-		<section class="py-20 px-8 bg-linear-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] text-white text-center">
-			<h1 class="text-4xl md:text-5xl font-bold mb-4">About Us</h1>
-			<p class="text-base md:text-xl opacity-85">Get to know Hometown Insurance Agency</p>
-		</section>
+    <style>
+        .hero-simple { border-bottom: none; }
+    </style>
 
-		<section class="py-20 px-8 max-w-3xl mx-auto">
-			<h2 class="text-3xl font-bold mb-6">Our Story</h2>
-			<p class="text-gray-600 leading-relaxed mb-6">
-				Founded in Bohemia, NY, Hometown Insurance Agency was built on a simple belief: insurance should be personal. As members of the community we serve, we understand the unique needs of our neighbors and are committed to providing coverage that truly fits.
-			</p>
-			<p class="text-gray-600 leading-relaxed mb-6">
-				We are dedicated to serving the local community with personalized insurance solutions. Whether you're looking for auto, home, or life insurance, our experienced team takes the time to understand your situation and recommend the right coverage at the right price.
-			</p>
-			<p class="text-gray-600 leading-relaxed">
-				At Hometown Insurance, you're not just a policy number — you're a neighbor. We pride ourselves on building lasting relationships and being there when it matters most.
-			</p>
-		</section>
-	</main>
+    <div class="hero-simple" style="background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://static-asset.amac.us/wp-content/uploads/2026/02/10103648/homes.jpg');">
+        <div class="container">
+            <h1>Your Local, Family-Owned Agency</h1>
+            <p>Since 1979, we've built our reputation on one simple promise: <strong>We work for you.</strong></p>
+        </div>
+    </div>
 
-	<Footer />
-</Layout>
+    <section class="section-padding mission-area">
+        <div class="container">
+            <div class="mission-box">
+                <h2>Our Mission: <span id="typing-text"></span></h2>
+                <div class="mission-description">
+                    <p>It is our pleasure to introduce you to Hometown Insurance – one of New York State's leading Independent Insurance Agencies. Our commitment is to serve you with the highest degree of professionalism. You can expect us to utilize our extensive knowledge and experience to act as your personal insurance advisers.</p>
+                </div>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2>Rooted in Our Community</h2>
+                    <p>Welcome to Hometown Insurance, one of New York State's leading independent insurance agencies. Proudly serving individuals, families, and businesses since 1979, we provide customized home insurance, auto insurance, business insurance, and specialty coverage solutions throughout Long Island and New York State.</p>
+                    <br>
+                    <p>While our agency has grown over the years, our core values remain the same. We continue to uphold the traditions established by our founders and the high standards of service and professionalism that our clients have trusted for generations.</p>
+                    <br>
+                    <p>Our formula for success is simple: we treat our neighbors like family. As an independent agency, our team works as your personal insurance advisors—using our experience to help you find the right home, auto, or business insurance coverage at the most competitive price.</p>
+                    <br>
+                    <a href="tel:6315890100" class="btn btn-red">Give Us a Call Today</a>
+                </div>
+                <div class="about-image">
+                    <img src="https://static-asset.amac.us/wp-content/uploads/2026/02/10142752/family-kite.jpg" alt="Hometown Family" class="about-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section">
+        <div class="container">
+            <div style="text-align:center;">
+                <h2 style="font-size: 44px;">Meet The Team</h2>
+                <p style="max-width: 800px; margin: 20px auto; color: var(--text-gray);">Our insurance producers and customer service representatives meet New York State's strict licensing, testing, and education requirements. We are committed to continuing education and professional development, ensuring our team stays up to date on the latest home, auto, and business insurance policies, regulations, and risk management strategies. This allows us to provide knowledgeable guidance and exceptional service to every client we serve.</p>
+            </div>
+
+            <div class="team-accordion">
+                <div class="team-group active">
+                    <div class="team-header">
+                        <h3>Executive Management</h3>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="team-content">
+                        <div class="team-grid-exec">
+                            <div class="team-card">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info">
+                                    <h4>Rebecca Weber, CPCU</h4>
+                                    <p>President & CEO</p>
+                                    <div class="member-contact">Licensed Property & Casualty Broker</div>
+                                </div>
+                            </div>
+                            <div class="team-card">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info">
+                                    <h4>Eric Keiffert, CPCU</h4>
+                                    <p>Executive Vice President</p>
+                                    <div class="member-contact">Licensed Life, Accident & Health Broker</div>
+                                </div>
+                            </div>
+                            <div class="team-card">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info">
+                                    <h4>Joanie LaFemina, CPSP™</h4>
+                                    <p>Vice President of HR & Marketing</p>
+                                    <div class="member-contact">Extension: x305</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-group">
+                    <div class="team-header">
+                        <h3>Personal Lines Department</h3>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="team-content">
+                        <div class="team-grid-small">
+                            <div class="team-card team-card-small">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info"><h4>Stacy Moutafis</h4><p>Director of Personal Lines</p><div class="member-contact">x330</div></div>
+                            </div>
+                            <div class="team-card team-card-small">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info"><h4>Jack Tramuta</h4><p>Personal Lines Sales</p><div class="member-contact">x306</div></div>
+                            </div>
+                            <div class="team-card team-card-small">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info"><h4>Faith Lambert</h4><p>Personal Lines Sales</p><div class="member-contact">x304</div></div>
+                            </div>
+                            <div class="team-card team-card-small">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info"><h4>Thomas Kidby</h4><p>Account Representative</p><div class="member-contact">x328</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-group">
+                    <div class="team-header">
+                        <h3>Commercial Lines Department</h3>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="team-content">
+                        <div class="team-grid-small">
+                            <div class="team-card team-card-small">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info"><h4>James Small, CIC</h4><p>Director of Commercial Production</p><div class="member-contact">x323</div></div>
+                            </div>
+                            <div class="team-card team-card-small">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info"><h4>Anna Olmedo</h4><p>Senior Account Executive</p><div class="member-contact">x354</div></div>
+                            </div>
+                            <div class="team-card team-card-small">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info"><h4>John Machalski, CRIS</h4><p>Commercial Account Executive</p><div class="member-contact">x329</div></div>
+                            </div>
+                            <div class="team-card team-card-small">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info"><h4>Linda Otero</h4><p>Account Executive</p><div class="member-contact">x371</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-group">
+                    <div class="team-header">
+                        <h3>Hometown Firefighters</h3>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="team-content">
+                        <div class="team-grid-small">
+                            <div class="team-card team-card-small">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info"><h4>Vince Marmorale</h4><p>Producer / LOSAP Agent</p><div class="member-contact">x316</div></div>
+                            </div>
+                            <div class="team-card team-card-small">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info"><h4>Robert Sagistano</h4><p>Senior Vice President</p><div class="member-contact">x301</div></div>
+                            </div>
+                            <div class="team-card team-card-small">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info"><h4>Kevin Parrett</h4><p>VP LOSAP Administration</p><div class="member-contact">x319</div></div>
+                            </div>
+                            <div class="team-card team-card-small">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info"><h4>Teresa Cowan</h4><p>Operations Supervisor</p><div class="member-contact">x350</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-group">
+                    <div class="team-header">
+                        <h3>Life, Financial Services and Accounting</h3>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="team-content">
+                        <div class="team-grid-small">
+                            <div class="team-card team-card-small">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info"><h4>Matt Racanelli</h4><p>Chief Financial Officer</p><div class="member-contact">Accounting</div></div>
+                            </div>
+                            <div class="team-card team-card-small">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info"><h4>Steve Bucci</h4><p>Accounting Manager</p><div class="member-contact">x311</div></div>
+                            </div>
+                            <div class="team-card team-card-small">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info"><h4>Laura Walden</h4><p>Accounting Assistant</p><div class="member-contact">x321</div></div>
+                            </div>
+                            <div class="team-card team-card-small">
+                                <div class="member-img"><i class="fa-solid fa-user"></i></div>
+                                <div class="member-info"><h4>Lauren Cusumano</h4><p>Accounting Assistant</p><div class="member-contact">x372</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-selector">
+        <div class="container">
+            <h2 style="font-size: 28px;">How can we help you today?</h2>
+            <p>Choose an insurance category to learn more about our specialized protection.</p>
+            <div class="product-grid">
+                <a href="/personal" class="product-item"><i class="fa-solid fa-house"></i><h3>Home & Auto</h3></a>
+                <a href="/business" class="product-item"><i class="fa-solid fa-briefcase"></i><h3>Business Insurance</h3></a>
+                <a href="/life-health" class="product-item"><i class="fa-solid fa-heart-pulse"></i><h3>Life & Health</h3></a>
+                <a href="/firefighter-ems" class="product-item"><i class="fa-solid fa-fire-extinguisher"></i><h3>Fire & EMS Districts</h3></a>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .section-padding { padding: 100px 0; }
+        .mission-area { background: #fff; padding-bottom: 0; }
+        .mission-box { border-left: 6px solid var(--primary-red); padding-left: 30px; margin-bottom: 60px; }
+        .mission-box h2 { font-size: 42px; margin-bottom: 15px; min-height: 1.2em; }
+        .mission-description { font-size: 20px; color: var(--text-gray); max-width: 900px; margin-top: 20px; }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 60px; }
+        .about-text h2 { font-size: 38px; margin-bottom: 25px; line-height: 1.2; }
+        .about-img { width: 100%; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+
+        .team-section { background: var(--bg-light); padding: 50px 0 100px 0; }
+        .team-accordion { margin-top: 40px; }
+        .team-group { margin-bottom: 15px; background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; }
+        .team-header { padding: 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: #fff; transition: background 0.2s; }
+        .team-header:hover { background: #fafafa; }
+        .team-header h3 { font-size: 28px; margin: 0; color: var(--dark-blue); }
+        .team-header i { color: var(--primary-red); transition: transform 0.3s; }
+        .team-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; padding: 0 25px; }
+        .team-group.active .team-content { max-height: 4000px; padding: 30px 25px; }
+        .team-group.active .team-header i { transform: rotate(180deg); }
+
+        .team-grid-exec { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .team-grid-small { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+        .team-card { background: var(--bg-light); border-radius: 12px; overflow: hidden; height: 100%; border: 1px solid #eee; }
+        .member-img { height: 280px; background: #cbd5e1; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #94a3b8; }
+        .team-card-small .member-img { height: 200px; font-size: 30px; }
+        .member-info { padding: 20px; }
+        .member-info h4 { font-size: 20px; margin-bottom: 5px; color: var(--dark-blue); }
+        .member-info p { font-size: 14px; color: var(--primary-red); font-weight: 700; margin-bottom: 10px; text-transform: uppercase; line-height: 1.3; }
+        .member-contact { font-size: 13px; color: var(--text-gray); border-top: 1px solid #ddd; padding-top: 10px; }
+
+        .product-selector { text-align: center; padding: 60px 0 100px 0; background: white; }
+
+        @media (max-width: 992px) {
+            .team-grid-exec, .team-grid-small { grid-template-columns: 1fr 1fr; }
+            .about-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 600px) {
+            .team-grid-exec, .team-grid-small { grid-template-columns: 1fr; }
+        }
+    </style>
+
+    <script is:inline>
+        const phrases = ["We work for you", "We save money for you", "We protect you and your family"];
+        const typingElement = document.getElementById("typing-text");
+        let phraseIndex = 0;
+        let charIndex = 0;
+        const typingSpeed = 100;
+        const displayTime = 3000;
+
+        function typePhrase() {
+            if (charIndex < phrases[phraseIndex].length) {
+                typingElement.style.opacity = "1";
+                typingElement.textContent += phrases[phraseIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(typePhrase, typingSpeed);
+            } else {
+                setTimeout(fadeOutPhrase, displayTime);
+            }
+        }
+
+        function fadeOutPhrase() {
+            typingElement.style.opacity = "0";
+            setTimeout(() => {
+                typingElement.textContent = "";
+                charIndex = 0;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typePhrase();
+            }, 1000);
+        }
+
+        typePhrase();
+
+        document.querySelectorAll('.team-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const group = header.parentElement;
+                if (group.classList.contains('active')) {
+                    group.classList.remove('active');
+                } else {
+                    group.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+</BaseLayout>

@@ -1,0 +1,312 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Business & Commercial Insurance | Hometown Insurance Agency">
+    <a href="#form-bottom" class="btn btn-red btn-pulse" slot="quote-button">Get a Quote</a>
+
+    <style>
+        .hero-wrapper {
+            position: relative;
+            background: url('https://static-asset.amac.us/wp-content/uploads/2026/02/10140502/business-1.jpg') no-repeat center center;
+            background-size: cover;
+            padding: 60px 0 120px 0;
+            color: white;
+            border-bottom: 8px solid var(--primary-red);
+        }
+        .hero-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.92) 20%, rgba(0, 0, 0, 0.35) 100%);
+            z-index: 1;
+        }
+        .hero-content { margin-top: 20px; }
+        .hero-content h1 { font-size: 62px; line-height: 1.1; margin-bottom: 25px; color: white; }
+        .hero-content p { color: #cbd5e1; font-size: 24px; max-width: 600px; margin-bottom: 35px; }
+
+        .coverage-section { padding: 100px 0; background: white; scroll-margin-top: 170px; }
+        .coverage-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: start; }
+        .portrait-img { width: 100%; border-radius: 20px; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.25); }
+        .accordion { margin-top: 30px; }
+
+        .action-divider {
+            height: 500px;
+            background: linear-gradient(rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.3)), url('https://static-asset.amac.us/wp-content/uploads/2026/02/10140941/workers2.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .special-section { padding: 100px 0; background: var(--bg-light); }
+        .benefits-split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 60px; }
+        .benefit-column h2 { font-size: 32px; margin-bottom: 40px; border-left: 6px solid var(--primary-red); padding-left: 20px; }
+        .special-grid-mini { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .special-card:hover { transform: none; border-color: #e2e8f0; }
+
+        .btn-red-form {
+            background: #e31b23; color: white; padding: 16px 32px; border-radius: 6px;
+            text-decoration: none; font-size: 18px; display: inline-block; font-weight: 700;
+            border: none; cursor: pointer; text-align: center; width: 100%; margin-top: 10px;
+        }
+        .btn-red-form:hover { background: #b0151a; }
+
+        .cta-footer {
+            position: relative;
+            background: url('https://static-asset.amac.us/wp-content/uploads/2026/02/10141357/real-estate.jpg') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        .cta-footer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.75));
+            z-index: 1;
+        }
+        .cta-footer .container { position: relative; z-index: 2; }
+
+        @media (max-width: 992px) {
+            .hero-grid, .coverage-layout, .benefits-split { grid-template-columns: 1fr; }
+        }
+    </style>
+
+    <div class="hero-wrapper">
+        <section class="container hero-grid">
+            <div class="hero-content">
+                <p class="hero-label" style="font-size: 20px;">
+                    <i class="fa-solid fa-briefcase" style="font-size: 28px;"></i> Comprehensive Protection for Your Business
+                </p>
+                <h1>Insurance Built for Your Business Success</h1>
+                <p>Hometown Insurance provides specialized commercial solutions to protect your assets, employees, and future in an ever-changing marketplace.</p>
+                <div class="hero-btns">
+                    <a href="#highlights" class="btn btn-white-outline">View Coverage Options</a>
+                </div>
+            </div>
+
+            <div class="quote-card">
+                <h3>Get a Customized Quote</h3>
+                <form>
+                    <div class="form-group"><label>Business Name</label><input type="text" placeholder="Company Name" required></div>
+                    <div class="form-group">
+                        <label>Insurance Type Interested In</label>
+                        <select required onchange="toggleOtherField(this, 'other_details_top')">
+                            <option value="" disabled selected>Select an option...</option>
+                            <option>General Liability</option>
+                            <option>Professional Liability (E&O)</option>
+                            <option>Commercial Property</option>
+                            <option>Cyber Liability</option>
+                            <option>Workers Compensation</option>
+                            <option>Commercial Auto</option>
+                            <option>Umbrella Liability</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div id="other_details_top" class="other-details-container">
+                        <div class="form-group">
+                            <label>Please specify:</label>
+                            <input type="text" placeholder="Enter details here" required>
+                        </div>
+                    </div>
+                    <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your Name" required></div>
+                    <div class="form-group"><label>Email Address</label><input type="email" placeholder="email@address.com" required></div>
+                    <div class="form-group"><label>Leave a message (optional)</label><textarea rows="2" placeholder="Tell us more..."></textarea></div>
+
+                    <div class="form-group">
+                        <label>How should we contact you?</label>
+                        <div class="radio-inline-container">
+                            <label><input type="radio" name="contact_method_top" value="email" checked onchange="toggleCallback('top', false)"> Email</label>
+                            <label><input type="radio" name="contact_method_top" value="phone" onchange="toggleCallback('top', true)"> Callback</label>
+                        </div>
+                    </div>
+
+                    <div id="callback_fields_top" class="callback-fields">
+                        <div class="form-group"><label>Phone Number</label><input type="tel"></div>
+                        <div class="form-group"><label>Best Day & Time</label><input type="text" placeholder="e.g. Monday Morning"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>How did you hear about us?</label>
+                        <select>
+                            <option value="" disabled selected>Please select...</option>
+                            <option>Google Search</option>
+                            <option>Facebook / Instagram</option>
+                            <option>Friend or Family Member</option>
+                            <option>Mailing / Flyer</option>
+                            <option>Local Event</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-red-form">Send Request</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <section id="highlights" class="container coverage-section">
+        <div class="coverage-layout">
+            <div class="portrait-frame">
+                <img src="https://static-asset.amac.us/wp-content/uploads/2026/02/10140306/business-workers.jpg" alt="Business Expertise" class="portrait-img">
+            </div>
+            <div>
+                <h2 style="font-size: 40px; margin-bottom: 20px;">Commercial Coverage Highlights</h2>
+                <p>We offer a comprehensive line of insurance products to ensure you spend less time worrying and more time making your business a success.</p>
+                <div class="accordion">
+                    <div class="accordion-item active">
+                        <div class="accordion-header" onclick="toggleAccordion(this)"><h3>Liability Protection</h3><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="accordion-content">
+                            <ul class="coverage-list">
+                                <li><b>General Liability:</b> Protects assets and pays for obligations and legal defense cost.</li>
+                                <li><b>Professional Liability (E&O):</b> Protects against claims of negligence in services.</li>
+                                <li><b>Employment Practices (EPLI):</b> Covers claims of wrongful termination or harassment.</li>
+                                <li><b>Directors & Officers (D&O):</b> Coverage for board members against wrongful act allegations.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)"><h3>Property & Operations</h3><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="accordion-content">
+                            <ul class="coverage-list">
+                                <li><b>Commercial Property:</b> Protects buildings, machinery, inventory, and furniture.</li>
+                                <li><b>Business Interruption:</b> Covers lost earnings if you cannot operate after a loss.</li>
+                                <li><b>Equipment Breakdown:</b> Specialized coverage for vital machinery and tech.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)"><h3>Specialized Commercial Risk</h3><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="accordion-content">
+                            <ul class="coverage-list">
+                                <li><b>Cyber Liability:</b> Protection from data breaches, extortions, and malware.</li>
+                                <li><b>Umbrella Liability:</b> Extra protection picking up where existing policies stop.</li>
+                                <li><b>Crime Coverage:</b> Protects against employee dishonesty and forgery.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)"><h3>Fleet & Employee Safety</h3><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="accordion-content">
+                            <ul class="coverage-list">
+                                <li><b>Commercial Auto:</b> Covers financial costs resulting from business-related accidents.</li>
+                                <li><b>Workers Compensation:</b> Mandatory benefits for work-related injuries or illnesses.</li>
+                                <li><b>Disability Benefits Law (DBL):</b> Ensuring compliance with NY state requirements.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="action-divider"></div>
+
+    <section class="special-section">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h2 style="font-size: 44px;">Business Growth & Stability</h2>
+                <p style="color: var(--text-gray);">Trusted guidance for Long Island businesses since 1979.</p>
+            </div>
+            <div class="benefits-split">
+                <div class="benefit-column">
+                    <h2>Asset Protection</h2>
+                    <div class="special-grid-mini">
+                        <div class="special-card"><i class="fa-solid fa-building-shield"></i><div><h3>Property & Inland Marine</h3><p>Coverage for tools, equipment, and goods in transit away from your primary location.</p></div></div>
+                        <div class="special-card"><i class="fa-solid fa-vault"></i><div><h3>Financial Security</h3><p>Business Interruption plans that ensure your cash flow remains stable after a disaster.</p></div></div>
+                        <div class="special-card"><i class="fa-solid fa-shield-halved"></i><div><h3>Surety Bonds</h3><p>Contract, License, and Permit bonds to meet your specific industry requirements.</p></div></div>
+                    </div>
+                </div>
+                <div class="benefit-column">
+                    <h2>Employee Benefits</h2>
+                    <div class="special-grid-mini">
+                        <div class="special-card"><i class="fa-solid fa-hospital-user"></i><div><h3>Group Health & Dental</h3><p>Attract and retain top talent with competitive medical and dental plans.</p></div></div>
+                        <div class="special-card"><i class="fa-solid fa-users"></i><div><h3>Voluntary Benefits</h3><p>Payroll deduction options for life, accident, and short-term disability insurance.</p></div></div>
+                        <div class="special-card"><i class="fa-solid fa-handshake"></i><div><h3>Affinity Programs</h3><p>Special group rates for larger associations and unions.</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="cta-footer" id="form-bottom">
+        <div class="container">
+            <div class="quote-card" style="max-width: 500px; margin: 0 auto; text-align: left;">
+                <h3>Get a Customized Quote</h3>
+                <form>
+                    <div class="form-group"><label>Business Name</label><input type="text" placeholder="Company Name" required></div>
+                    <div class="form-group">
+                        <label>Insurance Type Interested In</label>
+                        <select required onchange="toggleOtherField(this, 'other_details_bottom')">
+                            <option value="" disabled selected>Select an option...</option>
+                            <option>General Liability</option>
+                            <option>Professional Liability (E&O)</option>
+                            <option>Commercial Property</option>
+                            <option>Cyber Liability</option>
+                            <option>Workers Compensation</option>
+                            <option>Commercial Auto</option>
+                            <option>Umbrella Liability</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div id="other_details_bottom" class="other-details-container">
+                        <div class="form-group">
+                            <label>Please specify:</label>
+                            <input type="text" placeholder="Enter details here" required>
+                        </div>
+                    </div>
+                    <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your Name" required></div>
+                    <div class="form-group"><label>Email Address</label><input type="email" placeholder="email@address.com" required></div>
+                    <div class="form-group"><label>Leave a message (optional)</label><textarea rows="2" placeholder="Tell us more..."></textarea></div>
+
+                    <div class="form-group">
+                        <label>How should we contact you?</label>
+                        <div class="radio-inline-container">
+                            <label><input type="radio" name="contact_method_bot" value="email" checked onchange="toggleCallback('bot', false)"> Email</label>
+                            <label><input type="radio" name="contact_method_bot" value="phone" onchange="toggleCallback('bot', true)"> Callback</label>
+                        </div>
+                    </div>
+
+                    <div id="callback_fields_bot" class="callback-fields">
+                        <div class="form-group"><label>Phone Number</label><input type="tel"></div>
+                        <div class="form-group"><label>Best Day & Time</label><input type="text" placeholder="e.g. Wednesday Mornings"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>How did you hear about us?</label>
+                        <select>
+                            <option value="" disabled selected>Please select...</option>
+                            <option>Google Search</option>
+                            <option>Facebook / Instagram</option>
+                            <option>Friend or Family Member</option>
+                            <option>Mailing / Flyer</option>
+                            <option>Local Event</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-red-form">Send Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script is:inline>
+        function toggleCallback(prefix, show) {
+            document.getElementById('callback_fields_' + prefix).style.display = show ? 'block' : 'none';
+        }
+
+        function toggleOtherField(selectElement, fieldId) {
+            const otherField = document.getElementById(fieldId);
+            if (selectElement.value === 'Other') {
+                otherField.style.display = 'block';
+            } else {
+                otherField.style.display = 'none';
+            }
+        }
+
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const wasActive = item.classList.contains('active');
+            document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('active'));
+            if (!wasActive) item.classList.add('active');
+        }
+    </script>
+</BaseLayout>

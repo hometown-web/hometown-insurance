@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life & Health Insurance | Hometown Insurance Agency</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-red: #e31b23;
+            --dark-blue: #0f172a;
+            --text-gray: #374151;
+            --bg-light: #f3f4f6;
+            --white: #ffffff;
+            --navy-blue: #2c3e50;
+            --success-green: #10b981;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            line-height: 1.8; 
+            color: #111827; 
+            font-size: 18px; 
+            scroll-behavior: smooth;
+        }
+        
+        h1, h2, h3 { font-family: 'Inter', sans-serif; font-weight: 800; color: var(--dark-blue); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(227, 27, 35, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(227, 27, 35, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(227, 27, 35, 0); }
+        }
+        .btn-pulse { animation: pulse-red 2s infinite; }
+
+        /* Navigation Styles */
+        .sticky-header { position: sticky; top: 0; z-index: 3000; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+        .top-info { background: #000; color: white; padding: 22px 0; border-bottom: 1px solid #333; }
+        .prominent-contact-flex { display: flex; justify-content: space-between; align-items: center; }
+        .contact-prominent { display: flex; gap: 50px; font-size: 20px; }
+        .contact-item { display: flex; align-items: center; gap: 14px; cursor: pointer; transition: color 0.2s; }
+        .contact-item:hover, .contact-item:hover a, .contact-item:hover b { color: var(--primary-red) !important; }
+        .contact-item i { color: var(--primary-red); font-size: 26px; }
+        .contact-item a { color: #fff; text-decoration: none; font-weight: 400; transition: color 0.2s; }
+        .social-icons-shared a { color: white; margin-left: 25px; font-size: 28px; text-decoration: none; transition: transform 0.2s, opacity 0.2s; display: inline-block; }
+        .social-icons-shared a:hover { transform: scale(1.1); opacity: 0.7; }
+
+        header { border-bottom: 1px solid #e5e7eb; position: relative; background: var(--white); }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; min-height: 80px; }
+        .logo { width: 220px; position: relative; }
+        .logo img { height: 85px; width: auto; position: absolute; top: -58px; left: 0; z-index: 3100; }
+
+        .nav-links { display: flex; list-style: none; gap: 30px; align-items: center; margin-left: auto; margin-right: 30px; }
+        .nav-links > li { position: relative; display: flex; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-gray); font-weight: 700; font-size: 18px; transition: color 0.2s; padding: 12px 0; }
+        .nav-links a:hover { color: var(--primary-red); }
+        
+        .dropdown-menu { 
+            display: none; position: absolute; top: 100%; left: 0; background: var(--white); min-width: 350px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-radius: 8px; padding: 15px 0; z-index: 1000; border: 1px solid #e5e7eb; list-style: none;
+        }
+        .nav-links li:hover .dropdown-menu { display: block; }
+        .dropdown-menu li { width: 100%; padding: 0 20px; }
+        .dropdown-menu a { padding: 12px 0 !important; display: block; border-bottom: 1px solid #f3f4f6; font-size: 17px; }
+        .dropdown-menu li:last-child a { border-bottom: none; }
+
+        .nav-btns { display: flex; gap: 15px; align-items: center; }
+        .nav-btns .btn { display: flex; align-items: center; justify-content: center; height: 55px; margin: 0; }
+
+        .btn { padding: 0 32px; border-radius: 6px; text-decoration: none; font-size: 18px; font-weight: 700; border: none; cursor: pointer; text-align: center; transition: background 0.2s; }
+        .btn-white { background: white; color: #111; border: 2px solid #333; }
+        .btn-white-outline { background: transparent; color: white; border: 2px solid white; display: flex; align-items: center; justify-content: center; height: 55px; }
+        .btn-white-outline:hover { background: white; color: var(--dark-blue); }
+
+        /* Unified Quote Card Styles */
+        .quote-card { 
+            background: white; padding: 40px; border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
+            color: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; max-width: 500px;
+        }
+        .quote-card h3 { margin-bottom: 20px; font-size: 26px; text-align: center; font-weight: 800; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 14px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; font-family: inherit; }
+        .radio-inline-container { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 5px; }
+        .radio-inline-container label { display: flex; align-items: center; gap: 8px; margin-bottom: 0; cursor: pointer; white-space: nowrap; font-weight: 400; }
+        .radio-inline-container input[type="radio"] { width: auto; margin: 0; }
+        .callback-fields { display: none; background: #f8fafc; padding: 15px; border-radius: 6px; margin-top: 15px; border: 1px dashed #cbd5e1; }
+        .btn-red { 
+            background: #e31b23; color: white; padding: 16px 32px; border-radius: 6px; text-decoration: none; font-size: 18px; 
+            display: inline-block; font-weight: 700; border: none; cursor: pointer; text-align: center; width: 100%; margin-top: 10px;
+        }
+        .btn-red:hover { background: #b0151a; }
+        .other-details-container { display: none; margin-top: 15px; }
+
+        /* Hero Section */
+        .hero-wrapper { 
+            position: relative; background: url('https://static-asset.amac.us/wp-content/uploads/2026/02/10122755/health.jpg') no-repeat center center;
+            background-size: cover; padding: 80px 0 140px 0; color: white; border-bottom: 8px solid var(--primary-red);
+        }
+        .hero-wrapper::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0) 100%); z-index: 1;
+        }
+        .hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; align-items: center; }
+        .hero-content { position: relative; top: -90px; }
+        .hero-label { color: var(--primary-red); font-weight: 800; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .hero-content h1 { font-size: 62px; line-height: 1.1; margin-bottom: 25px; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .hero-content p { color: #f8fafc; font-size: 24px; max-width: 600px; margin-bottom: 35px; text-shadow: 0 1px 5px rgba(0,0,0,0.5); }
+
+        /* Content Section */
+        .content-section { padding: 100px 0; background: white; }
+        .content-layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: 80px; align-items: start; }
+        .side-image { width: 100%; height: auto; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .benefit-card { background: var(--bg-light); border-radius: 12px; padding: 40px; margin-bottom: 30px; border-left: 6px solid var(--primary-red); }
+        .benefit-card h3 { font-size: 28px; margin-bottom: 15px; }
+        .benefit-card p { color: var(--text-gray); }
+
+        /* Action Divider */
+        .action-divider {
+            height: 500px; background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), url('https://static-asset.amac.us/wp-content/uploads/2026/02/11094502/worksite.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Footer CTA */
+        .cta-footer { 
+            position: relative; background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.85)), url('https://static-asset.amac.us/wp-content/uploads/2026/02/10131418/healthy-food.jpg') no-repeat center center;
+            background-size: cover; color: white; padding: 100px 0; text-align: center; 
+        }
+        .cta-footer .container { position: relative; z-index: 2; display: flex; justify-content: center; }
+
+        @media (max-width: 992px) { 
+            .hero-grid, .content-layout { grid-template-columns: 1fr; } 
+            .logo img { position: static; height: 65px; margin-bottom: 10px; top: 0; }
+            .hero-content { top: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sticky-header">
+    <div class="top-info">
+        <div class="container prominent-contact-flex">
+            <div class="contact-prominent">
+                <div class="contact-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span><b>Find Us:</b> 5 Orville Drive, Suite 400, Bohemia, NY 11716</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fa-solid fa-phone-volume"></i>
+                    <span><b>Call Us:</b> <a href="tel:6315890100">631-589-0100</a></span>
+                </div>
+            </div>
+            <div class="top-socials social-icons-shared">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><img src="https://static-asset.amac.us/wp-content/uploads/2026/02/04173133/hometown-header-logo2.png" alt="Hometown Insurance"></div>
+                <ul class="nav-links">
+                    <li class="dropdown">
+                        <a href="#">Products & Services <small>▼</small></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Personal Protection</a></li>
+                            <li><a href="#">Business & Commercial</a></li>
+                            <li><a href="#">Firefighter & EMS Services</a></li>
+                            <li><a href="#">Life & Health</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">About Our Agency</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+                <div class="nav-btns">
+                    <a href="#" class="btn btn-white">Claims</a>
+                    <a href="#form-bottom" class="btn btn-red btn-pulse" style="background: var(--primary-red); color: white; height: 55px; display: flex; align-items: center;">Get a Quote</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+</div>
+
+<div class="hero-wrapper">
+    <section class="container hero-grid">
+        <div class="hero-content">
+            <p class="hero-label" style="font-size: 13px;">
+                <i class="fa-solid fa-heart-pulse" style="font-size: 28px;"></i> Protecting What Matters Most
+            </p>
+            <h1>Life & Health Insurance Solutions</h1>
+            <p>Providing the security and peace of mind you and your family deserve with comprehensive health and life coverage.</p>
+            <div class="hero-btns">
+                <a href="#details" class="btn btn-white-outline" style="width: 250px;">Explore Benefits</a>
+            </div>
+        </div>
+        
+        <div class="quote-card">
+            <h3>Insurance Quote Request</h3>
+            <form>
+                <div class="form-group">
+                    <label>Insurance Type Interested In</label>
+                    <select required onchange="toggleOtherField(this, 'other_details_top')">
+                        <option value="" disabled selected>Select an option...</option>
+                        <option>Auto Insurance</option>
+                        <option>Homeowners Insurance</option>
+                        <option>Condo/Renters Insurance</option>
+                        <option>Umbrella Insurance</option>
+                        <option>Boat & Yacht Insurance</option>
+                        <option>Flood Insurance</option>
+                        <option>Valuables/Collectibles</option>
+                        <option>Classic Car Insurance</option>
+                        <option>RV & Recreational</option>
+                        <option>Individual Health Insurance</option>
+                        <option>Group Health (Business)</option>
+                        <option>Voluntary Benefits (Dental and Vision)</option>
+                        <option>Disability Insurance</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div id="other_details_top" class="other-details-container">
+                    <div class="form-group">
+                        <label>Please specify:</label>
+                        <input type="text" placeholder="Enter details here">
+                    </div>
+                </div>
+
+                <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your Name" required></div>
+                <div class="form-group"><label>Email Address</label><input type="email" placeholder="email@address.com" required></div>
+                <div class="form-group"><label>Leave a message (optional)</label><textarea rows="2" placeholder="Tell us more..."></textarea></div>
+                
+                <div class="form-group">
+                    <label>How should we contact you?</label>
+                    <div class="radio-inline-container">
+                        <label><input type="radio" name="contact_top" value="email" checked onchange="toggleCallback(false, 'top')"> Email</label>
+                        <label><input type="radio" name="contact_top" value="phone" onchange="toggleCallback(true, 'top')"> Callback</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>How did you hear about us?</label>
+                    <select>
+                        <option value="" disabled selected>Please select...</option>
+                        <option>Google Search</option>
+                        <option>Facebook / Instagram</option>
+                        <option>Friend or Family Member</option>
+                        <option>Mailing / Flyer</option>
+                        <option>Local Event</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div id="callback_fields_top" class="callback-fields">
+                    <div class="form-group"><label>Phone Number</label><input type="tel"></div>
+                    <div class="form-group"><label>Best Day & Time</label><input type="text" placeholder="e.g. Monday Morning"></div>
+                </div>
+
+                <button type="submit" class="btn-red">Send Request</button>
+            </form>
+        </div>
+    </section>
+</div>
+
+<section id="details" class="container content-section">
+    <div class="content-layout">
+        <div>
+            <h2 style="font-size: 40px; margin-bottom: 30px;">Our Specialized Programs</h2>
+            <div class="benefit-card">
+                <h3>Group Health Insurance</h3>
+                <p>Let Hometown's team of employee benefit specialists assist your organization in developing a program that attracts and retains top talent while complying with all applicable laws.</p>
+            </div>
+            <div class="benefit-card">
+                <h3>Voluntary Benefits</h3>
+                <p>Supplementing your health insurance with the right mix of voluntary benefits is the key to a quality benefits package.</p>
+            </div>
+        </div>
+        <div>
+            <img src="https://static-asset.amac.us/wp-content/uploads/2026/02/101222225/doctor-patient.jpg" alt="Doctor and Patient" class="side-image">
+        </div>
+    </div>
+</section>
+
+<div class="action-divider"></div>
+
+<div class="cta-footer" id="form-bottom">
+    <div class="container">
+        <div class="quote-card" style="text-align: left;">
+            <h3>Insurance Quote Request</h3>
+            <form>
+                <div class="form-group">
+                    <label>Insurance Type Interested In</label>
+                    <select required onchange="toggleOtherField(this, 'other_details_bot')">
+                        <option value="" disabled selected>Select an option...</option>
+                        <option>Auto Insurance</option>
+                        <option>Homeowners Insurance</option>
+                        <option>Condo/Renters Insurance</option>
+                        <option>Umbrella Insurance</option>
+                        <option>Boat & Yacht Insurance</option>
+                        <option>Flood Insurance</option>
+                        <option>Valuables/Collectibles</option>
+                        <option>Classic Car Insurance</option>
+                        <option>RV & Recreational</option>
+                        <option>Individual Health Insurance</option>
+                        <option>Group Health (Business)</option>
+                        <option>Voluntary Benefits (Dental and Vision)</option>
+                        <option>Disability Insurance</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div id="other_details_bot" class="other-details-container">
+                    <div class="form-group">
+                        <label>Please specify:</label>
+                        <input type="text" placeholder="Enter details here">
+                    </div>
+                </div>
+
+                <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your Name" required></div>
+                <div class="form-group"><label>Email Address</label><input type="email" placeholder="email@address.com" required></div>
+                <div class="form-group"><label>Leave a message (optional)</label><textarea rows="2" placeholder="Tell us more..."></textarea></div>
+                
+                <div class="form-group">
+                    <label>How should we contact you?</label>
+                    <div class="radio-inline-container">
+                        <label><input type="radio" name="contact_bot" value="email" checked onchange="toggleCallback(false, 'bot')"> Email</label>
+                        <label><input type="radio" name="contact_bot" value="phone" onchange="toggleCallback(true, 'bot')"> Callback</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>How did you hear about us?</label>
+                    <select>
+                        <option value="" disabled selected>Please select...</option>
+                        <option>Google Search</option>
+                        <option>Facebook / Instagram</option>
+                        <option>Friend or Family Member</option>
+                        <option>Mailing / Flyer</option>
+                        <option>Local Event</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div id="callback_fields_bot" class="callback-fields">
+                    <div class="form-group"><label>Phone Number</label><input type="tel"></div>
+                    <div class="form-group"><label>Best Day & Time</label><input type="text" placeholder="e.g. Wednesday Afternoon"></div>
+                </div>
+
+                <button type="submit" class="btn-red">Send Request</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleCallback(show, id) {
+        document.getElementById('callback_fields_' + id).style.display = show ? 'block' : 'none';
+    }
+    
+    function toggleOtherField(selectElement, fieldId) {
+        const container = document.getElementById(fieldId);
+        container.style.display = (selectElement.value === 'Other') ? 'block' : 'none';
+    }
+</script>
+
+</body>
+</html>

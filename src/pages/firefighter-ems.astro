@@ -1,0 +1,334 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Firefighter & EMS Services | Hometown Insurance Agency">
+    <a href="#form-bottom" class="btn btn-red btn-pulse" slot="quote-button">Get a Quote</a>
+
+    <style>
+        .hero-wrapper {
+            position: relative;
+            background: url('https://static-asset.amac.us/wp-content/uploads/2026/02/05130916/fire-truck-rescue-operation-2026-01-08-23-39-15-utc-scaled.jpg') no-repeat center center;
+            background-size: cover;
+            padding: 60px 0 120px 0;
+            color: white;
+            border-bottom: 8px solid var(--primary-red);
+        }
+        .hero-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, rgba(15, 23, 42, 0.95) 20%, rgba(15, 23, 42, 0.4) 100%);
+            z-index: 1;
+        }
+        .hero-content { margin-top: 20px; }
+        .hero-content h1 { font-size: 62px; line-height: 1.1; margin-bottom: 25px; color: white; }
+        .hero-content p { color: #cbd5e1; font-size: 24px; max-width: 600px; margin-bottom: 35px; }
+
+        .coverage-section { padding: 100px 0; background: white; scroll-margin-top: 170px; }
+        .coverage-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: start; }
+        .portrait-img { width: 100%; border-radius: 20px; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.25); }
+        .highlight-group-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--primary-red); margin: 30px 0 15px 0; font-weight: 800; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .accordion { margin-top: 10px; }
+        .accordion-header h3 { font-size: 19px; font-weight: 700; }
+        .accordion-header { padding: 18px 0; }
+        .coverage-list li { color: var(--text-gray); }
+
+        .other-details-field { display: none; background: #f8fafc; padding: 15px; border-radius: 6px; margin-top: 15px; border: 1px dashed #cbd5e1; }
+        .btn-form-submit { width: 100%; margin-top: 10px; }
+
+        .action-divider {
+            height: 500px;
+            background: linear-gradient(rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.3)), url('https://static-asset.amac.us/wp-content/uploads/2026/02/05130911/firefighter-runs-2026-01-08-07-20-06-utc-scaled.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .special-section { padding: 100px 0; background: var(--white); }
+        .benefits-split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 60px; }
+        .benefit-column h2 { font-size: 32px; margin-bottom: 40px; border-left: 6px solid var(--primary-red); padding-left: 20px; }
+        .special-grid-mini { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .special-card { background: var(--bg-light); }
+        .special-card:hover { transform: none; border-color: #e2e8f0; }
+
+        .cta-footer {
+            position: relative;
+            background: url('https://static-asset.amac.us/wp-content/uploads/2026/02/05130922/high-speed-ambulance-on-a-new-york-city-street-2026-01-08-05-14-33-utc-scaled.jpg') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        .cta-footer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.75));
+            z-index: 1;
+        }
+        .cta-footer .container { position: relative; z-index: 2; }
+
+        @media (max-width: 992px) {
+            .hero-grid, .coverage-layout, .benefits-split { grid-template-columns: 1fr; }
+        }
+    </style>
+
+    <div class="hero-wrapper">
+        <section class="container hero-grid">
+            <div class="hero-content">
+                <p class="hero-label" style="font-size: 20px;">
+                    <i class="fa-solid fa-fire-extinguisher" style="font-size: 28px;"></i> Specialized Protection for NY First Responders
+                </p>
+                <h1>Insurance Built for Fire & EMS Districts and Volunteers</h1>
+                <p>Hometown Insurance is New York's leading provider of Property and Casualty coverage for the brave men and women of the fire and emergency services.</p>
+                <div class="hero-btns">
+                    <a href="#highlights" class="btn btn-white-outline">View Coverage Highlights</a>
+                </div>
+            </div>
+
+            <div class="quote-card">
+                <h3>Get an Insurance Quote</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Insurance Type Interested In</label>
+                        <select required onchange="toggleOtherField(this, 'other_details_top')">
+                            <option value="" disabled selected>Select an option...</option>
+                            <option>Fire District Package (Property & Liability)</option>
+                            <option>VFBL & Workers' Compensation</option>
+                            <option>Group Accident & Sickness</option>
+                            <option>Group Term Life Insurance</option>
+                            <option>First Responder Auto & Home Discount</option>
+                            <option>Individual Life & Health Insurance</option>
+                            <option>Long-Term Care Insurance</option>
+                            <option>Management Liability / D&O</option>
+                            <option>Cyber Liability Insurance</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div id="other_details_top" class="other-details-container">
+                        <div class="form-group"><label>Please specify insurance type</label><input type="text" placeholder="Tell us what you're looking for"></div>
+                    </div>
+                    <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your Name" required></div>
+                    <div class="form-group"><label>Email Address</label><input type="email" placeholder="email@address.com" required></div>
+                    <div class="form-group"><label>Leave a message (optional)</label><textarea rows="2" placeholder="Tell us more..."></textarea></div>
+
+                    <div class="form-group">
+                        <label>How should we contact you?</label>
+                        <div class="radio-inline-container">
+                            <label><input type="radio" name="contact_method_top" value="email" checked onchange="toggleCallback('top', false)"> Email</label>
+                            <label><input type="radio" name="contact_method_top" value="phone" onchange="toggleCallback('top', true)"> Callback</label>
+                        </div>
+                    </div>
+
+                    <div id="callback_fields_top" class="callback-fields">
+                        <div class="form-group"><label>Phone Number</label><input type="tel"></div>
+                        <div class="form-group"><label>Best Day & Time</label><input type="text" placeholder="e.g. Monday Morning"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>How did you hear about us?</label>
+                        <select>
+                            <option value="" disabled selected>Please select...</option>
+                            <option>Google Search</option>
+                            <option>Facebook / Instagram</option>
+                            <option>Friend or Family Member</option>
+                            <option>Mailing / Flyer</option>
+                            <option>Local Event</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-red btn-form-submit">Send Request</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <section id="highlights" class="container coverage-section">
+        <div class="coverage-layout">
+            <div class="portrait-frame">
+                <img src="https://static-asset.amac.us/wp-content/uploads/2026/02/05130926/two-firemen-standing-near-the-fire-truck-at-night-2026-01-07-01-14-23-utc.jpg" alt="Local Heroes" class="portrait-img">
+            </div>
+            <div>
+                <h2 style="font-size: 40px; margin-bottom: 10px;">Coverage Highlights</h2>
+                <p>Our programs address the specific property and liability exposures of New York's emergency service organizations.</p>
+
+                <div class="highlight-group-title">District & Department Operations</div>
+                <div class="accordion">
+                    <div class="accordion-item active">
+                        <div class="accordion-header" onclick="toggleAccordion(this)"><h3>Property & Physical Assets</h3><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="accordion-content">
+                            <ul class="coverage-list">
+                                <li>Guaranteed Replacement Cost for Real and Personal Property</li>
+                                <li>Emergency Apparatus on an Agreed Value basis</li>
+                                <li>Equipment Breakdown & Business Income protection</li>
+                                <li>Flood and Earthquake / Earth Movement coverage</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)"><h3>Liability & Risk Management</h3><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="accordion-content">
+                            <ul class="coverage-list">
+                                <li>General Liability with Emergency Services Endorsements</li>
+                                <li>Fire and Rescue Medical Malpractice Liability</li>
+                                <li>Cyber Liability & Privacy Security Protection</li>
+                                <li>Pollution Liability & Corrective Action Costs</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)"><h3>Automobile & Crime</h3><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="accordion-content">
+                            <ul class="coverage-list">
+                                <li>Business Auto Liability including Hired & Non-Owned</li>
+                                <li>Fellow Member Liability & Injury to Volunteers</li>
+                                <li>Commercial Crime for non-compensated officers</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-group-title">Volunteer & Member Protection</div>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)"><h3>Medical & Injury Benefits</h3><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="accordion-content">
+                            <ul class="coverage-list">
+                                <li>VFBL / Workers' Compensation medical care</li>
+                                <li>Weekly Accident & Sickness disability benefits</li>
+                                <li>Portable Equipment Replacement (Turnout gear/EMS kits)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)"><h3>Family & Financial Security</h3><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="accordion-content">
+                            <ul class="coverage-list">
+                                <li>Group Term Life Insurance for District Members</li>
+                                <li>Discounted Personal Auto & Home rates for first responders</li>
+                                <li>Individual Life and Long Term Care solutions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="action-divider"></div>
+
+    <section style="padding: 90px 0; background: var(--bg-light); border-top: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb;">
+        <div class="container" style="text-align: center;">
+            <h2 style="font-size: 38px; color: var(--dark-blue); margin-bottom: 25px;">Looking for LOSAP or Benevolent Information?</h2>
+            <p style="font-size: 21px; color: var(--text-gray); max-width: 850px; margin: 0 auto 40px auto; line-height: 1.6;">
+                Dedicated support for New York's Fire Districts and Associations. Visit <strong>Hometown Firefighters</strong> to access the Member Portal, manage Service Award Programs (LOSAP), or find administrative resources for Benevolent Associations.
+            </p>
+            <a href="https://hometownfirefighters.com/" class="btn btn-red" target="_blank" style="width: auto; text-decoration: none; padding: 18px 45px;">Access Hometown Firefighters Website</a>
+        </div>
+    </section>
+
+    <section class="special-section">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h2 style="font-size: 44px;">Specialized Benefits & Services</h2>
+                <p style="color: var(--text-gray);">Comprehensive solutions for the Fire and EMS Community.</p>
+            </div>
+
+            <div class="benefits-split">
+                <div class="benefit-column">
+                    <h2>District & Department</h2>
+                    <div class="special-grid-mini">
+                        <div class="special-card"><i class="fa-solid fa-user-shield"></i><div><h3>VFBL / Workers Comp</h3><p>Ensuring cash payments and full medical care for volunteer injuries.</p></div></div>
+                        <div class="special-card"><i class="fa-solid fa-truck-medical"></i><div><h3>Accident & Sickness</h3><p>Comprehensive weekly disability and AD&D benefit policies.</p></div></div>
+                        <div class="special-card"><i class="fa-solid fa-users-viewfinder"></i><div><h3>Group Term Life</h3><p>Life coverage designed for District members and Benevolent Associations.</p></div></div>
+                    </div>
+                </div>
+                <div class="benefit-column">
+                    <h2>Individual Member Protection</h2>
+                    <div class="special-grid-mini">
+                        <div class="special-card"><i class="fa-solid fa-house-chimney-window"></i><div><h3>Discount Auto & Home</h3><p>Exclusive group rates for active firefighters, EMTs, and families.</p></div></div>
+                        <div class="special-card"><i class="fa-solid fa-heart-pulse"></i><div><h3>Individual Life</h3><p>Personal life insurance solutions to secure your family's financial health.</p></div></div>
+                        <div class="special-card"><i class="fa-solid fa-wheelchair"></i><div><h3>Long Term Care</h3><p>Specialized plans to cover costs of care and protect your assets.</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="cta-footer" id="form-bottom">
+        <div class="container">
+            <div class="quote-card" style="margin: 0 auto; text-align: left;">
+                <h3>Get an Insurance Quote</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Insurance Type Interested In</label>
+                        <select required onchange="toggleOtherField(this, 'other_details_bot')">
+                            <option value="" disabled selected>Select an option...</option>
+                            <option>Fire District Package (Property & Liability)</option>
+                            <option>VFBL & Workers' Compensation</option>
+                            <option>Group Accident & Sickness</option>
+                            <option>Group Term Life Insurance</option>
+                            <option>First Responder Auto & Home Discount</option>
+                            <option>Individual Life & Health Insurance</option>
+                            <option>Long-Term Care Insurance</option>
+                            <option>Management Liability / D&O</option>
+                            <option>Cyber Liability Insurance</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div id="other_details_bot" class="other-details-container">
+                        <div class="form-group"><label>Please specify insurance type</label><input type="text" placeholder="Tell us what you're looking for"></div>
+                    </div>
+                    <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your Name" required></div>
+                    <div class="form-group"><label>Email Address</label><input type="email" placeholder="email@address.com" required></div>
+                    <div class="form-group"><label>Leave a message (optional)</label><textarea rows="2" placeholder="Tell us more..."></textarea></div>
+
+                    <div class="form-group">
+                        <label>How should we contact you?</label>
+                        <div class="radio-inline-container">
+                            <label><input type="radio" name="contact_method_bot" value="email" checked onchange="toggleCallback('bot', false)"> Email</label>
+                            <label><input type="radio" name="contact_method_bot" value="phone" onchange="toggleCallback('bot', true)"> Callback</label>
+                        </div>
+                    </div>
+
+                    <div id="callback_fields_bot" class="callback-fields">
+                        <div class="form-group"><label>Phone Number</label><input type="tel"></div>
+                        <div class="form-group"><label>Best Day & Time</label><input type="text" placeholder="e.g. Monday Morning"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>How did you hear about us?</label>
+                        <select>
+                            <option value="" disabled selected>Please select...</option>
+                            <option>Google Search</option>
+                            <option>Facebook / Instagram</option>
+                            <option>Friend or Family Member</option>
+                            <option>Mailing / Flyer</option>
+                            <option>Local Event</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-red btn-form-submit">Send Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script is:inline>
+        function toggleCallback(prefix, show) {
+            const el = document.getElementById('callback_fields_' + prefix);
+            if (el) el.style.display = show ? 'block' : 'none';
+        }
+
+        function toggleOtherField(select, targetId) {
+            const el = document.getElementById(targetId);
+            if (el) el.style.display = (select.value === "Other") ? 'block' : 'none';
+        }
+
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const wasActive = item.classList.contains('active');
+            document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('active'));
+            if (!wasActive) item.classList.add('active');
+        }
+    </script>
+</BaseLayout>

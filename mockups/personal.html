@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Protection | Hometown Insurance Agency</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-red: #e31b23;
+            --dark-blue: #0f172a;
+            --text-gray: #374151;
+            --bg-light: #f3f4f6;
+            --white: #ffffff;
+            --navy-blue: #2c3e50;
+            --success-green: #10b981;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            line-height: 1.8; 
+            color: #111827; 
+            font-size: 18px; 
+            scroll-behavior: smooth;
+        }
+        
+        h1, h2, h3 { font-family: 'Inter', sans-serif; font-weight: 800; color: var(--dark-blue); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(227, 27, 35, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(227, 27, 35, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(227, 27, 35, 0); }
+        }
+        .btn-pulse { animation: pulse-red 2s infinite; }
+
+        /* Navigation Styles */
+        .sticky-header { position: sticky; top: 0; z-index: 3000; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+        .top-info { background: #000; color: white; padding: 22px 0; border-bottom: 1px solid #333; }
+        .prominent-contact-flex { display: flex; justify-content: space-between; align-items: center; }
+        .contact-prominent { display: flex; gap: 50px; font-size: 20px; }
+        .contact-item { display: flex; align-items: center; gap: 14px; cursor: pointer; transition: color 0.2s; }
+        .contact-item:hover { color: var(--primary-red); }
+        .contact-item:hover a { color: var(--primary-red); } 
+        .contact-item i { color: var(--primary-red); font-size: 26px; }
+        .contact-item a { color: #fff; text-decoration: none; font-weight: 400; transition: color 0.2s; }
+        .social-icons-shared a { color: white; margin-left: 25px; font-size: 28px; text-decoration: none; transition: transform 0.2s, opacity 0.2s; display: inline-block; }
+        .social-icons-shared a:hover { transform: scale(1.1); opacity: 0.7; }
+
+        header { border-bottom: 1px solid #e5e7eb; position: relative; background: var(--white); }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
+        
+        .logo { position: relative; z-index: 3001; }
+        .logo img { 
+            height: 90px; 
+            width: auto; 
+            display: block; 
+            margin-top: -35px; 
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .nav-links { display: flex; list-style: none; gap: 30px; align-items: center; }
+        .nav-links > li { position: relative; display: flex; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-gray); font-weight: 700; font-size: 18px; transition: color 0.2s; padding: 12px 0; }
+        .nav-links a:hover { color: var(--primary-red); }
+        
+        .dropdown-menu { 
+            display: none; 
+            position: absolute; 
+            top: 100%; 
+            left: 0; 
+            background: var(--white); 
+            min-width: 350px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+            border-radius: 8px; 
+            padding: 15px 0; 
+            z-index: 1000; 
+            border: 1px solid #e5e7eb; 
+            list-style: none;
+        }
+        .nav-links li:hover .dropdown-menu { display: block; }
+        .dropdown-menu li { width: 100%; padding: 0 20px; }
+        .dropdown-menu a { padding: 12px 0 !important; display: block; border-bottom: 1px solid #f3f4f6; font-size: 17px; }
+        .dropdown-menu li:last-child a { border-bottom: none; }
+
+        .nav-btns { display: flex; gap: 15px; align-items: center; }
+
+        .btn { padding: 16px 32px; border-radius: 6px; text-decoration: none; font-size: 18px; display: inline-block; font-weight: 700; border: none; cursor: pointer; text-align: center; transition: background 0.2s; }
+        .btn-red { background: var(--primary-red); color: white; }
+        .btn-white { background: white; color: #111; border: 2px solid #333; }
+        .btn-red:hover { background: #b0151a; }
+        .btn-white-outline { background: transparent; color: white; border: 2px solid white; }
+        .btn-white-outline:hover { background: white; color: var(--dark-blue); }
+
+        /* Modal Styles */
+        .map-modal { display: none; position: fixed; z-index: 4000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; }
+        .map-modal-content { background-color: var(--white); padding: 30px; border-radius: 12px; width: 90%; max-width: 900px; position: relative; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
+        .close-modal { position: absolute; top: -45px; right: 0; color: white; font-size: 35px; cursor: pointer; font-weight: bold; }
+        .close-modal:hover { color: var(--primary-red); }
+        .map-frame { width: 100%; height: 500px; border: none; border-radius: 8px; display: block; }
+
+        /* Hero Section */
+        .hero-wrapper { 
+            position: relative;
+            background: url('https://static-asset.amac.us/wp-content/uploads/2026/02/10124555/condo.jpg') no-repeat center center;
+            background-size: cover;
+            padding: 60px 0 120px 0;
+            color: white;
+            border-bottom: 8px solid var(--primary-red);
+        }
+        .hero-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, rgba(15, 23, 42, 0.85) 20%, rgba(15, 23, 42, 0.4) 100%);
+            z-index: 1;
+        }
+        .hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; align-items: flex-start; }
+        .hero-label { color: var(--primary-red); font-weight: 800; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .hero-content { margin-top: 20px; }
+        .hero-content h1 { font-size: 62px; line-height: 1.1; margin-bottom: 25px; color: white; }
+        .hero-content p { color: #cbd5e1; font-size: 24px; max-width: 600px; margin-bottom: 35px; }
+        
+        .quote-card { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); color: var(--dark-blue); }
+        .quote-card h3 { margin-bottom: 20px; font-size: 26px; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 14px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; font-family: inherit; }
+        
+        .radio-inline-container { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+        .radio-inline-container label { display: flex; align-items: center; gap: 8px; margin-bottom: 0; cursor: pointer; white-space: nowrap; font-weight: 400; }
+        .radio-inline-container input[type="radio"] { width: auto; margin: 0; }
+
+        .callback-fields { display: none; background: #f8fafc; padding: 15px; border-radius: 6px; margin-top: 15px; border: 1px dashed #cbd5e1; }
+
+        /* Coverage Section */
+        .coverage-section { 
+            padding: 80px 0 40px 0; 
+            background: white; 
+            scroll-margin-top: 170px;
+        }
+        .coverage-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: start; }
+        .portrait-img { width: 100%; border-radius: 20px; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.25); }
+        
+        .accordion { margin-top: 30px; }
+        .accordion-item { border-bottom: 1px solid #e5e7eb; }
+        .accordion-header { background: #fff; padding: 22px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .accordion-header h3 { font-size: 21px; color: var(--dark-blue); }
+        .accordion-header i { color: var(--primary-red); transition: transform 0.3s; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
+        .accordion-item.active .accordion-content { max-height: 1000px; padding-bottom: 30px; }
+        .accordion-item.active .accordion-header i { transform: rotate(180deg); }
+        .coverage-list { list-style: none; margin-top: 15px; }
+        .coverage-list li { margin-bottom: 8px; padding-left: 25px; position: relative; font-size: 16px; line-height: 1.5; }
+        .coverage-list li::before { content: "\f058"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; color: var(--success-green); }
+
+        /* Defensive Driving Specific Row */
+        .dd-section { padding: 40px 0 80px 0; background: #ffffff; }
+        .dd-card { background: #f8fafc; border-radius: 12px; padding: 40px; border-left: 6px solid var(--primary-red); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+
+        /* Specialized Benefits Area */
+        .special-section { padding: 100px 0; background: var(--bg-light); }
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
+        .special-card { background: white; border-radius: 12px; padding: 30px; text-align: left; border: 1px solid #e2e8f0; display: flex; align-items: flex-start; gap: 20px; transition: transform 0.3s; height: 100%; }
+        .special-card:hover { transform: translateY(-5px); border-color: var(--primary-red); }
+        .special-card i { font-size: 32px; color: var(--primary-red); flex-shrink: 0; }
+        .special-card h3 { font-size: 20px; margin-bottom: 8px; }
+        .special-card p { font-size: 15px; color: var(--text-gray); line-height: 1.5; }
+
+        /* Footer */
+        .cta-footer { 
+            position: relative;
+            background: url('https://static-asset.amac.us/wp-content/uploads/2026/02/10125737/RV.jpg') no-repeat 80% center; 
+            background-size: cover;
+            color: white; 
+            padding: 100px 0; 
+            text-align: center; 
+        }
+        .cta-footer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.75));
+            z-index: 1;
+        }
+        .cta-footer .container { position: relative; z-index: 2; }
+
+        @media (max-width: 992px) { 
+            .hero-grid, .coverage-layout { grid-template-columns: 1fr; } 
+            .hero-content { margin-top: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sticky-header">
+    <div class="top-info">
+        <div class="container prominent-contact-flex">
+            <div class="contact-prominent">
+                <div class="contact-item" onclick="toggleMapModal(true)">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span><b>Find Us:</b> 5 Orville Drive, Suite 400, Bohemia, NY 11716</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fa-solid fa-phone-volume"></i>
+                    <span><b>Call Us:</b> <a href="tel:6315890100">631-589-0100</a></span>
+                </div>
+            </div>
+            <div class="top-socials social-icons-shared">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><img src="https://static-asset.amac.us/wp-content/uploads/2026/02/04173133/hometown-header-logo2.png" alt="Hometown Insurance"></div>
+                <ul class="nav-links">
+                    <li class="dropdown">
+                        <a href="#">Products & Services <small>▼</small></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Personal Protection</a></li>
+                            <li><a href="#">Business & Commercial</a></li>
+                            <li><a href="#">Firefighter & EMS Services</a></li>
+                            <li><a href="#">Life & Health</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">About Our Agency</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+                <div class="nav-btns">
+                    <a href="#" class="btn btn-white">Claims</a>
+                    <a href="#form-bottom" class="btn btn-red btn-pulse">Get a Quote</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+</div>
+
+<div id="mapModal" class="map-modal" onclick="toggleMapModal(false)">
+    <div class="map-modal-content" onclick="event.stopPropagation()">
+        <span class="close-modal" onclick="toggleMapModal(false)">×</span>
+        <img src="https://static-asset.amac.us/wp-content/uploads/2026/02/10130312/orville.jpg" alt="Our Office" style="width: 100%; height: auto; border-radius: 8px;">
+    </div>
+</div>
+
+<div class="hero-wrapper">
+    <section class="container hero-grid">
+        <div class="hero-content">
+            <p class="hero-label" style="font-size: 13px;">
+                <i class="fa-solid fa-shield-halved" style="font-size: 28px;"></i> Comprehensive Personal Security
+            </p>
+            <h1>Protecting What Matters Most to You</h1>
+            <p>From your home and auto to your family’s future, Hometown Insurance Agency provides the customized coverage you need for peace of mind.</p>
+            <div class="hero-btns">
+                <a href="#highlights" class="btn btn-white-outline">Explore Coverage Options</a>
+            </div>
+        </div>
+        
+        <div class="quote-card">
+            <h3>Personal Quote Request</h3>
+            <form>
+                <div class="form-group">
+                    <label>Insurance Type Interested In</label>
+                    <select required onchange="toggleOtherField(this, 'other_details_top')">
+                        <option value="" disabled selected>Select an option...</option>
+                        <option>Auto Insurance</option>
+                        <option>Homeowners Insurance</option>
+                        <option>Condo/Renters Insurance</option>
+                        <option>Umbrella Insurance</option>
+                        <option>Boat & Yacht Insurance</option>
+                        <option>Flood Insurance</option>
+                        <option>Valuables/Collectibles</option>
+                        <option>Classic Car Insurance</option>
+                        <option>RV & Recreational</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div id="other_details_top" class="other-details-container" style="display: none;">
+                    <div class="form-group">
+                        <label>Please specify:</label>
+                        <input type="text" placeholder="Enter details here">
+                    </div>
+                </div>
+                <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your Name" required></div>
+                <div class="form-group"><label>Email Address</label><input type="email" placeholder="email@address.com" required></div>
+                <div class="form-group"><label>Leave a message (optional)</label><textarea rows="2" placeholder="Tell us more..."></textarea></div>
+                <div class="form-group">
+                    <label>How should we contact you?</label>
+                    <div class="radio-inline-container">
+                        <label><input type="radio" name="contact_method_top" value="email" checked onchange="toggleCallback('top', false)"> Email</label>
+                        <label><input type="radio" name="contact_method_top" value="phone" onchange="toggleCallback('top', true)"> Callback</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>How did you hear about us?</label>
+                    <select>
+                        <option value="" disabled selected>Please select...</option>
+                        <option>Google Search</option>
+                        <option>Facebook / Instagram</option>
+                        <option>Friend or Family Member</option>
+                        <option>Mailing / Flyer</option>
+                        <option>Local Event</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div id="callback_fields_top" class="callback-fields">
+                    <div class="form-group"><label>Phone Number</label><input type="tel"></div>
+                    <div class="form-group"><label>Best Day & Time</label><input type="text" placeholder="e.g. Monday Morning"></div>
+                </div>
+                <button type="submit" class="btn btn-red" style="width: 100%; margin-top: 10px;">Send Request</button>
+            </form>
+        </div>
+    </section>
+</div>
+
+<section id="highlights" class="container coverage-section">
+    <div class="coverage-layout">
+        <div class="portrait-frame">
+            <img src="https://static-asset.amac.us/wp-content/uploads/2026/02/10124929/family.jpg" alt="Happy Family" class="portrait-img">
+        </div>
+        <div>
+            <h2 style="font-size: 40px; margin-bottom: 20px;">Personal Coverage Highlights</h2>
+            <p>We offer a broad range of products to meet your unique lifestyle and protection needs.</p>
+            
+            <div class="accordion">
+                <div class="accordion-item active">
+                    <div class="accordion-header" onclick="toggleAccordion(this)"><h3>Home & Property</h3><i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="accordion-content">
+                        <ul class="coverage-list">
+                            <li>Homeowners Insurance (Replacement Cost)</li>
+                            <li>Condo & Co-op Owner Policies</li>
+                            <li>Renters Insurance for Personal Belongings</li>
+                            <li>Flood Insurance (Even for non-waterfront)</li>
+                            <li>Valuable Articles (Jewelry, Fine Arts, Antiques)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)"><h3>Auto & Vehicle</h3><i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="accordion-content">
+                        <ul class="coverage-list">
+                            <li>Standard Auto Insurance</li>
+                            <li>Classic & Collector Car Coverage</li>
+                            <li>Motorcycles & ATVs</li>
+                            <li>Recreational Vehicles (Winnebago, etc.)</li>
+                            <li>Boat & Yacht Insurance</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)"><h3>Liability & Life</h3><i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="accordion-content">
+                        <ul class="coverage-list">
+                            <li>Personal Umbrella Liability (Excess Coverage)</li>
+                            <li>Individual Life Insurance</li>
+                            <li>Health Insurance Solutions</li>
+                            <li>Long-Term Care Planning</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="dd-section">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h2 style="font-size: 44px;">Defensive Driving Resources</h2>
+            <p style="color: var(--text-gray);">Enhance your safety and lower your insurance costs.</p>
+        </div>
+        <div class="dd-card">
+            <div style="display: flex; align-items: flex-start; gap: 25px;">
+                <i class="fa-solid fa-car-side" style="font-size: 48px; color: var(--primary-red); margin-top: 5px;"></i>
+                <div>
+                    <h3 style="font-size: 26px; margin-bottom: 15px;">Defensive Driving Online Course</h3>
+                    <p style="font-size: 18px; margin-bottom: 20px;">
+                        Take the official online course via the 
+                        <a href="https://empiresafetycouncil.com/" target="_blank" style="color: var(--primary-red); font-weight: 700; text-decoration: underline;">Empire Safety Council</a>.
+                    </p>
+                    <div style="background: var(--white); display: inline-block; padding: 15px 25px; border: 2px dashed var(--primary-red); border-radius: 8px; margin-bottom: 25px;">
+                        <span style="font-size: 18px; font-weight: 700; color: var(--dark-blue);">
+                            PROMO CODE: <span style="color: var(--primary-red);">HOME</span> — Lowest inclusive price of $34.95
+                        </span>
+                    </div>
+                    <p style="font-size: 16px; color: var(--text-gray); border-top: 1px solid #e2e8f0; pt: 20px; margin-top: 10px; padding-top: 20px;">
+                        If you would like information about the online Defensive Driving course, please contact us by email 
+                        <a href="mailto:service@hometowninsurance.com" style="color: var(--primary-red); font-weight: 600;">service@hometowninsurance.com</a> 
+                        or call <a href="tel:6315890100" style="color: var(--primary-red); font-weight: 600;">631-589-0100</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="special-section">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h2 style="font-size: 44px;">Personal Protection Portfolio</h2>
+            <p style="color: var(--text-gray);">Comprehensive solutions for your assets and loved ones.</p>
+        </div>
+
+        <div class="benefits-grid">
+            <div class="special-card">
+                <i class="fa-solid fa-car"></i>
+                <div>
+                    <h3>Auto Insurance</h3>
+                    <p>Chances are, you've thought about protecting your car. It's one of your most valuable assets—make sure it's covered right.</p>
+                </div>
+            </div>
+            <div class="special-card">
+                <i class="fa-solid fa-house-chimney"></i>
+                <div>
+                    <h3>Homeowners Insurance</h3>
+                    <p>The roof over your head represents your biggest investment. We ensure it's well protected against the unexpected.</p>
+                </div>
+            </div>
+            <div class="special-card">
+                <i class="fa-solid fa-umbrella"></i>
+                <div>
+                    <h3>Umbrella Insurance</h3>
+                    <p>Protect yourself from financially devastating liability claims with high-limit excess coverage.</p>
+                </div>
+            </div>
+            <div class="special-card">
+                <i class="fa-solid fa-ship"></i>
+                <div>
+                    <h3>Boat & Yacht</h3>
+                    <p>From the coastal waterways of Long Island to freshwater expanses, we have your marine adventures covered.</p>
+                </div>
+            </div>
+            <div class="special-card">
+                <i class="fa-solid fa-gem"></i>
+                <div>
+                    <h3>Valuables</h3>
+                    <p>Specific coverage for rare or irreplaceable items such as collectibles, jewelry, and antiques.</p>
+                </div>
+            </div>
+            <div class="special-card">
+                <i class="fa-solid fa-heart-pulse"></i>
+                <div>
+                    <h3>Life & Health</h3>
+                    <p>Don’t be under-insured for a single day. Let our team find the protection your family deserves.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="cta-footer" id="form-bottom">
+    <div class="container">
+        <div class="quote-card" style="max-width: 600px; margin: 0 auto; text-align: left;">
+            <h3>Personal Quote Request</h3>
+             <form>
+                <div class="form-group">
+                    <label>What coverage do you need?</label>
+                    <select required onchange="toggleOtherField(this, 'other_details_bottom')">
+                        <option value="" disabled selected>Select an option...</option>
+                        <option>Auto & Homeowners Bundle</option>
+                        <option>Individual Homeowners</option>
+                        <option>Individual Auto</option>
+                        <option>Umbrella/Liability</option>
+                        <option>Recreational/Marine</option>
+                        <option>Life/Health</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div id="other_details_bottom" class="other-details-container" style="display: none;">
+                    <div class="form-group">
+                        <label>Please specify:</label>
+                        <input type="text" placeholder="Enter details here">
+                    </div>
+                </div>
+                <div class="form-group"><label>Your Full Name</label><input type="text" placeholder="Full Name" required></div>
+                <div class="form-group"><label>Email Address</label><input type="email" placeholder="email@address.com" required></div>
+                <div class="form-group"><label>Leave a message (optional)</label><textarea rows="2" placeholder="Tell us more..."></textarea></div>
+                <div class="form-group">
+                    <label>How should we contact you?</label>
+                    <div class="radio-inline-container">
+                        <label><input type="radio" name="contact_method_bot" value="email" checked onchange="toggleCallback('bot', false)"> Email</label>
+                        <label><input type="radio" name="contact_method_bot" value="phone" onchange="toggleCallback('bot', true)"> Callback</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>How did you hear about us?</label>
+                    <select>
+                        <option value="" disabled selected>Please select...</option>
+                        <option>Google Search</option>
+                        <option>Facebook / Instagram</option>
+                        <option>Friend or Family Member</option>
+                        <option>Mailing / Flyer</option>
+                        <option>Local Event</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div id="callback_fields_bot" class="callback-fields">
+                    <div class="form-group"><label>Phone Number</label><input type="tel"></div>
+                    <div class="form-group"><label>Best Day & Time</label><input type="text" placeholder="e.g. Wednesday Mornings"></div>
+                </div>
+                <button type="submit" class="btn btn-red" style="width: 100%; margin-top: 10px;">Send Request</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleCallback(prefix, show) {
+        document.getElementById('callback_fields_' + prefix).style.display = show ? 'block' : 'none';
+    }
+
+    function toggleOtherField(selectElement, fieldId) {
+        const otherField = document.getElementById(fieldId);
+        if (selectElement.value === 'Other') {
+            otherField.style.display = 'block';
+        } else {
+            otherField.style.display = 'none';
+        }
+    }
+    
+    function toggleAccordion(header) {
+        const item = header.parentElement;
+        const wasActive = item.classList.contains('active');
+        document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('active'));
+        if (!wasActive) item.classList.add('active');
+    }
+
+    function toggleMapModal(show) {
+        const modal = document.getElementById('mapModal');
+        modal.style.display = show ? 'flex' : 'none';
+        document.body.style.overflow = show ? 'hidden' : 'auto';
+    }
+</script>
+
+</body>
+</html>

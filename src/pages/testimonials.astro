@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Testimonials | Hometown Insurance Agency">
+
+    <!-- Review Guide Modal -->
+    <div class="modal-overlay" id="reviewGuideModal">
+        <div class="modal-content review-guide-modal">
+            <span class="close-modal" id="closeReviewModal">&times;</span>
+            <h2 style="color: var(--primary-red); margin-bottom: 5px; font-size: 32px;">We value your feedback</h2>
+            <p><strong>Scan to leave us a review</strong></p>
+
+            <img src="https://static-asset.amac.us/wp-content/uploads/2026/02/25103637/Hometown-Google-Reviews.png" alt="Review QR Code" class="qr-code-img">
+
+            <ul class="review-guide-list">
+                <li><span>1</span> Scan the QR code above or use the button below.</li>
+                <li><span>2</span> <strong>The button below is a direct link to leave your review.</strong></li>
+                <li><span>3</span> Select your star rating and share your experience!</li>
+            </ul>
+
+            <a href="https://reviewthis.biz/hometown-insurance-agency-of-li" target="_blank" class="btn btn-red" style="width: 100%; text-decoration: none;">Direct Link: Leave a Google Review</a>
+        </div>
+    </div>
+
+    <div class="hero-simple" style="background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://static-asset.amac.us/wp-content/uploads/2026/02/13120743/testimonials.jpg'); padding: 60px 0 100px 0;">
+        <div class="container">
+            <h1 style="text-shadow: 2px 2px 10px rgba(0,0,0,0.5);">What Our Neighbors Are Saying</h1>
+            <button class="btn btn-red btn-pulse" id="openReviewGuide">Leave a Google Review <small style="display:block; font-size:12px; font-weight:400; opacity:0.9;">(Click here, we'll tell you how)</small></button>
+        </div>
+    </div>
+
+    <section class="section-padding container">
+        <h2 class="body-heading">Reviews</h2>
+        <div class="reviews-grid">
+            <div class="review-card-full">
+                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <span class="cat">Commercial</span>
+                <p>"Reasonable price. All the people here at Hometown have been very courteous and accommodating...I would highly recommend these folks for all your insurance needs."</p>
+                <div class="author">John M</div>
+            </div>
+            <div class="review-card-full">
+                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <span class="cat">Commercial</span>
+                <p>"I've had the pleasure of insuring my businesses and properties with Hometown Insurance for many years and I highly recommend them. As a client you are literally treated as if you are family."</p>
+                <div class="author">K M</div>
+            </div>
+            <div class="review-card-full">
+                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <span class="cat">Personal</span>
+                <p>"I have been with Hometown Insurance Agency since 1979, when I bought my first car. ...I loved the way I was treated back then by Mr Weber, and through all these years the service hasn't changed."</p>
+                <div class="author">Mario Martins</div>
+            </div>
+            <div class="review-card-full">
+                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <span class="cat">Personal</span>
+                <p>"I couldn't be happier with the team at Hometown. They treat you like family!! Yesterday in my time of need they pulled through and got me the documents I needed in record time."</p>
+                <div class="author">Laurie Kleinhenz</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="savings-area">
+        <div class="container">
+            <h2 class="body-heading">Testimonials</h2>
+            <div class="savings-grid">
+                <div class="saving-box">
+                    <h3>Annual savings $2,204</h3>
+                    <p class="quote">"I saved $2,204...by switching from Allstate to Travelers with Hometown!"</p>
+                    <p class="client">Paul B. from Bayport</p>
+                </div>
+                <div class="saving-box">
+                    <h3>Annual Savings $750.00</h3>
+                    <p class="quote">"My Hometown agent helped me lower my auto premium with the same coverage... and is now working on adding our business liability policy."</p>
+                    <p class="client">John P. from East Hampton</p>
+                </div>
+                <div class="saving-box">
+                    <h3>Annual savings $350.00</h3>
+                    <p class="quote">"Each year my agent checks all the car insurance agencies that Home Town contracts with to find me the lowest rate."</p>
+                    <p class="client">Donna Schloss</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-selector">
+        <div class="container">
+            <h2 style="font-size: 44px;">How can we help you today?</h2>
+            <p>Choose an insurance category to learn more about our specialized protection.</p>
+            <div class="product-grid">
+                <a href="/personal" class="product-item"><i class="fa-solid fa-house"></i><h3>Home & Auto</h3></a>
+                <a href="/business" class="product-item"><i class="fa-solid fa-briefcase"></i><h3>Business Insurance</h3></a>
+                <a href="/life-health" class="product-item"><i class="fa-solid fa-heart-pulse"></i><h3>Life & Health</h3></a>
+                <a href="/firefighter-ems" class="product-item"><i class="fa-solid fa-fire-extinguisher"></i><h3>Fire & EMS Districts</h3></a>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .review-guide-modal { max-width: 600px !important; text-align: center; }
+        .qr-code-img { width: 140px; height: auto; margin: 15px auto; border: 1px solid #eee; padding: 5px; background: #fff; display: block; }
+        .review-guide-list { list-style: none; margin: 20px 0; text-align: left; padding: 0; }
+        .review-guide-list li { margin-bottom: 15px; display: flex; align-items: center; gap: 15px; font-size: 17px; }
+        .review-guide-list span { background: var(--primary-red); color: white; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; flex-shrink: 0; }
+
+        .body-heading { text-align: center; margin-bottom: 40px; font-size: 44px; color: var(--dark-blue); }
+        .section-padding { padding: 80px 0; }
+
+        .review-card-full { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .review-card-full .stars { color: var(--star-gold); margin-bottom: 10px; }
+        .review-card-full .cat { font-size: 12px; font-weight: 800; color: var(--primary-red); text-transform: uppercase; margin-bottom: 15px; display: block; }
+        .review-card-full p { font-style: italic; color: var(--text-gray); margin-bottom: 20px; }
+        .review-card-full .author { font-weight: 800; color: var(--dark-blue); }
+
+        .savings-area { background: var(--bg-light); padding: 80px 0; }
+        .saving-box h3 { color: var(--success-green); font-size: 24px; margin-bottom: 10px; }
+        .saving-box .quote { font-weight: 600; margin-bottom: 20px; }
+        .saving-box .client { font-size: 16px; font-weight: 700; color: var(--text-gray); }
+
+        .product-selector { text-align: center; padding: 100px 0; background: white; }
+    </style>
+
+    <script is:inline>
+        const reviewGuideModal = document.getElementById("reviewGuideModal");
+        const openBtn = document.getElementById("openReviewGuide");
+        const closeBtn = document.getElementById("closeReviewModal");
+
+        openBtn.onclick = () => reviewGuideModal.style.display = "flex";
+        closeBtn.onclick = () => reviewGuideModal.style.display = "none";
+
+        window.addEventListener('click', (event) => {
+            if (event.target === reviewGuideModal) reviewGuideModal.style.display = "none";
+        });
+    </script>
+
+</BaseLayout>

@@ -1,0 +1,239 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Hometown Insurance Agency - Protecting what matters most since 1979.' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <meta name="description" content={description}>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <!-- Quote Modal -->
+    <div class="modal-overlay" id="quoteModal">
+        <div class="modal-content quote-form-modal">
+            <span class="close-modal" id="closeQuoteModal">&times;</span>
+            <div class="form-header">
+                <h2>Get Your Personal Quote</h2>
+                <p>Tell us a bit about your needs and we'll handle the rest.</p>
+            </div>
+            <form id="quoteForm">
+                <div class="form-group"><label>Full Name</label><input type="text" placeholder="John Doe" required></div>
+                <div class="form-row">
+                    <div class="form-group"><label>Email Address</label><input type="email" placeholder="john@example.com" required></div>
+                    <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="631-555-0100" required></div>
+                </div>
+                <div class="form-group">
+                    <label>Insurance type?</label>
+                    <select id="modalInsuranceType" required>
+                        <option value="" disabled selected>Select an option...</option>
+                        <option>Personal Protection (Home/Auto)</option>
+                        <option>Business & Commercial</option>
+                        <option>Firefighter & EMS Services</option>
+                        <option>Life & Health</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group other-details-box" id="modalOtherDiv" style="display: none;">
+                    <label>Please specify insurance type:</label>
+                    <input type="text" id="modalOtherInput" placeholder="Enter coverage type..." required>
+                </div>
+                <div class="form-group">
+                    <label>Preferred way for us to reach you?</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="modal_contact_method" value="Email" checked> Email</label>
+                        <label class="radio-label"><input type="radio" name="modal_contact_method" value="Callback"> Give me a callback</label>
+                    </div>
+                </div>
+                <div id="modalCallbackOptions" style="display: none; border-top: 1px solid #eee; padding-top: 15px; margin-top: 5px;">
+                    <div class="form-row">
+                        <div class="form-group"><label>Preferred Day</label><select><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option></select></div>
+                        <div class="form-group"><label>Preferred Time</label><select><option>Morning (9am - 12pm)</option><option>Afternoon (12pm - 5pm)</option><option>Evening (After 5pm)</option></select></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Add a message (optional)</label>
+                    <textarea rows="2" placeholder="Tell us more about your specific needs..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-red btn-pulse" style="width: 100%; margin-top: 10px;">Send Quote Request</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="mapModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeMapModal">&times;</span>
+            <h2 style="text-align: center; margin-bottom: 20px; color: var(--dark-blue); font-size: 38px;">Hometown Insurance Agency</h2>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.633908226066!2d-73.11183182342502!3d40.72608403675005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e8334465d637c3%3A0xc665135f606822c6!2s5%20Orville%20Dr%2C%20Bohemia%2C%20NY%2011716!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus" width="100%" height="450" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+
+    <div class="sticky-header">
+        <div class="top-info">
+            <div class="container prominent-contact-flex">
+                <div class="contact-prominent">
+                    <div class="contact-item openMapTrigger">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span><b>Find Us:</b> 5 Orville Drive, Suite 400, Bohemia, NY 11716</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fa-solid fa-phone-volume"></i>
+                        <span><b>Call Us:</b> <a href="tel:6315890100">631-589-0100</a></span>
+                    </div>
+                </div>
+                <div class="top-socials social-icons-shared">
+                    <a href="https://www.facebook.com/HometownInsurance/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@hometowninsuranceagencyofLI/featured" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.instagram.com/hometown_insurance_agency_li/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/hometown-insurance-agency-of-li" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <header class="main-header">
+            <div class="container">
+                <nav class="main-nav">
+                    <a href="/" class="logo"><img src="https://static-asset.amac.us/wp-content/uploads/2026/02/04173133/hometown-header-logo2.png" alt="Hometown Insurance"></a>
+                    <ul class="nav-links">
+                        <li>
+                            <a href="#">Products & Services <small>▼</small></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/personal">Personal Protection</a></li>
+                                <li><a href="/business">Business & Commercial</a></li>
+                                <li><a href="/firefighter-ems">Firefighter & EMS Services</a></li>
+                                <li><a href="/life-health">Life & Health</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/about">About Our Agency</a></li>
+                        <li><a href="/faqs">FAQs</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                    </ul>
+                    <div class="nav-btns">
+                        <a href="/claims" class="btn btn-white">Claims</a>
+                        <slot name="quote-button">
+                            <a href="#" class="btn btn-red btn-pulse openQuoteTrigger">Get a Quote</a>
+                        </slot>
+                    </div>
+                </nav>
+            </div>
+        </header>
+    </div>
+
+    <slot />
+
+    <footer class="new-footer">
+        <div class="container">
+            <div class="newsletter">
+                <div class="newsletter-text">
+                    <h2>Hometown Monthly Newsletter</h2>
+                    <p>Insurance insights and safety tips delivered right to your inbox.</p>
+                </div>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Your email address">
+                    <button class="btn btn-red">Subscribe Now</button>
+                </div>
+            </div>
+
+            <div class="footer-grid">
+                <div class="footer-col footer-logo-area">
+                    <img src="https://static-asset.amac.us/wp-content/uploads/2026/02/04174156/hometown-header-logo-white.png" alt="Hometown Insurance">
+                    <p>Protecting what matters most since 1979.</p>
+                    <div class="social-icons-shared" style="margin-top: 20px; text-align: left;">
+                        <a href="https://www.facebook.com/HometownInsurance/" target="_blank" style="margin-left: 0;"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.youtube.com/@hometowninsuranceagencyofLI/featured" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/hometown_insurance_agency_li/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/hometown-insurance-agency-of-li" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Products & Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="/personal">Personal Protection</a></li>
+                        <li><a href="/business">Business & Commercial</a></li>
+                        <li><a href="/firefighter-ems">Firefighter & EMS Services</a></li>
+                        <li><a href="/life-health">Life & Health</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/about">About Our Agency</a></li>
+                        <li><a href="/faqs">Insurance Insights</a></li>
+                        <li><a href="/testimonials">Reviews/Testimonials</a></li>
+                        <li><a href="/claims">Claims Center</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col footer-contact">
+                    <h3>Contact Us</h3>
+                    <p class="openMapTrigger" style="cursor:pointer;"><i class="fa-solid fa-location-dot"></i> 5 Orville Drive, Bohemia, NY</p>
+                    <p><i class="fa-solid fa-phone"></i> <a href="tel:6315890100">631-589-0100</a></p>
+                    <p><i class="fa-solid fa-envelope"></i> <a href="mailto:info@hometown.com">info@hometown.com</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom"><div class="container"><p>&copy; 2026 Hometown Insurance Agency.</p></div></div>
+    </footer>
+
+    <script>
+        // Map Modal
+        const mapModal = document.getElementById("mapModal");
+        document.querySelectorAll(".openMapTrigger").forEach(btn => {
+            btn.onclick = () => mapModal!.style.display = "flex";
+        });
+        document.getElementById("closeMapModal")!.onclick = () => mapModal!.style.display = "none";
+
+        // Quote Modal
+        const quoteModal = document.getElementById("quoteModal");
+        const modalCallbackOptions = document.getElementById("modalCallbackOptions");
+        const modalInsuranceType = document.getElementById("modalInsuranceType") as HTMLSelectElement;
+        const modalOtherDiv = document.getElementById("modalOtherDiv");
+        const modalOtherInput = document.getElementById("modalOtherInput") as HTMLInputElement;
+
+        document.querySelectorAll(".openQuoteTrigger").forEach(btn => {
+            btn.addEventListener('click', (e) => { e.preventDefault(); quoteModal!.style.display = "flex"; });
+        });
+        document.getElementById("closeQuoteModal")!.onclick = () => quoteModal!.style.display = "none";
+
+        // Quote modal - insurance type "Other" toggle
+        modalInsuranceType?.addEventListener('change', function() {
+            if (this.value === 'Other') {
+                modalOtherDiv!.style.display = 'block';
+                modalOtherInput?.setAttribute('required', 'required');
+            } else {
+                modalOtherDiv!.style.display = 'none';
+                modalOtherInput?.removeAttribute('required');
+            }
+        });
+
+        // Quote modal - contact method toggle
+        document.querySelectorAll('input[name="modal_contact_method"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                modalCallbackOptions!.style.display = (radio as HTMLInputElement).value === 'Callback' ? 'block' : 'none';
+            });
+        });
+
+        // Quote modal - form submit
+        document.getElementById('quoteForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert("Thank you! Your quote request has been sent to the Hometown team.");
+            quoteModal!.style.display = "none";
+        });
+
+        // Close modals on overlay click
+        window.addEventListener('click', (event) => {
+            if (event.target === mapModal) mapModal!.style.display = "none";
+            if (event.target === quoteModal) quoteModal!.style.display = "none";
+        });
+    </script>
+</body>
+</html>

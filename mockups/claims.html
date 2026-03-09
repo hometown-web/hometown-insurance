@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report a Claim | Hometown Insurance Agency</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-red: #e31b23;
+            --dark-blue: #0f172a;
+            --text-gray: #374151;
+            --bg-light: #f3f4f6;
+            --white: #ffffff;
+            --navy-blue: #2c3e50;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            line-height: 1.8; 
+            color: #111827; 
+            font-size: 18px; 
+            scroll-behavior: smooth;
+        }
+        
+        h1, h2, h3 { font-family: 'Inter', sans-serif; font-weight: 800; color: var(--dark-blue); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(227, 27, 35, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(227, 27, 35, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(227, 27, 35, 0); }
+        }
+        .btn-pulse { animation: pulse-red 2s infinite; }
+
+        /* Navigation Styles */
+        .sticky-header { position: sticky; top: 0; z-index: 3000; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+        .top-info { background: #000; color: white; padding: 22px 0; border-bottom: 1px solid #333; }
+        .prominent-contact-flex { display: flex; justify-content: space-between; align-items: center; }
+        .contact-prominent { display: flex; gap: 50px; font-size: 20px; }
+        
+        .contact-item { display: flex; align-items: center; gap: 14px; cursor: pointer; transition: color 0.2s; }
+        .contact-item:hover, .contact-item:hover b, .contact-item:hover a { color: var(--primary-red); }
+        .contact-item i { color: var(--primary-red); font-size: 26px; }
+        .contact-item a { color: #fff; text-decoration: none; font-weight: 400; transition: color 0.2s; }
+        
+        .social-icons-shared a { color: white; margin-left: 25px; font-size: 28px; text-decoration: none; transition: transform 0.2s, opacity 0.2s; display: inline-block; }
+        .social-icons-shared a:hover { transform: scale(1.1); opacity: 0.7; }
+
+        header { border-bottom: 1px solid #e5e7eb; position: relative; background: var(--white); }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
+        
+        .logo { position: relative; z-index: 3001; }
+        .logo img { 
+            height: 90px; 
+            width: auto; 
+            display: block; 
+            margin-top: -35px; 
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .nav-links { display: flex; list-style: none; gap: 30px; align-items: center; }
+        .nav-links > li { position: relative; display: flex; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-gray); font-weight: 700; font-size: 18px; transition: color 0.2s; padding: 12px 0; }
+        .nav-links a:hover { color: var(--primary-red); }
+        
+        .dropdown-menu { 
+            display: none; 
+            position: absolute; 
+            top: 100%; 
+            left: 0; 
+            background: var(--white); 
+            min-width: 350px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+            border-radius: 8px; 
+            padding: 15px 0; 
+            z-index: 1000; 
+            border: 1px solid #e5e7eb; 
+            list-style: none;
+        }
+        .nav-links li:hover .dropdown-menu { display: block; }
+        .dropdown-menu li { width: 100%; padding: 0 20px; }
+        .dropdown-menu a { padding: 12px 0 !important; display: block; border-bottom: 1px solid #f3f4f6; font-size: 17px; }
+        .dropdown-menu li:last-child a { border-bottom: none; }
+
+        .nav-btns { display: flex; gap: 15px; align-items: center; }
+        .btn { padding: 16px 32px; border-radius: 6px; text-decoration: none; font-size: 18px; display: inline-block; font-weight: 700; border: none; cursor: pointer; transition: 0.3s; }
+        .btn-red { background: var(--primary-red); color: white; }
+        .btn-red:hover { background: #bc141a; }
+        .btn-white { background: white; color: #000; border: 2px solid #333; }
+
+        /* Claims Hero */
+        .claims-hero {
+            position: relative;
+            background: url('https://static-asset.amac.us/wp-content/uploads/2026/02/26095305/call-center-1.jpg') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 30px 0; 
+            text-align: center;
+        }
+        .claims-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.6) 100%);
+            z-index: 1;
+        }
+        .claims-hero .container { position: relative; z-index: 2; }
+        .claims-hero h1 { color: white; font-size: 48px; margin-bottom: 15px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .claims-hero p { font-size: 20px; max-width: 800px; margin: 0 auto 30px; opacity: 1; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
+
+        /* Search Autocomplete Area */
+        .search-container { max-width: 700px; margin: 0 auto 20px; position: relative; z-index: 2000; }
+        .search-container input { 
+            width: 100%; padding: 22px 50px 22px 30px; border-radius: 50px; border: none; 
+            font-size: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); outline: none;
+        }
+        #clearSearch {
+            position: absolute; right: 25px; top: 50%; transform: translateY(-50%);
+            font-size: 20px; color: #94a3b8; cursor: pointer; display: none; transition: 0.2s;
+            z-index: 2001;
+        }
+        #clearSearch:hover { color: var(--primary-red); }
+
+        .autocomplete-results {
+            position: absolute; top: 100%; left: 0; right: 0; 
+            background: white; border-radius: 12px; margin-top: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 2005;
+            max-height: 300px; overflow-y: auto; display: none;
+        }
+        .autocomplete-item { padding: 15px 25px; color: #333; cursor: pointer; border-bottom: 1px solid #eee; text-align: left; }
+        .autocomplete-item:hover { background: #f8fafc; color: var(--primary-red); }
+
+        /* Main Content */
+        .claims-main { padding: 60px 0; background: var(--bg-light); min-height: 600px; }
+        
+        /* Display Box */
+        #result-card { 
+            max-width: 700px; margin: 0 auto 40px; background: white; 
+            padding: 40px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            display: none; border-left: 5px solid var(--primary-red);
+            position: relative;
+        }
+        .close-card {
+            position: absolute; top: 15px; right: 20px;
+            font-size: 24px; color: #94a3b8; cursor: pointer; transition: 0.2s;
+        }
+        .close-card:hover { color: var(--primary-red); }
+        
+        .carrier-title { font-size: 32px; margin-bottom: 20px; color: var(--dark-blue); }
+        .carrier-detail { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; font-size: 20px; }
+        .carrier-detail i { color: var(--primary-red); width: 25px; font-size: 20px; }
+        .carrier-detail a { color: var(--dark-blue); text-decoration: none; font-weight: 600; }
+        .carrier-detail a:hover { text-decoration: underline; }
+        .carrier-label { font-size: 13px; font-weight: 800; text-transform: uppercase; color: #64748b; display: block; margin-bottom: 2px; }
+        .email-link { font-size: 16px; color: #475569 !important; font-weight: 500 !important; display: block; margin-top: 4px; }
+        .carrier-note { font-size: 15px; color: #64748b; font-style: italic; margin-top: 5px; display: block; }
+
+        /* Manual List Area */
+        .manual-browse { max-width: 1100px; margin: 0 auto; }
+        .manual-browse h2 { margin-bottom: 20px; font-size: 36px; text-align: center; border-bottom: 4px solid var(--primary-red); display: inline-block; padding-bottom: 10px; }
+        .section-title-wrap { text-align: center; margin-bottom: 10px; }
+        
+        /* Accordion Styles */
+        .emergency-accordion {
+            max-width: 900px;
+            margin: 0 auto 40px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .accordion-header {
+            background: var(--dark-blue);
+            color: white;
+            padding: 15px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 20px;
+            transition: background 0.3s;
+        }
+        .accordion-header:hover { background: #1e293b; }
+        .accordion-header i { transition: transform 0.3s; }
+        .accordion-header.active i { transform: rotate(180deg); }
+        
+        .accordion-content {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease;
+            background: white;
+            font-size: 16px;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+        .accordion-content.open {
+            padding: 25px;
+            max-height: 800px;
+        }
+
+        /* Checklist Styles */
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            font-weight: 600;
+        }
+        .checklist-item i { color: #10b981; }
+
+        .instruction-text {
+            display: block;
+            text-align: center;
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .office-hours-notice {
+            background: #eef2ff;
+            border: 1px solid #c7d2fe;
+            padding: 15px;
+            border-radius: 8px;
+            max-width: 900px;
+            margin: 0 auto 30px;
+            text-align: center;
+            font-size: 16px;
+            color: #3730a3;
+        }
+
+        .carrier-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; margin-bottom: 60px; }
+        .carrier-btn { 
+            background: white; border: 1px solid #ddd; padding: 12px; border-radius: 8px;
+            cursor: pointer; font-weight: 600; transition: 0.2s; text-align: center; font-size: 15px;
+            display: flex; align-items: center; justify-content: center; min-height: 60px;
+        }
+        .carrier-btn:hover { background: var(--primary-red); color: white; border-color: var(--primary-red); transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+
+        @media print {
+            .sticky-header, .claims-hero, .manual-browse, footer, .btn-print, .close-card { display: none !important; }
+            #result-card { display: block !important; box-shadow: none; border: 2px solid #eee; width: 100%; margin: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .claims-hero h1 { font-size: 32px; }
+            .carrier-detail { font-size: 18px; }
+            .logo img { height: 70px; margin-top: -25px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sticky-header">
+    <div class="top-info">
+        <div class="container prominent-contact-flex">
+            <div class="contact-prominent">
+                <div class="contact-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span><b>Find Us:</b> 5 Orville Drive, Suite 400, Bohemia, NY 11716</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fa-solid fa-phone-volume"></i>
+                    <span><b>Call Us:</b> <a href="tel:6315890100">631-589-0100</a></span>
+                </div>
+            </div>
+            <div class="top-socials social-icons-shared">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><img src="https://static-asset.amac.us/wp-content/uploads/2026/02/04173133/hometown-header-logo2.png" alt="Hometown Insurance"></div>
+                <ul class="nav-links">
+                    <li class="dropdown">
+                        <a href="#">Products & Services <small>▼</small></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Personal Protection</a></li>
+                            <li><a href="#">Business & Commercial</a></li>
+                            <li><a href="#">Firefighter & EMS Services</a></li>
+                            <li><a href="#">Life & Health</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">About Our Agency</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+                <div class="nav-btns">
+                    <a href="#" class="btn btn-white">Claims</a>
+                    <a href="#" class="btn btn-red btn-pulse">Get a Quote</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+</div>
+
+<section class="claims-hero">
+    <div class="container">
+        <h1>Report a Claim</h1>
+        <p>If you’ve experienced a loss related to your home insurance, auto insurance, or business insurance policy, please notify your insurance company as soon as possible. <span style="display: block; margin-top: 4px;">Start typing your Insurance company name below.</span></p>
+        
+        <div class="search-container">
+            <input type="text" id="carrierSearch" placeholder="Enter Company Name (e.g. Progressive, Travelers)..." autocomplete="off">
+            <span id="clearSearch"><i class="fa-solid fa-circle-xmark"></i></span>
+            <div id="autocompleteList" class="autocomplete-results"></div>
+        </div>
+    </div>
+</section>
+
+<div class="claims-main">
+    <div class="container">
+        
+        <div id="result-card">
+            <span class="close-card" onclick="closeResultCard()"><i class="fa-solid fa-xmark"></i></span>
+            <h2 id="res-name" class="carrier-title">Company Name</h2>
+            <div id="details-container"></div>
+            <button onclick="window.print()" class="btn btn-white btn-print" style="width: 100%; margin-top: 20px;">
+                <i class="fa-solid fa-print"></i> Print This Information
+            </button>
+        </div>
+
+        <div class="manual-browse">
+            <div class="section-title-wrap">
+                <h2>Hometown Insurance Carriers</h2>
+            </div>
+
+            <span class="instruction-text">Click the bar below to view the checklist before calling</span>
+            <div class="emergency-accordion">
+                <div class="accordion-header" onclick="toggleAccordion()">
+                    <span><i class="fa-solid fa-clipboard-list" style="color: var(--primary-red); margin-right: 10px;"></i> Claims Reporting Checklist</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content" id="accordionContent">
+                    <p style="margin-bottom: 15px;">Have your policy number and key details ready, including the date, description, location, police report number, and any witness information. Please have the following information ready:</p>
+                    
+                    <div class="checklist-grid">
+                        <div class="checklist-item"><i class="fa-solid fa-check-circle"></i> Policy Number</div>
+                        <div class="checklist-item"><i class="fa-solid fa-check-circle"></i> Date of Loss</div>
+                        <div class="checklist-item"><i class="fa-solid fa-check-circle"></i> Description of Loss</div>
+                        <div class="checklist-item"><i class="fa-solid fa-check-circle"></i> Loss Location</div>
+                        <div class="checklist-item"><i class="fa-solid fa-check-circle"></i> Police Report Numbers</div>
+                        <div class="checklist-item"><i class="fa-solid fa-check-circle"></i> Witness Information</div>
+                    </div>
+
+                    <p style="margin-top: 20px; font-style: italic; border-top: 1px solid #eee; pt: 15px;">If you need assistance or if you do not see your insurance company listed below, feel free to contact your Hometown Insurance Agency of LI Agent.</p>
+                </div>
+            </div>
+
+            <div class="office-hours-notice">
+                <i class="fa-solid fa-clock" style="margin-right: 8px;"></i>
+                If you need assistance contact your Personal Hometown Account Representative between <br> <strong>9:00 AM – 5:00 PM (Mon-Fri) ET</strong> at <strong>631-589-0100</strong>.
+            </div>
+
+            <div class="carrier-grid" id="mainGrid"></div>
+        </div>
+    </div>
+</div>
+
+<footer style="background: #000; color: #666; padding: 40px 0; text-align: center; font-size: 14px;">
+    <div class="container">
+        <p>&copy; 2026 Hometown Insurance Agency. All Rights Reserved. Licensed in NY.</p>
+    </div>
+</footer>
+
+<script>
+    function toggleAccordion() {
+        const header = document.querySelector('.accordion-header');
+        const content = document.getElementById('accordionContent');
+        header.classList.toggle('active');
+        content.classList.toggle('open');
+    }
+
+    const allCarriers = [
+        { name: "AIG", numbers: [{label: "Claims", phone: "888-760-9195", email: "irwinsiegelclaims@aig.com"}] },
+        { name: "American Collectors", numbers: [{label: "Claims", phone: "800-360-2277", email: "info@americancollectors.com"}] },
+        { name: "AmTrust", numbers: [{label: "Claims", phone: "877-528-7878", email: "glclaimreport@amtrustgroup.com"}] },
+        { name: "Andover", numbers: [{label: "Claims", phone: "800-225-0770", email: "welcome@andovercos.com"}] },
+        { name: "AON Edge EZ Flood", numbers: [{label: "Claims", phone: "844-325-3004", email: "aonedgeclaims@us.crawco.com"}] },
+        { name: "Arch Insurance Company", numbers: [{label: "Business Claims", phone: "800-822-3747", email: "claims@archinsurance.com"}] },
+        { name: "Assurant FloodPort", numbers: [{label: "Flood Claims", phone: "1-800-423-4403", email: "myfloodclaim@assurant.com", note: "Select option 2 to report new"}] },
+        { name: "Attune", numbers: [{label: "Claims", phone: "888-530-4650", email: "hello@attuneinsurance.com"}] },
+        { name: "Chubb", numbers: [{label: "Claims", phone: "800-252-4670", email: "claims@gotoservice.chubb.com"}] },
+        { name: "CNA", numbers: [{label: "Claims", phone: "877-262-2727", email: "gapclaims@cnanational.com"}] },
+        { name: "Essentia - Hagerty", numbers: [{label: "Claims", phone: "800-922-4050", email: "auto@hagerty.com"}] },
+        { name: "Farmers", numbers: [{label: "Claims", phone: "800-435-7764", email: "life.claims@farmersinsurance.com"}] },
+        { name: "Foremost", numbers: [{label: "Claims", phone: "800-527-3907", email: "myclaim@foremost.com"}] },
+        { name: "Global Marine", numbers: [{label: "Claims", phone: "800-748-0224", email: "claims@globalmarineinsurance.com"}] },
+        { name: "GNY", numbers: [{label: "Claims", phone: "516-869-8666", email: "NYCompClaims@gny.com"}] },
+        { name: "Grundy", numbers: [{label: "Claims", phone: "800-765-9749", email: "collectorvehicle@grundy.com"}] },
+        { name: "Hagerty", numbers: [{label: "Claims", phone: "800-922-4050", email: "claims@hagerty.com"}] },
+        { name: "Hartford", numbers: [{label: "Personal Claims", phone: "800-243-5860", email: "Agency.services@thehartford.com"}, {label: "Business Claims", phone: "800-243-5860", email: "Agency.services@thehartford.com"}] },
+        { name: "HCC Midwest", numbers: [{label: "Claims", phone: "800-225-6561", email: "claims@midwestfamily.com"}] },
+        { name: "Hiscox", numbers: [{label: "Claims", phone: "888-202-3007", email: "reportaclaim@hiscox.com"}] },
+        { name: "JC Taylor", numbers: [{label: "Claims", phone: "800-345-8290", email: "support@jctaylor.com"}] },
+        { name: "Jewelers Mutual (JIBNA)", numbers: [{label: "Claims", phone: "888-884-2424", email: "claims@jminsure.com"}] },
+        { name: "Kingstone", numbers: [{label: "Claims", phone: "855-394-0704", email: "claims@kingstoneinsurance.com"}] },
+        { name: "Lancer", numbers: [{label: "Claims", phone: "800-444-5150", email: "claims@lancerinsurance.com"}] },
+        { name: "Lloyds of London", numbers: [{label: "Claims", phone: "800-444-5150", email: "claims@lancerinsurance.com"}] },
+        { name: "McNeil", numbers: [{label: "Claims", phone: "800-822-3747", email: "claims@mcneilandcompany.com"}] },
+        { name: "Merchants", numbers: [
+            {label: "Personal Claims", phone: "800-952-5246", email: "claims@merchantsgroup.com"},
+            {label: "Business Claims", phone: "800-722-6523", email: "claims@merchantsgroup.com"},
+            {label: "Evening Claims", phone: "888-644-6680"},
+            {label: "Towing", phone: "866-328-5771"}
+        ]},
+        { name: "Narragansett Bay Insurance", numbers: [{label: "Claims", phone: "800-343-3375", email: "claims@nbic.com"}] },
+        { name: "National General", numbers: [
+            {label: "Claims", phone: "800-325-1088", email: "nationalgeneral@torrentcorp.com"},
+            {label: "Auto Claims", phone: "800-325-1088"},
+            {label: "Flood Claims", phone: "800-325-1088", email: "nationalgeneral@torrentcorp.com"}
+        ]},
+        { name: "Nationwide", numbers: [{label: "Claims", phone: "800-320-7586", email: "enewloss@nationwide.com"}] },
+        { name: "NatGen Premier", numbers: [{label: "Claims", phone: "844-287-2236", email: "claims@natgenpremier.com"}] },
+        { name: "Nationwide", numbers: [{label: "Claims", phone: "800-320-7586", email: "enewloss@nationwide.com"}] },
+        { name: "Neptune Flood", numbers: [{label: "Claims", phone: "727-202-4815", email: "claims@neptuneflood.com"}] },
+        { name: "Ocean Harbor / Complex Coverage", numbers: [{label: "Claims", phone: "855-585-0500", email: "claims@oceanharbor-ins.com"}] },
+        { name: "Personal Umbrella", numbers: [{label: "Claims", phone: "800-564-1799", email: "claims@personalumbrella.com"}] },
+        { name: "Plymouth Rock", numbers: [{label: "Claims", phone: "844-208-1235", email: "claims@plymouthrock.com"}] },
+        { name: "Progressive", numbers: [{label: "Claims", phone: "800-776-4737", email: "claims@progressive.com"}] },
+        { name: "Safeco", numbers: [{label: "Claims", phone: "800-332-3226", email: "claims@safeco.com"}] },
+        { name: "Sage Sure", numbers: [{label: "Claims", phone: "800-481-0696", email: "claims@sagesure.com"}] },
+        { name: "Scottsdale", numbers: [{label: "Claims", phone: "800-423-7675", email: "newclaim@scottsdaleins.com"}] },
+        { name: "Seneca", numbers: [{label: "Claims", phone: "800-539-0657", email: "claims@senecainsurance.com"}] },
+        { name: "Shore One", numbers: [{label: "Claims", phone: "888-513-1314", email: "claims@shoreoneinsurance.com"}] },
+        { name: "Sutton", numbers: [{label: "Claims", phone: "800-461-3292", email: "claims@suttonspecialty.com"}] },
+        { name: "Travelers", numbers: [
+            {label: "Personal Claims", phone: "800-252-4633", email: "claims@travelers.com"},
+            {label: "Business Claims", phone: "800-238-6225", email: "claims@travelers.com"},
+            {label: "Boat Claims", phone: "800-952-8699", email: "claims@travelers.com"}
+        ]},
+        { name: "USLI", numbers: [{label: "Claims", phone: "888-523-5545", email: "newlosses@usli.com"}] },
+        { name: "Utica", numbers: [
+            {label: "Business Claims", phone: "800-766-1914", email: "claims@uticanational.com"},
+            {label: "Utica First Claims", phone: "800-456-4556", email: "claims@uticafirst.com"},
+            {label: "Personal Claims", phone: "800-216-1420", email: "claims@uticanational.com"}
+        ]},
+        { name: "Wright Flood", numbers: [{label: "Claims", phone: "800-725-9472", email: "floodclaims@wrightflood.com"}] },
+        { name: "Zurich", numbers: [{label: "Claims", phone: "877-397-2329", email: "usz.newclaims@zurichna.com"}] }
+    ].sort((a, b) => a.name.localeCompare(b.name));
+
+    const input = document.getElementById('carrierSearch');
+    const list = document.getElementById('autocompleteList');
+    const clearBtn = document.getElementById('clearSearch');
+    const resultCard = document.getElementById('result-card');
+    const detailsContainer = document.getElementById('details-container');
+    const grid = document.getElementById('mainGrid');
+
+    allCarriers.forEach(c => {
+        const btn = document.createElement('div');
+        btn.className = 'carrier-btn';
+        btn.innerText = c.name;
+        btn.onclick = () => selectCarrier(c.name);
+        grid.appendChild(btn);
+    });
+
+    input.addEventListener('input', function() {
+        const val = this.value.trim().toLowerCase();
+        list.innerHTML = '';
+        clearBtn.style.display = val ? 'block' : 'none';
+
+        if (!val) { 
+            list.style.display = 'none'; 
+            return; 
+        }
+
+        const matches = allCarriers.filter(c => c.name.toLowerCase().includes(val));
+        
+        matches.sort((a, b) => {
+            const aStartsWith = a.name.toLowerCase().startsWith(val);
+            const bStartsWith = b.name.toLowerCase().startsWith(val);
+            if (aStartsWith && !bStartsWith) return -1;
+            if (!aStartsWith && bStartsWith) return 1;
+            return a.name.localeCompare(b.name);
+        });
+
+        if (matches.length > 0) {
+            matches.forEach(m => {
+                const div = document.createElement('div');
+                div.className = 'autocomplete-item';
+                div.innerHTML = `<strong>${m.name}</strong>`;
+                div.addEventListener('mousedown', function(e) {
+                    e.preventDefault(); 
+                    input.value = m.name;
+                    selectCarrier(m.name);
+                    list.style.display = 'none';
+                });
+                list.appendChild(div);
+            });
+            list.style.display = 'block';
+        } else {
+            list.style.display = 'none';
+        }
+    });
+
+    function closeResultCard() {
+        resultCard.style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    clearBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        input.value = '';
+        list.style.display = 'none';
+        clearBtn.style.display = 'none';
+        resultCard.style.display = 'none';
+        input.focus();
+    });
+
+    function selectCarrier(name) {
+        const carrier = allCarriers.find(c => c.name === name);
+        if (!carrier) return;
+
+        document.getElementById('res-name').innerText = carrier.name;
+        detailsContainer.innerHTML = '';
+        
+        carrier.numbers.forEach(n => {
+            const row = document.createElement('div');
+            row.className = 'carrier-detail';
+            const lowLabel = n.label.toLowerCase();
+            const iconClass = lowLabel.includes('business') ? 'fa-briefcase' : 
+                               lowLabel.includes('towing') ? 'fa-truck-pickup' : 
+                               lowLabel.includes('auto') ? 'fa-car' : 
+                               lowLabel.includes('flood') ? 'fa-house-flood-water' : 'fa-phone';
+            
+            row.innerHTML = `
+                <i class="fa-solid ${iconClass}"></i>
+                <div>
+                    <span class="carrier-label">${n.label}</span>
+                    <a href="tel:${n.phone.replace(/[^0-9]/g, '')}">${n.phone}</a>
+                    ${n.email ? `<a href="mailto:${n.email}" class="email-link"><i class="fa-regular fa-envelope" style="font-size: 14px; margin-right: 5px; color: #64748b;"></i>${n.email}</a>` : ''}
+                    ${n.note ? `<span class="carrier-note">${n.note}</span>` : ''}
+                </div>`;
+            detailsContainer.appendChild(row);
+        });
+        
+        resultCard.style.display = 'block';
+        resultCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    document.addEventListener('click', (e) => {
+        if (e.target !== input) {
+            list.style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>
