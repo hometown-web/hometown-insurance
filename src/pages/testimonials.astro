@@ -30,6 +30,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
     </div>
 
+    <section class="rating-banner">
+        <div class="container">
+            <div class="rating-badge">
+                <div class="rating-number">4.7</div>
+                <div class="rating-details">
+                    <div class="rating-stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <p class="rating-text">out of 5 — based on <a href="https://reviewthis.biz/hometown-insurance-agency-of-li" target="_blank">Google Reviews</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="section-padding container">
         <h2 class="body-heading">Reviews</h2>
         <div class="reviews-grid">
@@ -117,7 +131,34 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         .saving-box .quote { font-weight: 600; margin-bottom: 20px; }
         .saving-box .client { font-size: 16px; font-weight: 700; color: var(--text-gray); }
 
+        .rating-banner { background: var(--dark-blue); padding: 30px 0; border-bottom: 4px solid var(--primary-red); }
+        .rating-badge { display: flex; align-items: center; justify-content: center; gap: 25px; }
+        .rating-number { font-size: 64px; font-weight: 800; color: white; line-height: 1; font-family: 'Inter', sans-serif; }
+        .rating-stars { color: var(--star-gold); font-size: 24px; margin-bottom: 6px; }
+        .rating-text { color: #cbd5e1; font-size: 17px; margin: 0; line-height: 1.4; }
+        .rating-text a { color: white; font-weight: 700; text-decoration: underline; }
+        .rating-text a:hover { color: var(--primary-red); }
+
+        .hero-simple { border-bottom: 4px solid var(--primary-red); }
         .product-selector { text-align: center; padding: 100px 0; background: white; }
+
+        @media (max-width: 768px) {
+            .body-heading { font-size: 30px; margin-bottom: 25px; }
+            .section-padding { padding: 50px 0; }
+            .savings-area { padding: 50px 0; }
+            .rating-number { font-size: 48px; }
+            .rating-stars { font-size: 20px; }
+            .rating-text { font-size: 15px; }
+            .saving-box { padding: 25px; }
+            .saving-box h3 { font-size: 20px; }
+            .product-selector { padding: 60px 0; }
+            .review-guide-modal { max-width: 95% !important; }
+            .review-card-full { padding: 20px; }
+        }
+        @media (max-width: 480px) {
+            .body-heading { font-size: 26px; }
+            .rating-badge { flex-direction: column; gap: 10px; }
+        }
     </style>
 
     <script is:inline>

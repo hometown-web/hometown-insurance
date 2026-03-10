@@ -55,6 +55,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         @media (max-width: 992px) {
             .hero-grid, .content-layout { grid-template-columns: 1fr; }
             .hero-content { margin-top: 0; }
+            .content-layout { gap: 40px; }
+        }
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 34px; }
+            .hero-content p { font-size: 17px; }
+            .hero-wrapper { padding: 50px 0 100px 0; }
+            .content-section { padding: 50px 0; }
+            .benefit-card { padding: 25px; }
+            .benefit-card h3 { font-size: 22px; }
+        }
+        @media (max-width: 480px) {
+            .hero-content h1 { font-size: 28px; }
         }
     </style>
 
@@ -120,15 +132,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     </div>
                     <div class="form-group">
                         <label>How did you hear about us?</label>
-                        <select>
+                        <select id="hear_about_top" onchange="toggleHearOther(this, 'hear_other_top')">
                             <option value="" disabled selected>Please select...</option>
                             <option>Google Search</option>
                             <option>Facebook / Instagram</option>
                             <option>Friend or Family Member</option>
                             <option>Mailing / Flyer</option>
                             <option>Local Event</option>
-                            <option>Other</option>
+                            <option value="Other">Other</option>
                         </select>
+                    </div>
+                    <div id="hear_other_top" class="other-details-container">
+                        <div class="form-group">
+                            <label>Please specify how you heard about us:</label>
+                            <input type="text" placeholder="Tell us how you found us...">
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-red" style="width: 100%; margin-top: 10px;">Send Request</button>
@@ -209,15 +227,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     </div>
                     <div class="form-group">
                         <label>How did you hear about us?</label>
-                        <select>
+                        <select id="hear_about_bot" onchange="toggleHearOther(this, 'hear_other_bot')">
                             <option value="" disabled selected>Please select...</option>
                             <option>Google Search</option>
                             <option>Facebook / Instagram</option>
                             <option>Friend or Family Member</option>
                             <option>Mailing / Flyer</option>
                             <option>Local Event</option>
-                            <option>Other</option>
+                            <option value="Other">Other</option>
                         </select>
+                    </div>
+                    <div id="hear_other_bot" class="other-details-container">
+                        <div class="form-group">
+                            <label>Please specify how you heard about us:</label>
+                            <input type="text" placeholder="Tell us how you found us...">
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-red" style="width: 100%; margin-top: 10px;">Send Request</button>
@@ -232,8 +256,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         }
 
         function toggleOtherField(selectElement, fieldId) {
-            const container = document.getElementById(fieldId);
+            var container = document.getElementById(fieldId);
             container.style.display = (selectElement.value === 'Other') ? 'block' : 'none';
+        }
+
+        function toggleHearOther(selectElement, fieldId) {
+            var container = document.getElementById(fieldId);
+            var input = container.querySelector('input');
+            if (selectElement.value === 'Other') {
+                container.style.display = 'block';
+                input.setAttribute('required', 'required');
+            } else {
+                container.style.display = 'none';
+                input.removeAttribute('required');
+                input.value = '';
+            }
         }
     </script>
 </BaseLayout>

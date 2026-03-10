@@ -1,0 +1,424 @@
+diff --git a/src/pages/business.astro b/src/pages/business.astro
+index d308bd0..6ee68fc 100644
+--- a/src/pages/business.astro
++++ b/src/pages/business.astro
+@@ -126,16 +126,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+                     </div>
+                     <div class="form-group">
+                         <label>How did you hear about us?</label>
+-                        <select>
++                        <select id="hear_about_top" onchange="toggleHearOther(this, 'hear_other_top')">
+                             <option value="" disabled selected>Please select...</option>
+                             <option>Google Search</option>
+                             <option>Facebook / Instagram</option>
+                             <option>Friend or Family Member</option>
+                             <option>Mailing / Flyer</option>
+                             <option>Local Event</option>
+-                            <option>Other</option>
++                            <option value="Other">Other</option>
+                         </select>
+                     </div>
++                    <div id="hear_other_top" class="other-details-container">
++                        <div class="form-group">
++                            <label>Please specify how you heard about us:</label>
++                            <input type="text" placeholder="Tell us how you found us...">
++                        </div>
++                    </div>
+ 
+                     <button type="submit" class="btn-red-form">Send Request</button>
+                 </form>
+@@ -271,16 +277,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+                     </div>
+                     <div class="form-group">
+                         <label>How did you hear about us?</label>
+-                        <select>
++                        <select id="hear_about_bot" onchange="toggleHearOther(this, 'hear_other_bot')">
+                             <option value="" disabled selected>Please select...</option>
+                             <option>Google Search</option>
+                             <option>Facebook / Instagram</option>
+                             <option>Friend or Family Member</option>
+                             <option>Mailing / Flyer</option>
+                             <option>Local Event</option>
+-                            <option>Other</option>
++                            <option value="Other">Other</option>
+                         </select>
+                     </div>
++                    <div id="hear_other_bot" class="other-details-container">
++                        <div class="form-group">
++                            <label>Please specify how you heard about us:</label>
++                            <input type="text" placeholder="Tell us how you found us...">
++                        </div>
++                    </div>
+ 
+                     <button type="submit" class="btn-red-form">Send Request</button>
+                 </form>
+@@ -294,7 +306,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+         }
+ 
+         function toggleOtherField(selectElement, fieldId) {
+-            const otherField = document.getElementById(fieldId);
++            var otherField = document.getElementById(fieldId);
+             if (selectElement.value === 'Other') {
+                 otherField.style.display = 'block';
+             } else {
+@@ -302,10 +314,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+             }
+         }
+ 
++        function toggleHearOther(selectElement, fieldId) {
++            var container = document.getElementById(fieldId);
++            var input = container.querySelector('input');
++            if (selectElement.value === 'Other') {
++                container.style.display = 'block';
++                input.setAttribute('required', 'required');
++            } else {
++                container.style.display = 'none';
++                input.removeAttribute('required');
++                input.value = '';
++            }
++        }
++
+         function toggleAccordion(header) {
+-            const item = header.parentElement;
+-            const wasActive = item.classList.contains('active');
+-            document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('active'));
++            var item = header.parentElement;
++            var wasActive = item.classList.contains('active');
++            document.querySelectorAll('.accordion-item').forEach(function(el) { el.classList.remove('active'); });
+             if (!wasActive) item.classList.add('active');
+         }
+     </script>
+diff --git a/src/pages/firefighter-ems.astro b/src/pages/firefighter-ems.astro
+index 230e02a..0b9367a 100644
+--- a/src/pages/firefighter-ems.astro
++++ b/src/pages/firefighter-ems.astro
+@@ -125,16 +125,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+                     </div>
+                     <div class="form-group">
+                         <label>How did you hear about us?</label>
+-                        <select>
++                        <select id="hear_about_top" onchange="toggleHearOther(this, 'hear_other_top')">
+                             <option value="" disabled selected>Please select...</option>
+                             <option>Google Search</option>
+                             <option>Facebook / Instagram</option>
+                             <option>Friend or Family Member</option>
+                             <option>Mailing / Flyer</option>
+                             <option>Local Event</option>
+-                            <option>Other</option>
++                            <option value="Other">Other</option>
+                         </select>
+                     </div>
++                    <div id="hear_other_top" class="other-details-container">
++                        <div class="form-group">
++                            <label>Please specify how you heard about us:</label>
++                            <input type="text" placeholder="Tell us how you found us...">
++                        </div>
++                    </div>
+ 
+                     <button type="submit" class="btn btn-red btn-form-submit">Send Request</button>
+                 </form>
+@@ -296,16 +302,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+                     </div>
+                     <div class="form-group">
+                         <label>How did you hear about us?</label>
+-                        <select>
++                        <select id="hear_about_bot" onchange="toggleHearOther(this, 'hear_other_bot')">
+                             <option value="" disabled selected>Please select...</option>
+                             <option>Google Search</option>
+                             <option>Facebook / Instagram</option>
+                             <option>Friend or Family Member</option>
+                             <option>Mailing / Flyer</option>
+                             <option>Local Event</option>
+-                            <option>Other</option>
++                            <option value="Other">Other</option>
+                         </select>
+                     </div>
++                    <div id="hear_other_bot" class="other-details-container">
++                        <div class="form-group">
++                            <label>Please specify how you heard about us:</label>
++                            <input type="text" placeholder="Tell us how you found us...">
++                        </div>
++                    </div>
+ 
+                     <button type="submit" class="btn btn-red btn-form-submit">Send Request</button>
+                 </form>
+@@ -315,19 +327,32 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+ 
+     <script is:inline>
+         function toggleCallback(prefix, show) {
+-            const el = document.getElementById('callback_fields_' + prefix);
++            var el = document.getElementById('callback_fields_' + prefix);
+             if (el) el.style.display = show ? 'block' : 'none';
+         }
+ 
+         function toggleOtherField(select, targetId) {
+-            const el = document.getElementById(targetId);
++            var el = document.getElementById(targetId);
+             if (el) el.style.display = (select.value === "Other") ? 'block' : 'none';
+         }
+ 
++        function toggleHearOther(selectElement, fieldId) {
++            var container = document.getElementById(fieldId);
++            var input = container.querySelector('input');
++            if (selectElement.value === 'Other') {
++                container.style.display = 'block';
++                input.setAttribute('required', 'required');
++            } else {
++                container.style.display = 'none';
++                input.removeAttribute('required');
++                input.value = '';
++            }
++        }
++
+         function toggleAccordion(header) {
+-            const item = header.parentElement;
+-            const wasActive = item.classList.contains('active');
+-            document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('active'));
++            var item = header.parentElement;
++            var wasActive = item.classList.contains('active');
++            document.querySelectorAll('.accordion-item').forEach(function(el) { el.classList.remove('active'); });
+             if (!wasActive) item.classList.add('active');
+         }
+     </script>
+diff --git a/src/pages/life-health.astro b/src/pages/life-health.astro
+index 66c4acf..39ed149 100644
+--- a/src/pages/life-health.astro
++++ b/src/pages/life-health.astro
+@@ -120,16 +120,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+                     </div>
+                     <div class="form-group">
+                         <label>How did you hear about us?</label>
+-                        <select>
++                        <select id="hear_about_top" onchange="toggleHearOther(this, 'hear_other_top')">
+                             <option value="" disabled selected>Please select...</option>
+                             <option>Google Search</option>
+                             <option>Facebook / Instagram</option>
+                             <option>Friend or Family Member</option>
+                             <option>Mailing / Flyer</option>
+                             <option>Local Event</option>
+-                            <option>Other</option>
++                            <option value="Other">Other</option>
+                         </select>
+                     </div>
++                    <div id="hear_other_top" class="other-details-container">
++                        <div class="form-group">
++                            <label>Please specify how you heard about us:</label>
++                            <input type="text" placeholder="Tell us how you found us...">
++                        </div>
++                    </div>
+ 
+                     <button type="submit" class="btn btn-red" style="width: 100%; margin-top: 10px;">Send Request</button>
+                 </form>
+@@ -209,16 +215,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+                     </div>
+                     <div class="form-group">
+                         <label>How did you hear about us?</label>
+-                        <select>
++                        <select id="hear_about_bot" onchange="toggleHearOther(this, 'hear_other_bot')">
+                             <option value="" disabled selected>Please select...</option>
+                             <option>Google Search</option>
+                             <option>Facebook / Instagram</option>
+                             <option>Friend or Family Member</option>
+                             <option>Mailing / Flyer</option>
+                             <option>Local Event</option>
+-                            <option>Other</option>
++                            <option value="Other">Other</option>
+                         </select>
+                     </div>
++                    <div id="hear_other_bot" class="other-details-container">
++                        <div class="form-group">
++                            <label>Please specify how you heard about us:</label>
++                            <input type="text" placeholder="Tell us how you found us...">
++                        </div>
++                    </div>
+ 
+                     <button type="submit" class="btn btn-red" style="width: 100%; margin-top: 10px;">Send Request</button>
+                 </form>
+@@ -232,8 +244,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+         }
+ 
+         function toggleOtherField(selectElement, fieldId) {
+-            const container = document.getElementById(fieldId);
++            var container = document.getElementById(fieldId);
+             container.style.display = (selectElement.value === 'Other') ? 'block' : 'none';
+         }
++
++        function toggleHearOther(selectElement, fieldId) {
++            var container = document.getElementById(fieldId);
++            var input = container.querySelector('input');
++            if (selectElement.value === 'Other') {
++                container.style.display = 'block';
++                input.setAttribute('required', 'required');
++            } else {
++                container.style.display = 'none';
++                input.removeAttribute('required');
++                input.value = '';
++            }
++        }
+     </script>
+ </BaseLayout>
+diff --git a/src/pages/personal.astro b/src/pages/personal.astro
+index 10a161e..46f5c56 100644
+--- a/src/pages/personal.astro
++++ b/src/pages/personal.astro
+@@ -121,16 +121,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+                     </div>
+                     <div class="form-group">
+                         <label>How did you hear about us?</label>
+-                        <select>
++                        <select id="hear_about_top" onchange="toggleHearOther(this, 'hear_other_top')">
+                             <option value="" disabled selected>Please select...</option>
+                             <option>Google Search</option>
+                             <option>Facebook / Instagram</option>
+                             <option>Friend or Family Member</option>
+                             <option>Mailing / Flyer</option>
+                             <option>Local Event</option>
+-                            <option>Other</option>
++                            <option value="Other">Other</option>
+                         </select>
+                     </div>
++                    <div id="hear_other_top" class="other-details-container">
++                        <div class="form-group">
++                            <label>Please specify how you heard about us:</label>
++                            <input type="text" placeholder="Tell us how you found us...">
++                        </div>
++                    </div>
+                     <button type="submit" class="btn btn-red" style="width: 100%; margin-top: 10px;">Send Request</button>
+                 </form>
+             </div>
+@@ -204,7 +210,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+                         </p>
+                         <div style="background: var(--white); display: inline-block; padding: 15px 25px; border: 2px dashed var(--primary-red); border-radius: 8px; margin-bottom: 25px;">
+                             <span style="font-size: 18px; font-weight: 700; color: var(--dark-blue);">
+-                                PROMO CODE: <span style="color: var(--primary-red);">HOME</span> — Lowest inclusive price of $34.95
++                                PROMO CODE: <span style="color: var(--primary-red);">HOMETOWN</span> — Lowest inclusive price of $34.95
+                             </span>
+                         </div>
+                         <p style="font-size: 16px; color: var(--text-gray); border-top: 1px solid #e2e8f0; margin-top: 10px; padding-top: 20px;">
+@@ -312,16 +318,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+                     </div>
+                     <div class="form-group">
+                         <label>How did you hear about us?</label>
+-                        <select>
++                        <select id="hear_about_bot" onchange="toggleHearOther(this, 'hear_other_bot')">
+                             <option value="" disabled selected>Please select...</option>
+                             <option>Google Search</option>
+                             <option>Facebook / Instagram</option>
+                             <option>Friend or Family Member</option>
+                             <option>Mailing / Flyer</option>
+                             <option>Local Event</option>
+-                            <option>Other</option>
++                            <option value="Other">Other</option>
+                         </select>
+                     </div>
++                    <div id="hear_other_bot" class="other-details-container">
++                        <div class="form-group">
++                            <label>Please specify how you heard about us:</label>
++                            <input type="text" placeholder="Tell us how you found us...">
++                        </div>
++                    </div>
+                     <button type="submit" class="btn btn-red" style="width: 100%; margin-top: 10px;">Send Request</button>
+                 </form>
+             </div>
+@@ -334,7 +346,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+         }
+ 
+         function toggleOtherField(selectElement, fieldId) {
+-            const otherField = document.getElementById(fieldId);
++            var otherField = document.getElementById(fieldId);
+             if (selectElement.value === 'Other') {
+                 otherField.style.display = 'block';
+             } else {
+@@ -342,10 +354,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+             }
+         }
+ 
++        function toggleHearOther(selectElement, fieldId) {
++            var container = document.getElementById(fieldId);
++            var input = container.querySelector('input');
++            if (selectElement.value === 'Other') {
++                container.style.display = 'block';
++                input.setAttribute('required', 'required');
++            } else {
++                container.style.display = 'none';
++                input.removeAttribute('required');
++                input.value = '';
++            }
++        }
++
+         function toggleAccordion(header) {
+-            const item = header.parentElement;
+-            const wasActive = item.classList.contains('active');
+-            document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('active'));
++            var item = header.parentElement;
++            var wasActive = item.classList.contains('active');
++            document.querySelectorAll('.accordion-item').forEach(function(el) { el.classList.remove('active'); });
+             if (!wasActive) item.classList.add('active');
+         }
+     </script>
+diff --git a/src/pages/testimonials.astro b/src/pages/testimonials.astro
+index ca797d9..3e81165 100644
+--- a/src/pages/testimonials.astro
++++ b/src/pages/testimonials.astro
+@@ -30,6 +30,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+         </div>
+     </div>
+ 
++    <section class="rating-banner">
++        <div class="container">
++            <div class="rating-badge">
++                <div class="rating-number">4.7</div>
++                <div class="rating-details">
++                    <div class="rating-stars">
++                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
++                    </div>
++                    <p class="rating-text">out of 5 — based on <a href="https://reviewthis.biz/hometown-insurance-agency-of-li" target="_blank">Google Reviews</a></p>
++                </div>
++            </div>
++        </div>
++    </section>
++
+     <section class="section-padding container">
+         <h2 class="body-heading">Reviews</h2>
+         <div class="reviews-grid">
+@@ -117,6 +131,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
+         .saving-box .quote { font-weight: 600; margin-bottom: 20px; }
+         .saving-box .client { font-size: 16px; font-weight: 700; color: var(--text-gray); }
+ 
++        .rating-banner { background: var(--dark-blue); padding: 30px 0; border-bottom: 4px solid var(--primary-red); }
++        .rating-badge { display: flex; align-items: center; justify-content: center; gap: 25px; }
++        .rating-number { font-size: 64px; font-weight: 800; color: white; line-height: 1; font-family: 'Inter', sans-serif; }
++        .rating-stars { color: var(--star-gold); font-size: 24px; margin-bottom: 6px; }
++        .rating-text { color: #cbd5e1; font-size: 17px; margin: 0; line-height: 1.4; }
++        .rating-text a { color: white; font-weight: 700; text-decoration: underline; }
++        .rating-text a:hover { color: var(--primary-red); }
++
+         .product-selector { text-align: center; padding: 100px 0; background: white; }
+     </style>
+ 
+diff --git a/src/styles/global.css b/src/styles/global.css
+index 680f0fd..04d1865 100644
+--- a/src/styles/global.css
++++ b/src/styles/global.css
+@@ -125,6 +125,7 @@ h1, h2, h3 {
+ /* Modal Styles */
+ .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 4000; justify-content: center; align-items: center; }
+ .modal-content { background: white; padding: 40px 35px 35px; border-radius: 12px; position: relative; width: 90%; max-width: 900px; }
++.quote-form-modal .form-group { margin-bottom: 14px; }
+ .close-modal {
+   position: absolute;
+   top: 15px;
+@@ -138,9 +139,10 @@ h1, h2, h3 {
+ .close-modal:hover { color: var(--primary-red); }
+ 
+ /* Quote Modal */
+-.quote-form-modal { max-width: 600px !important; }
+-.form-header { margin-bottom: 25px; border-bottom: 2px solid var(--bg-light); padding-bottom: 15px; text-align: center; }
+-.form-header h2 { font-size: 32px; color: var(--primary-red); margin-bottom: 5px; }
++.quote-form-modal { max-width: 600px !important; max-height: 85vh; overflow-y: auto; padding-top: 0 !important; }
++.quote-form-modal .close-modal { position: sticky; top: 0; right: 0; z-index: 10; display: block; text-align: right; padding: 12px 0 0 0; background: white; margin-bottom: -5px; }
++.form-header { margin-bottom: 15px; border-bottom: 2px solid var(--bg-light); padding-bottom: 10px; text-align: center; }
++.form-header h2 { font-size: 28px; color: var(--primary-red); margin-bottom: 5px; }
+ 
+ /* Form Styles */
+ .form-group { margin-bottom: 20px; text-align: left; }

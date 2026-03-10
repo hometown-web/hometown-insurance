@@ -243,7 +243,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         }
 
         @media (max-width: 992px) {
-            .contact-grid { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+        }
+        @media (max-width: 768px) {
+            .contact-hero h1 { font-size: 34px; }
+            .contact-hero p { font-size: 17px; }
+            .contact-hero { padding: 50px 0; }
+            .contact-grid { padding: 40px 0; }
+            .contact-card { padding: 25px; }
+            .info-section h2 { font-size: 26px; }
+            .full-width-map { height: 300px; }
+            .personal-insurance-selector { padding: 50px 0; }
+            .detail-item h4 { font-size: 17px; }
+        }
+        @media (max-width: 480px) {
+            .contact-hero h1 { font-size: 28px; }
+            .selector-grid { grid-template-columns: 1fr 1fr; }
         }
     </style>
 

@@ -203,6 +203,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             .faq-grid, .interaction-grid { grid-template-columns: 1fr; }
             .faq-nav { display: none; }
         }
+        @media (max-width: 768px) {
+            .faq-hero h1 { font-size: 34px; }
+            .faq-hero p { font-size: 17px; }
+            .faq-hero { padding: 50px 0; }
+            .faq-main { padding: 40px 0; }
+            .faq-header h3 { font-size: 16px; }
+            .faq-header { padding: 18px; }
+            .faq-content { font-size: 15px; }
+            .faq-card.active .faq-content { padding: 0 18px 18px 18px; }
+            .faq-interaction { padding: 50px 0; }
+            .interaction-box { padding: 25px; }
+            .faq-section h2 { font-size: 22px; }
+        }
+        @media (max-width: 480px) {
+            .faq-hero h1 { font-size: 28px; }
+        }
     </style>
 
     <script is:inline>

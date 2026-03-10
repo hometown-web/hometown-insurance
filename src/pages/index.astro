@@ -157,8 +157,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <div class="product-text">
                 <span class="label" style="color: var(--personal-blue);">FOR INDIVIDUALS</span>
                 <h2>Personal Protection</h2>
-                <p>Your home and family are the center of your world. We take the time to listen and understand your life, ensuring that everything you've worked so hard for is protected with the care it deserves.</p>
-                <a href="/personal" class="btn btn-personal">Explore Personal Coverage</a>
+                <p>Protecting your home, family, and everything you've worked hard for — with the personal care it deserves.</p>
+                <ul class="product-bullets">
+                    <li>Homeowners & Renters Insurance</li>
+                    <li>Auto & Motorcycle Insurance</li>
+                    <li>Umbrella / Excess Liability</li>
+                    <li>Flood & Earthquake Coverage</li>
+                    <li>Valuable Items & Collections</li>
+                    <li>Boat & Watercraft Insurance</li>
+                </ul>
+                <a href="/personal" class="btn btn-personal" style="margin-top: 20px;">Explore Personal Coverage</a>
             </div>
         </div>
         <div class="product-row">
@@ -196,8 +204,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <h3>Our Trusted Insurance Partners</h3>
             <div class="logo-marquee-container">
                 <div class="logo-marquee-track">
-                    <span>HARTFORD</span><span>TRAVELERS</span><span>PROGRESSIVE</span><span>METLIFE</span><span>CHUBB</span><span>LIBERTY MUTUAL</span>
-                    <span>HARTFORD</span><span>TRAVELERS</span><span>PROGRESSIVE</span><span>METLIFE</span><span>CHUBB</span><span>LIBERTY MUTUAL</span>
+                    <img src="/images/logos/hartford.png" alt="The Hartford" class="carrier-logo">
+                    <img src="/images/logos/travelers.png" alt="Travelers" class="carrier-logo">
+                    <img src="/images/logos/progressive.png" alt="Progressive" class="carrier-logo">
+                    <img src="/images/logos/metlife.png" alt="MetLife" class="carrier-logo">
+                    <img src="/images/logos/chubb.png" alt="Chubb" class="carrier-logo">
+                    <img src="/images/logos/liberty-mutual.png" alt="Liberty Mutual" class="carrier-logo">
+                    <img src="/images/logos/hartford.png" alt="The Hartford" class="carrier-logo">
+                    <img src="/images/logos/travelers.png" alt="Travelers" class="carrier-logo">
+                    <img src="/images/logos/progressive.png" alt="Progressive" class="carrier-logo">
+                    <img src="/images/logos/metlife.png" alt="MetLife" class="carrier-logo">
+                    <img src="/images/logos/chubb.png" alt="Chubb" class="carrier-logo">
+                    <img src="/images/logos/liberty-mutual.png" alt="Liberty Mutual" class="carrier-logo">
                 </div>
             </div>
         </div>
@@ -269,4 +287,48 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             quoteModal.style.display = "none";
         };
     </script>
+
+<style>
+    .carrier-logo {
+        height: 180px !important;
+        width: 280px !important;
+        margin-right: 60px !important;
+        flex-shrink: 0;
+        object-fit: contain !important;
+    }
+    .product-bullets {
+        list-style: none !important;
+        padding: 0 !important;
+        margin: 15px 0 !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px 20px !important;
+    }
+    .product-bullets li {
+        font-size: 15px !important;
+        color: #4b5563 !important;
+        padding-left: 24px !important;
+        position: relative !important;
+        line-height: 1.4 !important;
+    }
+    .product-bullets li::before {
+        content: "✓" !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        width: 16px !important;
+        height: 16px !important;
+        background: var(--personal-blue) !important;
+        color: #fff !important;
+        border-radius: 50% !important;
+        font-size: 10px !important;
+        font-weight: bold !important;
+        line-height: 16px !important;
+        text-align: center !important;
+    }
+    @media (max-width: 768px) {
+        .product-bullets { grid-template-columns: 1fr !important; }
+    }
+</style>
 </BaseLayout>

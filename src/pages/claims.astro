@@ -203,7 +203,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         @media (max-width: 768px) {
             .claims-hero h1 { font-size: 32px; }
-            .carrier-detail { font-size: 18px; }
+            .claims-hero p { font-size: 16px; }
+            .claims-hero { padding: 20px 0; }
+            .claims-main { padding: 30px 0; }
+            .carrier-detail { font-size: 16px; }
+            .carrier-title { font-size: 26px; }
+            #result-card { padding: 25px; }
+            .manual-browse h2 { font-size: 26px; }
+            .search-container input { padding: 16px 40px 16px 20px; font-size: 16px; }
+            .emergency-accordion .accordion-header { font-size: 16px; padding: 12px 18px; }
+            .office-hours-notice { font-size: 14px; padding: 12px; }
+        }
+        @media (max-width: 480px) {
+            .claims-hero h1 { font-size: 26px; }
+            .checklist-grid { grid-template-columns: 1fr; }
         }
     </style>
 
@@ -219,7 +232,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             { name: "Attune", numbers: [{label: "Claims", phone: "888-530-4650", email: "hello@attuneinsurance.com"}] },
             { name: "Chubb", numbers: [{label: "Claims", phone: "800-252-4670", email: "claims@gotoservice.chubb.com"}] },
             { name: "CNA", numbers: [{label: "Claims", phone: "877-262-2727", email: "gapclaims@cnanational.com"}] },
-            { name: "Essentia - Hagerty", numbers: [{label: "Claims", phone: "800-922-4050", email: "auto@hagerty.com"}] },
+            { name: "Essentia", numbers: [{label: "Claims", phone: "877-922-9701", email: "claims@hagerty.com"}] },
             { name: "Farmers", numbers: [{label: "Claims", phone: "800-435-7764", email: "life.claims@farmersinsurance.com"}] },
             { name: "Foremost", numbers: [{label: "Claims", phone: "800-527-3907", email: "myclaim@foremost.com"}] },
             { name: "Global Marine", numbers: [{label: "Claims", phone: "800-748-0224", email: "claims@globalmarineinsurance.com"}] },

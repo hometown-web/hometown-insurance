@@ -79,6 +79,25 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
         </div>
     </div>
 
+    <div class="nav-overlay" id="navOverlay" onclick="document.getElementById('hamburgerBtn').classList.remove('active'); document.getElementById('mobileNavPanel').classList.remove('open'); document.body.classList.remove('nav-open');"></div>
+    <div class="mobile-nav-panel" id="mobileNavPanel">
+        <span class="mobile-nav-close" onclick="document.getElementById('mobileNavPanel').classList.remove('open'); document.getElementById('hamburgerBtn').classList.remove('active'); document.body.classList.remove('nav-open');">&times;</span>
+        <ul class="mobile-nav-list">
+            <li>
+                <a href="#" class="mobile-dropdown-toggle" onclick="event.preventDefault(); event.stopPropagation(); var sub=this.nextElementSibling; sub.style.display=sub.style.display==='block'?'none':'block'; this.classList.toggle('open');">Products & Services <small>▼</small></a>
+                <ul class="mobile-dropdown-sub">
+                    <li><a href="/personal">Personal Protection</a></li>
+                    <li><a href="/business">Business & Commercial</a></li>
+                    <li><a href="/firefighter-ems">Firefighter & EMS Services</a></li>
+                    <li><a href="/life-health">Life & Health</a></li>
+                </ul>
+            </li>
+            <li><a href="/about">About Our Agency</a></li>
+            <li><a href="/faqs">FAQs</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/claims">Claims Center</a></li>
+        </ul>
+    </div>
     <div class="sticky-header">
         <div class="top-info">
             <div class="container prominent-contact-flex">
@@ -104,9 +123,9 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
             <div class="container">
                 <nav class="main-nav">
                     <a href="/" class="logo"><img src="https://static-asset.amac.us/wp-content/uploads/2026/02/04173133/hometown-header-logo2.png" alt="Hometown Insurance"></a>
-                    <ul class="nav-links">
+                    <ul class="nav-links" id="navLinks">
                         <li>
-                            <a href="#">Products & Services <small>▼</small></a>
+                            <a href="#" class="has-dropdown">Products & Services <small>▼</small></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/personal">Personal Protection</a></li>
                                 <li><a href="/business">Business & Commercial</a></li>
@@ -117,6 +136,9 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                         <li><a href="/about">About Our Agency</a></li>
                         <li><a href="/faqs">FAQs</a></li>
                         <li><a href="/contact">Contact Us</a></li>
+                        <li class="mobile-nav-btns">
+                            <a href="#" class="btn btn-red btn-pulse openQuoteTrigger">Get a Quote</a>
+                        </li>
                     </ul>
                     <div class="nav-btns">
                         <a href="/claims" class="btn btn-white">Claims</a>
@@ -124,6 +146,13 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                             <a href="#" class="btn btn-red btn-pulse openQuoteTrigger">Get a Quote</a>
                         </slot>
                     </div>
+                    <div class="mobile-nav-btns-header">
+                        <a href="/claims" class="btn btn-white">Claims</a>
+                        <a href="#" class="btn btn-red btn-pulse openQuoteTrigger">Get a Quote</a>
+                    </div>
+                    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu" onclick="this.classList.toggle('active'); document.getElementById('mobileNavPanel').classList.toggle('open'); document.body.classList.toggle('nav-open');" style="z-index: 3012; position: relative;">
+                        <span></span><span></span><span></span>
+                    </button>
                 </nav>
             </div>
         </header>
@@ -184,55 +213,96 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
         <div class="footer-bottom"><div class="container"><p>&copy; 2026 Hometown Insurance Agency.</p></div></div>
     </footer>
 
-    <script>
+    <script is:inline>
         // Map Modal
-        const mapModal = document.getElementById("mapModal");
-        document.querySelectorAll(".openMapTrigger").forEach(btn => {
-            btn.onclick = () => mapModal!.style.display = "flex";
+        var mapModal = document.getElementById("mapModal");
+        document.querySelectorAll(".openMapTrigger").forEach(function(btn) {
+            btn.onclick = function() { mapModal.style.display = "flex"; };
         });
-        document.getElementById("closeMapModal")!.onclick = () => mapModal!.style.display = "none";
+        document.getElementById("closeMapModal").onclick = function() { mapModal.style.display = "none"; };
 
         // Quote Modal
-        const quoteModal = document.getElementById("quoteModal");
-        const modalCallbackOptions = document.getElementById("modalCallbackOptions");
-        const modalInsuranceType = document.getElementById("modalInsuranceType") as HTMLSelectElement;
-        const modalOtherDiv = document.getElementById("modalOtherDiv");
-        const modalOtherInput = document.getElementById("modalOtherInput") as HTMLInputElement;
+        var quoteModal = document.getElementById("quoteModal");
+        var modalCallbackOptions = document.getElementById("modalCallbackOptions");
+        var modalInsuranceType = document.getElementById("modalInsuranceType");
+        var modalOtherDiv = document.getElementById("modalOtherDiv");
+        var modalOtherInput = document.getElementById("modalOtherInput");
 
-        document.querySelectorAll(".openQuoteTrigger").forEach(btn => {
-            btn.addEventListener('click', (e) => { e.preventDefault(); quoteModal!.style.display = "flex"; });
+        document.querySelectorAll(".openQuoteTrigger").forEach(function(btn) {
+            btn.addEventListener('click', function(e) { e.preventDefault(); quoteModal.style.display = "flex"; });
         });
-        document.getElementById("closeQuoteModal")!.onclick = () => quoteModal!.style.display = "none";
+        document.getElementById("closeQuoteModal").onclick = function() { quoteModal.style.display = "none"; };
 
         // Quote modal - insurance type "Other" toggle
-        modalInsuranceType?.addEventListener('change', function() {
-            if (this.value === 'Other') {
-                modalOtherDiv!.style.display = 'block';
-                modalOtherInput?.setAttribute('required', 'required');
-            } else {
-                modalOtherDiv!.style.display = 'none';
-                modalOtherInput?.removeAttribute('required');
-            }
-        });
+        if (modalInsuranceType) {
+            modalInsuranceType.addEventListener('change', function() {
+                if (this.value === 'Other') {
+                    modalOtherDiv.style.display = 'block';
+                    if (modalOtherInput) modalOtherInput.setAttribute('required', 'required');
+                } else {
+                    modalOtherDiv.style.display = 'none';
+                    if (modalOtherInput) modalOtherInput.removeAttribute('required');
+                }
+            });
+        }
 
         // Quote modal - contact method toggle
-        document.querySelectorAll('input[name="modal_contact_method"]').forEach(radio => {
-            radio.addEventListener('change', () => {
-                modalCallbackOptions!.style.display = (radio as HTMLInputElement).value === 'Callback' ? 'block' : 'none';
+        document.querySelectorAll('input[name="modal_contact_method"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                modalCallbackOptions.style.display = radio.value === 'Callback' ? 'block' : 'none';
             });
         });
 
         // Quote modal - form submit
-        document.getElementById('quoteForm')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert("Thank you! Your quote request has been sent to the Hometown team.");
-            quoteModal!.style.display = "none";
-        });
+        var quoteForm = document.getElementById('quoteForm');
+        if (quoteForm) {
+            quoteForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert("Thank you! Your quote request has been sent to the Hometown team.");
+                quoteModal.style.display = "none";
+            });
+        }
 
         // Close modals on overlay click
-        window.addEventListener('click', (event) => {
-            if (event.target === mapModal) mapModal!.style.display = "none";
-            if (event.target === quoteModal) quoteModal!.style.display = "none";
+        window.addEventListener('click', function(event) {
+            if (event.target === mapModal) mapModal.style.display = "none";
+            if (event.target === quoteModal) quoteModal.style.display = "none";
+        });
+
+        // Hamburger Menu
+        var hamburgerBtn = document.getElementById('hamburgerBtn');
+        var navLinks = document.getElementById('navLinks');
+        var body = document.body;
+
+        // Mobile nav panel dropdown toggle
+        var mobilePanel = document.getElementById('mobileNavPanel');
+        if (mobilePanel) {
+            mobilePanel.querySelectorAll('.mobile-dropdown-toggle').forEach(function(toggle) {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var sub = toggle.nextElementSibling;
+                    if (sub) {
+                        sub.style.display = sub.style.display === 'block' ? 'none' : 'block';
+                    }
+                });
+            });
+            // Close panel when clicking a nav link (not the dropdown toggle)
+            mobilePanel.querySelectorAll('a:not(.mobile-dropdown-toggle)').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    mobilePanel.classList.remove('open');
+                    hamburgerBtn.classList.remove('active');
+                    body.classList.remove('nav-open');
+                });
+            });
+        }
+
+        // Close mobile nav on resize to desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 1200) {
+                hamburgerBtn.classList.remove('active');
+                if (mobilePanel) mobilePanel.classList.remove('open');
+                body.classList.remove('nav-open');
+            }
         });
     </script>
 </body>

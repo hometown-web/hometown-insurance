@@ -64,6 +64,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         @media (max-width: 992px) {
             .hero-grid, .coverage-layout { grid-template-columns: 1fr; }
             .hero-content { margin-top: 0; }
+            .coverage-layout { gap: 40px; }
+        }
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 34px; }
+            .hero-content p { font-size: 17px; }
+            .hero-wrapper { padding: 40px 0 80px 0; }
+            .coverage-section { padding: 50px 0 30px 0; }
+            .special-section { padding: 50px 0; }
+            .dd-section { padding: 20px 0 50px 0; }
+            .dd-card { padding: 25px; }
+        }
+        @media (max-width: 480px) {
+            .hero-content h1 { font-size: 28px; }
         }
     </style>
 
@@ -121,15 +134,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     </div>
                     <div class="form-group">
                         <label>How did you hear about us?</label>
-                        <select>
+                        <select id="hear_about_top" onchange="toggleHearOther(this, 'hear_other_top')">
                             <option value="" disabled selected>Please select...</option>
                             <option>Google Search</option>
                             <option>Facebook / Instagram</option>
                             <option>Friend or Family Member</option>
                             <option>Mailing / Flyer</option>
                             <option>Local Event</option>
-                            <option>Other</option>
+                            <option value="Other">Other</option>
                         </select>
+                    </div>
+                    <div id="hear_other_top" class="other-details-container">
+                        <div class="form-group">
+                            <label>Please specify how you heard about us:</label>
+                            <input type="text" placeholder="Tell us how you found us...">
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-red" style="width: 100%; margin-top: 10px;">Send Request</button>
                 </form>
@@ -204,7 +223,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                         </p>
                         <div style="background: var(--white); display: inline-block; padding: 15px 25px; border: 2px dashed var(--primary-red); border-radius: 8px; margin-bottom: 25px;">
                             <span style="font-size: 18px; font-weight: 700; color: var(--dark-blue);">
-                                PROMO CODE: <span style="color: var(--primary-red);">HOME</span> — Lowest inclusive price of $34.95
+                                PROMO CODE: <span style="color: var(--primary-red);">HOMETOWN</span> — Lowest inclusive price of $34.95
                             </span>
                         </div>
                         <p style="font-size: 16px; color: var(--text-gray); border-top: 1px solid #e2e8f0; margin-top: 10px; padding-top: 20px;">
@@ -312,15 +331,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     </div>
                     <div class="form-group">
                         <label>How did you hear about us?</label>
-                        <select>
+                        <select id="hear_about_bot" onchange="toggleHearOther(this, 'hear_other_bot')">
                             <option value="" disabled selected>Please select...</option>
                             <option>Google Search</option>
                             <option>Facebook / Instagram</option>
                             <option>Friend or Family Member</option>
                             <option>Mailing / Flyer</option>
                             <option>Local Event</option>
-                            <option>Other</option>
+                            <option value="Other">Other</option>
                         </select>
+                    </div>
+                    <div id="hear_other_bot" class="other-details-container">
+                        <div class="form-group">
+                            <label>Please specify how you heard about us:</label>
+                            <input type="text" placeholder="Tell us how you found us...">
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-red" style="width: 100%; margin-top: 10px;">Send Request</button>
                 </form>
@@ -334,7 +359,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         }
 
         function toggleOtherField(selectElement, fieldId) {
-            const otherField = document.getElementById(fieldId);
+            var otherField = document.getElementById(fieldId);
             if (selectElement.value === 'Other') {
                 otherField.style.display = 'block';
             } else {
@@ -342,10 +367,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             }
         }
 
+        function toggleHearOther(selectElement, fieldId) {
+            var container = document.getElementById(fieldId);
+            var input = container.querySelector('input');
+            if (selectElement.value === 'Other') {
+                container.style.display = 'block';
+                input.setAttribute('required', 'required');
+            } else {
+                container.style.display = 'none';
+                input.removeAttribute('required');
+                input.value = '';
+            }
+        }
+
         function toggleAccordion(header) {
-            const item = header.parentElement;
-            const wasActive = item.classList.contains('active');
-            document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('active'));
+            var item = header.parentElement;
+            var wasActive = item.classList.contains('active');
+            document.querySelectorAll('.accordion-item').forEach(function(el) { el.classList.remove('active'); });
             if (!wasActive) item.classList.add('active');
         }
     </script>
