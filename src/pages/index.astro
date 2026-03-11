@@ -328,6 +328,29 @@ const recentPosts = allPosts.slice(0, 3);
             });
         }
 
+        // Toast notification
+        function showToast(message, type) {
+            var existing = document.getElementById('sigToast');
+            if (existing) existing.remove();
+
+            var toast = document.createElement('div');
+            toast.id = 'sigToast';
+            toast.textContent = message;
+            toast.style.cssText = 'position:fixed;top:30px;left:50%;transform:translateX(-50%);z-index:100000;padding:16px 28px;border-radius:10px;font-weight:700;font-size:16px;box-shadow:0 4px 20px rgba(0,0,0,0.2);opacity:0;transition:opacity 0.3s ease;max-width:90%;text-align:center;';
+            toast.style.background = type === 'success' ? '#10b981' : '#ef4444';
+            toast.style.color = '#fff';
+            document.body.appendChild(toast);
+
+            // Fade in
+            setTimeout(function() { toast.style.opacity = '1'; }, 10);
+
+            // Fade out and remove after 4 seconds
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 4000);
+        }
+
         // Form submit
         var homeQuoteForm = document.getElementById('homeQuoteForm');
         var homeQuoteFormMsg = document.getElementById('homeQuoteFormMsg');
@@ -369,30 +392,16 @@ const recentPosts = allPosts.slice(0, 3);
                 .then(function(response) { return response.json(); })
                 .then(function(data) {
                     if (data.success) {
-                        if (homeQuoteFormMsg) {
-                            homeQuoteFormMsg.style.color = '#10b981';
-                            homeQuoteFormMsg.textContent = '✓ Your request has been sent! Our team will be in touch shortly.';
-                            homeQuoteFormMsg.style.display = 'block';
-                        }
                         homeQuoteForm.reset();
                         var quoteModal = document.getElementById('quoteModal');
-                        if (quoteModal) {
-                            setTimeout(function() { quoteModal.style.display = "none"; }, 2000);
-                        }
+                        if (quoteModal) { quoteModal.style.display = "none"; }
+                        showToast('✓ Your request has been sent! Our team will be in touch shortly.', 'success');
                     } else {
-                        if (homeQuoteFormMsg) {
-                            homeQuoteFormMsg.style.color = '#ef4444';
-                            homeQuoteFormMsg.textContent = data.error || 'Something went wrong. Please try again.';
-                            homeQuoteFormMsg.style.display = 'block';
-                        }
+                        showToast(data.error || 'Something went wrong. Please try again.', 'error');
                     }
                 })
                 .catch(function() {
-                    if (homeQuoteFormMsg) {
-                        homeQuoteFormMsg.style.color = '#ef4444';
-                        homeQuoteFormMsg.textContent = 'Network error. Please try again.';
-                        homeQuoteFormMsg.style.display = 'block';
-                    }
+                    showToast('Network error. Please try again.', 'error');
                 })
                 .finally(function() {
                     submitBtn.textContent = originalBtnText;
