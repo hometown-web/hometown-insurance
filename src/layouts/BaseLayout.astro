@@ -29,13 +29,13 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                 <p>Tell us a bit about your needs and we'll handle the rest.</p>
             </div>
             <form id="quoteForm">
-                <div class="form-group"><label>Full Name</label><input type="text" name="full_name" placeholder="John Doe" required></div>
+                <div class="form-group"><label>Full Name <span class="req">*</span></label><input type="text" name="full_name" placeholder="John Doe" required></div>
                 <div class="form-row">
-                    <div class="form-group"><label>Email Address</label><input type="email" name="email" placeholder="john@example.com" required></div>
-                    <div class="form-group"><label>Phone Number</label><input type="tel" name="phone" placeholder="631-555-0100" required></div>
+                    <div class="form-group"><label>Email Address <span class="req">*</span></label><input type="email" name="email" placeholder="john@example.com" required></div>
+                    <div class="form-group"><label>Phone Number <span class="req">*</span></label><input type="tel" name="phone" placeholder="631-555-0100" required></div>
                 </div>
                 <div class="form-group">
-                    <label>Insurance type?</label>
+                    <label>Insurance type? <span class="req">*</span></label>
                     <select id="modalInsuranceType" name="insurance_type" required>
                         <option value="" disabled selected>Select an option...</option>
                         <option>Personal Protection (Home/Auto)</option>
@@ -46,7 +46,7 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                     </select>
                 </div>
                 <div class="form-group other-details-box" id="modalOtherDiv" style="display: none;">
-                    <label>Please specify insurance type:</label>
+                    <label>Please specify insurance type: <span class="req">*</span></label>
                     <input type="text" id="modalOtherInput" name="other_insurance" placeholder="Enter coverage type..." required>
                 </div>
                 <div class="form-group">
@@ -75,7 +75,7 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                     </select>
                 </div>
                 <div class="form-group other-details-box" id="modalHearOtherDiv" style="display: none;">
-                    <label>Please specify how you heard about us:</label>
+                    <label>Please specify how you heard about us: <span class="req">*</span></label>
                     <input type="text" id="modalHearOtherInput" name="hear_other" placeholder="Tell us how you found us...">
                 </div>
                 <div class="form-group">
