@@ -563,7 +563,17 @@ body.nav-open .nav-overlay { display: block; }
 
   /* Logo */
   .logo { top: -10px; }
-  .logo img { height: 60px; }
+  .logo img { height: 60px; width: auto; object-fit: contain; }
+
+  /* Hero - hide background images on mobile, solid navy */
+  .hero-simple {
+    background-image: none !important;
+    background-color: var(--dark-blue) !important;
+  }
+  .contact-hero {
+    background-image: none !important;
+    background-color: var(--dark-blue) !important;
+  }
 
   /* Typography */
   .section-title h2 { font-size: 30px; }
