@@ -22,7 +22,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                         <i class="fa-solid fa-map-location-dot"></i>
                         <div>
                             <h4>Address</h4>
-                            <p><a href=".full-width-map" onclick="event.preventDefault(); document.querySelector('.full-width-map').scrollIntoView({ behavior: 'smooth' });" style="color: inherit; text-decoration: none; cursor: pointer;">5 Orville Drive, Suite 400<br>Bohemia, NY 11716</a></p>
+                            <p><a href="#contact-map" onclick="event.preventDefault(); document.getElementById('contact-map').scrollIntoView({ behavior: 'smooth', block: 'start' });" style="color: inherit; text-decoration: none; cursor: pointer;">5 Orville Drive, Suite 400<br>Bohemia, NY 11716</a></p>
                         </div>
                     </div>
                     <div class="detail-item">
@@ -110,7 +110,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
     </main>
 
-    <section class="full-width-map">
+    <section class="full-width-map" id="contact-map" style="scroll-margin-top: 20px;">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.731420790479!2d-73.12053672342548!3d40.78010377138332!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e83693f9c62371%3A0xc3f173b2a2656910!2s5%20Orville%20Dr%2C%20Bohemia%2C%20NY%2011716!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </section>
 
