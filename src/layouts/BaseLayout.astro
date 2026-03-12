@@ -50,7 +50,7 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                     <input type="text" id="modalOtherInput" name="other_insurance" placeholder="Enter coverage type..." required>
                 </div>
                 <div class="form-group">
-                    <label>Preferred way for us to reach you?</label>
+                    <label>Preferred way for us to reach you? <span class="req">*</span></label>
                     <div class="radio-group">
                         <label class="radio-label"><input type="radio" name="modal_contact_method" value="Email" checked> Email</label>
                         <label class="radio-label"><input type="radio" name="modal_contact_method" value="Callback"> Give me a callback</label>
@@ -58,13 +58,13 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                 </div>
                 <div id="modalCallbackOptions" style="display: none; border-top: 1px solid #eee; padding-top: 15px; margin-top: 5px;">
                     <div class="form-row">
-                        <div class="form-group"><label>Preferred Day</label><select name="callback_day"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option></select></div>
-                        <div class="form-group"><label>Preferred Time</label><select name="callback_time"><option>Morning (9am - 12pm)</option><option>Afternoon (12pm - 5pm)</option><option>Evening (After 5pm)</option></select></div>
+                        <div class="form-group"><label>Preferred Day <span class="req">*</span></label><select name="callback_day" required><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option></select></div>
+                        <div class="form-group"><label>Preferred Time <span class="req">*</span></label><select name="callback_time" required><option>Morning (9am - 12pm)</option><option>Afternoon (12pm - 5pm)</option><option>Evening (After 5pm)</option></select></div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>How did you hear about us?</label>
-                    <select id="modalHearAbout" name="hear_about">
+                    <label>How did you hear about us? <span class="req">*</span></label>
+                    <select id="modalHearAbout" name="hear_about" required>
                         <option value="" disabled selected>Please select...</option>
                         <option>Google Search</option>
                         <option>Facebook / Instagram</option>
@@ -230,7 +230,7 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                 </div>
                 <div class="footer-col footer-contact">
                     <h3>Contact Us</h3>
-                    <p class="openMapTrigger" style="cursor:pointer;"><i class="fa-solid fa-location-dot"></i> 5 Orville Drive, Bohemia, NY 11716</p>
+                    <p class="openMapTrigger" style="cursor:pointer;"><i class="fa-solid fa-location-dot"></i> 5 Orville Drive, Suite 400, Bohemia, NY 11716</p>
                     <p><i class="fa-solid fa-phone"></i> <a href="tel:6315890100">631-589-0100</a></p>
                     <p><i class="fa-solid fa-envelope"></i> <a href="mailto:service@hometowninsurance.com">service@hometowninsurance.com</a></p>
                 </div>
