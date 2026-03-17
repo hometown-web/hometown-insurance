@@ -234,7 +234,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <script is:inline>
         function toggleCallback(show, id) {
-            document.getElementById('callback_fields_' + id).style.display = show ? 'block' : 'none';
+            var container = document.getElementById('callback_fields_' + id);
+            container.style.display = show ? 'block' : 'none';
+            var inputs = container.querySelectorAll('input[name="phone"], input[name="callback_time"]');
+            inputs.forEach(function(input) {
+                if (show) { input.setAttribute('required', 'required'); }
+                else { input.removeAttribute('required'); input.value = ''; }
+            });
         }
 
         function toggleOtherField(selectElement, fieldId) {
