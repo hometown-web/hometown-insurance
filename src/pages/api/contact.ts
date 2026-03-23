@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { neon } from '@neondatabase/serverless';
-// import { Resend } from 'resend';
+import { Resend } from 'resend';
 
 export const prerender = false;
 
@@ -24,8 +24,7 @@ export const POST: APIRoute = async ({ request }) => {
       ${data.phone || ''}, ${data.help_type || ''}, ${data.message || ''}
     )`;
 
-    // Send email notification - TEMPORARILY DISABLED FOR BUILD
-    /*
+    // Send email notification
     try {
       const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
@@ -48,7 +47,6 @@ export const POST: APIRoute = async ({ request }) => {
     } catch (emailErr) {
       console.error('Email notification failed (contact still saved):', emailErr);
     }
-    */
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,

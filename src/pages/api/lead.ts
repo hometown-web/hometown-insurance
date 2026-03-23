@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { neon } from '@neondatabase/serverless';
-// import { Resend } from 'resend';
+import { Resend } from 'resend';
 
 export const prerender = false;
 
@@ -31,8 +31,7 @@ export const POST: APIRoute = async ({ request }) => {
       ${data.page || ''}, ${data.form_position || ''}
     )`;
 
-    // Send email notification - TEMPORARILY DISABLED FOR BUILD
-    /*
+    // Send email notification
     try {
       const resend = new Resend(import.meta.env.RESEND_API_KEY);
       const pageLabel = data.page ? data.page.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase()) : 'Unknown';
@@ -63,7 +62,6 @@ export const POST: APIRoute = async ({ request }) => {
     } catch (emailErr) {
       console.error('Email notification failed (lead still saved):', emailErr);
     }
-    */
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
