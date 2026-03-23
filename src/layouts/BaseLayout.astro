@@ -18,22 +18,121 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
     <meta name="description" content={description}>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!-- Google Tag Manager -->
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0RYHJQZTT4"></script>
     <script is:inline>
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-TQ96BMZH');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-0RYHJQZTT4');
     </script>
-    <!-- End Google Tag Manager -->
+    
+    <style>
+        /* Multi-Select Styles */
+        .multi-select-hint {
+            font-size: 13px;
+            color: #64748b;
+            margin: -5px 0 8px 0;
+            font-style: italic;
+        }
+        .multi-select-wrapper {
+            position: relative;
+        }
+        .multi-select-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .multi-select-display:hover {
+            border-color: #cbd5e1;
+        }
+        .multi-select-display.active {
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+        .multi-select-text {
+            color: #64748b;
+            flex-grow: 1;
+        }
+        .multi-select-text.has-selection {
+            color: #1e293b;
+        }
+        .multi-select-arrow {
+            color: #64748b;
+            transition: transform 0.2s ease;
+        }
+        .multi-select-display.active .multi-select-arrow {
+            transform: rotate(180deg);
+        }
+        .multi-select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid var(--primary-red);
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: none;
+            margin-top: 4px;
+        }
+        .multi-select-dropdown.show {
+            display: block;
+        }
+        .multi-select-options {
+            max-height: 240px;
+            overflow-y: auto;
+            padding: 8px 0;
+        }
+        .multi-select-option {
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin: 0;
+        }
+        .multi-select-option:hover {
+            background: #f8fafc;
+        }
+        .multi-select-option input[type="checkbox"] {
+            margin: 0 12px 0 0;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary-red);
+        }
+        .multi-select-option span {
+            color: #1e293b;
+            font-weight: normal;
+        }
+        .multi-select-actions {
+            border-top: 1px solid #e2e8f0;
+            padding: 12px 16px;
+            text-align: right;
+        }
+        .multi-select-done {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .multi-select-done:hover {
+            background: #dc2626;
+        }
+    </style>
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TQ96BMZH"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
     <!-- Quote Modal -->
     <div class="modal-overlay" id="quoteModal">
         <div class="modal-content quote-form-modal">
@@ -50,14 +149,40 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                 </div>
                 <div class="form-group">
                     <label>Insurance type? <span class="req">*</span></label>
-                    <select id="modalInsuranceType" name="insurance_type" required>
-                        <option value="" disabled selected>Select an option...</option>
-                        <option>Personal Protection (Home/Auto)</option>
-                        <option>Business & Commercial</option>
-                        <option>Firefighter & EMS Services</option>
-                        <option>Life & Health</option>
-                        <option value="Other">Other</option>
-                    </select>
+                    <p class="multi-select-hint">Click all that apply</p>
+                    <div class="multi-select-wrapper">
+                        <div class="multi-select-display" onclick="toggleMultiSelect('modal_insurance_type')">
+                            <span class="multi-select-text">Select insurance types...</span>
+                            <i class="fas fa-chevron-down multi-select-arrow"></i>
+                        </div>
+                        <div class="multi-select-dropdown" id="modal_insurance_type_dropdown">
+                            <div class="multi-select-options">
+                                <label class="multi-select-option">
+                                    <input type="checkbox" name="insurance_type[]" value="Personal Protection (Home/Auto)" onchange="updateMultiSelectDisplay('modal_insurance_type')">
+                                    <span>Personal Protection (Home/Auto)</span>
+                                </label>
+                                <label class="multi-select-option">
+                                    <input type="checkbox" name="insurance_type[]" value="Business & Commercial" onchange="updateMultiSelectDisplay('modal_insurance_type')">
+                                    <span>Business & Commercial</span>
+                                </label>
+                                <label class="multi-select-option">
+                                    <input type="checkbox" name="insurance_type[]" value="Firefighter & EMS Services" onchange="updateMultiSelectDisplay('modal_insurance_type')">
+                                    <span>Firefighter & EMS Services</span>
+                                </label>
+                                <label class="multi-select-option">
+                                    <input type="checkbox" name="insurance_type[]" value="Life & Health" onchange="updateMultiSelectDisplay('modal_insurance_type')">
+                                    <span>Life & Health</span>
+                                </label>
+                                <label class="multi-select-option">
+                                    <input type="checkbox" name="insurance_type[]" value="Other" onchange="updateMultiSelectDisplay('modal_insurance_type'); toggleModalOtherMulti(this)">
+                                    <span>Other</span>
+                                </label>
+                            </div>
+                            <div class="multi-select-actions">
+                                <button type="button" class="multi-select-done" onclick="closeMultiSelect('modal_insurance_type')">Done</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group other-details-box" id="modalOtherDiv" style="display: none;">
                     <label>Please specify insurance type: <span class="req">*</span></label>
@@ -78,15 +203,44 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                 </div>
                 <div class="form-group">
                     <label>How did you hear about us? <span class="req">*</span></label>
-                    <select id="modalHearAbout" name="hear_about" required>
-                        <option value="" disabled selected>Please select...</option>
-                        <option>Google Search</option>
-                        <option>Facebook / Instagram</option>
-                        <option>Friend or Family Member</option>
-                        <option>Mailing / Flyer</option>
-                        <option>Local Event</option>
-                        <option value="Other">Other</option>
-                    </select>
+                    <p class="multi-select-hint">Click all that apply</p>
+                    <div class="multi-select-wrapper">
+                        <div class="multi-select-display" onclick="toggleMultiSelect('modal_hear_about')">
+                            <span class="multi-select-text">Please select...</span>
+                            <i class="fas fa-chevron-down multi-select-arrow"></i>
+                        </div>
+                        <div class="multi-select-dropdown" id="modal_hear_about_dropdown">
+                            <div class="multi-select-options">
+                                <label class="multi-select-option">
+                                    <input type="checkbox" name="hear_about[]" value="Google Search" onchange="updateMultiSelectDisplay('modal_hear_about')">
+                                    <span>Google Search</span>
+                                </label>
+                                <label class="multi-select-option">
+                                    <input type="checkbox" name="hear_about[]" value="Facebook / Instagram" onchange="updateMultiSelectDisplay('modal_hear_about')">
+                                    <span>Facebook / Instagram</span>
+                                </label>
+                                <label class="multi-select-option">
+                                    <input type="checkbox" name="hear_about[]" value="Friend or Family Member" onchange="updateMultiSelectDisplay('modal_hear_about')">
+                                    <span>Friend or Family Member</span>
+                                </label>
+                                <label class="multi-select-option">
+                                    <input type="checkbox" name="hear_about[]" value="Mailing / Flyer" onchange="updateMultiSelectDisplay('modal_hear_about')">
+                                    <span>Mailing / Flyer</span>
+                                </label>
+                                <label class="multi-select-option">
+                                    <input type="checkbox" name="hear_about[]" value="Local Event" onchange="updateMultiSelectDisplay('modal_hear_about')">
+                                    <span>Local Event</span>
+                                </label>
+                                <label class="multi-select-option">
+                                    <input type="checkbox" name="hear_about[]" value="Other" onchange="updateMultiSelectDisplay('modal_hear_about'); toggleModalHearOtherMulti(this)">
+                                    <span>Other</span>
+                                </label>
+                            </div>
+                            <div class="multi-select-actions">
+                                <button type="button" class="multi-select-done" onclick="closeMultiSelect('modal_hear_about')">Done</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group other-details-box" id="modalHearOtherDiv" style="display: none;">
                     <label>Please specify how you heard about us: <span class="req">*</span></label>
@@ -254,6 +408,92 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
     </footer>
 
     <script is:inline>
+        // Multi-Select Functions
+        function toggleMultiSelect(fieldId) {
+            var dropdown = document.getElementById(fieldId + '_dropdown');
+            var display = dropdown.parentElement.querySelector('.multi-select-display');
+            var isOpen = dropdown.classList.contains('show');
+            
+            // Close all other dropdowns
+            document.querySelectorAll('.multi-select-dropdown').forEach(function(el) {
+                el.classList.remove('show');
+            });
+            document.querySelectorAll('.multi-select-display').forEach(function(el) {
+                el.classList.remove('active');
+            });
+            
+            if (!isOpen) {
+                dropdown.classList.add('show');
+                display.classList.add('active');
+            }
+        }
+        
+        function closeMultiSelect(fieldId) {
+            var dropdown = document.getElementById(fieldId + '_dropdown');
+            var display = dropdown.parentElement.querySelector('.multi-select-display');
+            dropdown.classList.remove('show');
+            display.classList.remove('active');
+        }
+        
+        function updateMultiSelectDisplay(fieldId) {
+            var wrapper = document.getElementById(fieldId + '_dropdown').parentElement;
+            var textElement = wrapper.querySelector('.multi-select-text');
+            var checkboxes = wrapper.querySelectorAll('input[type="checkbox"]:checked');
+            
+            if (checkboxes.length === 0) {
+                textElement.textContent = fieldId.includes('insurance_type') ? 'Select insurance types...' : 'Please select...';
+                textElement.classList.remove('has-selection');
+            } else if (checkboxes.length === 1) {
+                textElement.textContent = checkboxes[0].nextElementSibling.textContent;
+                textElement.classList.add('has-selection');
+            } else {
+                textElement.textContent = checkboxes.length + ' items selected';
+                textElement.classList.add('has-selection');
+            }
+        }
+        
+        function toggleModalOtherMulti(checkbox) {
+            var modalOtherDiv = document.getElementById('modalOtherDiv');
+            var modalOtherInput = document.getElementById('modalOtherInput');
+            
+            if (checkbox.checked) {
+                modalOtherDiv.style.display = 'block';
+                if (modalOtherInput) modalOtherInput.setAttribute('required', 'required');
+            } else {
+                modalOtherDiv.style.display = 'none';
+                if (modalOtherInput) { 
+                    modalOtherInput.removeAttribute('required'); 
+                    modalOtherInput.value = ''; 
+                }
+            }
+        }
+        
+        function toggleModalHearOtherMulti(checkbox) {
+            var modalHearOtherDiv = document.getElementById('modalHearOtherDiv');
+            var modalHearOtherInput = document.getElementById('modalHearOtherInput');
+            
+            if (checkbox.checked) {
+                modalHearOtherDiv.style.display = 'block';
+                modalHearOtherInput.setAttribute('required', 'required');
+            } else {
+                modalHearOtherDiv.style.display = 'none';
+                modalHearOtherInput.removeAttribute('required');
+                modalHearOtherInput.value = '';
+            }
+        }
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.multi-select-wrapper')) {
+                document.querySelectorAll('.multi-select-dropdown').forEach(function(el) {
+                    el.classList.remove('show');
+                });
+                document.querySelectorAll('.multi-select-display').forEach(function(el) {
+                    el.classList.remove('active');
+                });
+            }
+        });
+
         // Phone number formatting: (631) 555-0100
         function formatPhone(input) {
             var digits = input.value.replace(/\D/g, '');
@@ -281,27 +521,11 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
         // Quote Modal
         var quoteModal = document.getElementById("quoteModal");
         var modalCallbackOptions = document.getElementById("modalCallbackOptions");
-        var modalInsuranceType = document.getElementById("modalInsuranceType");
-        var modalOtherDiv = document.getElementById("modalOtherDiv");
-        var modalOtherInput = document.getElementById("modalOtherInput");
 
         document.querySelectorAll(".openQuoteTrigger").forEach(function(btn) {
             btn.addEventListener('click', function(e) { e.preventDefault(); quoteModal.style.display = "flex"; });
         });
         document.getElementById("closeQuoteModal").onclick = function() { quoteModal.style.display = "none"; };
-
-        // Quote modal - insurance type "Other" toggle
-        if (modalInsuranceType) {
-            modalInsuranceType.addEventListener('change', function() {
-                if (this.value === 'Other') {
-                    modalOtherDiv.style.display = 'block';
-                    if (modalOtherInput) modalOtherInput.setAttribute('required', 'required');
-                } else {
-                    modalOtherDiv.style.display = 'none';
-                    if (modalOtherInput) modalOtherInput.removeAttribute('required');
-                }
-            });
-        }
 
         // Quote modal - contact method toggle
         document.querySelectorAll('input[name="modal_contact_method"]').forEach(function(radio) {
@@ -309,22 +533,6 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                 modalCallbackOptions.style.display = radio.value === 'Callback' ? 'block' : 'none';
             });
         });
-
-        // Quote modal - hear about toggle
-        var modalHearAbout = document.getElementById("modalHearAbout");
-        var modalHearOtherDiv = document.getElementById("modalHearOtherDiv");
-        var modalHearOtherInput = document.getElementById("modalHearOtherInput");
-        if (modalHearAbout) {
-            modalHearAbout.addEventListener('change', function() {
-                if (this.value === 'Other') {
-                    modalHearOtherDiv.style.display = 'block';
-                    if (modalHearOtherInput) modalHearOtherInput.setAttribute('required', 'required');
-                } else {
-                    modalHearOtherDiv.style.display = 'none';
-                    if (modalHearOtherInput) modalHearOtherInput.removeAttribute('required');
-                }
-            });
-        }
 
         // Toast notification
         function showToast(message, type) {
@@ -363,16 +571,28 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                 // Collect form data (defensive — use helper to avoid null errors)
                 function gv(form, sel) { var el = form.querySelector(sel); return el ? el.value : ''; }
                 var checkedRadio = quoteForm.querySelector('input[name="modal_contact_method"]:checked');
+                
+                // Handle multi-select arrays
+                var insuranceTypes = [];
+                quoteForm.querySelectorAll('input[name="insurance_type[]"]:checked').forEach(function(cb) {
+                    insuranceTypes.push(cb.value);
+                });
+                
+                var hearAbout = [];
+                quoteForm.querySelectorAll('input[name="hear_about[]"]:checked').forEach(function(cb) {
+                    hearAbout.push(cb.value);
+                });
+                
                 var formData = {
                     full_name: gv(quoteForm, 'input[name="full_name"]'),
                     email: gv(quoteForm, 'input[name="email"]'),
                     phone: gv(quoteForm, 'input[name="phone"]'),
-                    insurance_type: gv(quoteForm, 'select[name="insurance_type"]'),
+                    insurance_type: insuranceTypes.join(', '),
                     other_insurance: gv(quoteForm, 'input[name="other_insurance"]'),
                     contact_method: checkedRadio ? checkedRadio.value : 'Email',
                     callback_day: gv(quoteForm, 'select[name="callback_day"]'),
                     callback_time: gv(quoteForm, 'select[name="callback_time"]'),
-                    hear_about: gv(quoteForm, 'select[name="hear_about"]'),
+                    hear_about: hearAbout.join(', '),
                     hear_other: gv(quoteForm, 'input[name="hear_other"]'),
                     promo_code: gv(quoteForm, 'input[name="promo_code"]'),
                     message: gv(quoteForm, 'textarea[name="message"]'),
@@ -388,15 +608,6 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                 .then(function(response) { return response.json(); })
                 .then(function(data) {
                     if (data.success) {
-                        window.dataLayer = window.dataLayer || [];
-                        window.dataLayer.push({
-                            event: 'form_submission',
-                            form_name: formData.page,
-                            insurance_type: formData.insurance_type || '',
-                            contact_method: formData.contact_method || '',
-                            hear_about: formData.hear_about || '',
-                            help_type: ''
-                        });
                         quoteForm.reset();
                         quoteModal.style.display = "none";
                         showToast('✓ Your request has been sent! Our team will be in touch shortly.', 'success');

@@ -89,12 +89,36 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
                         <div class="form-group">
                             <label>How can we help? <span class="req">*</span></label>
-                            <select name="help_type" required>
-                                <option>I'd like a quick quote</option>
-                                <option>I have a question about my policy</option>
-                                <option>I need help with a claim</option>
-                                <option>General Inquiry</option>
-                            </select>
+                            <p class="multi-select-hint">Click all that apply</p>
+                            <div class="multi-select-wrapper">
+                                <div class="multi-select-display" onclick="toggleMultiSelect('help_type')">
+                                    <span class="multi-select-text">Please select...</span>
+                                    <i class="fas fa-chevron-down multi-select-arrow"></i>
+                                </div>
+                                <div class="multi-select-dropdown" id="help_type_dropdown">
+                                    <div class="multi-select-options">
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="help_type[]" value="I'd like a quick quote" onchange="updateMultiSelectDisplay('help_type')">
+                                            <span>I'd like a quick quote</span>
+                                        </label>
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="help_type[]" value="I have a question about my policy" onchange="updateMultiSelectDisplay('help_type')">
+                                            <span>I have a question about my policy</span>
+                                        </label>
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="help_type[]" value="I need help with a claim" onchange="updateMultiSelectDisplay('help_type')">
+                                            <span>I need help with a claim</span>
+                                        </label>
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="help_type[]" value="General Inquiry" onchange="updateMultiSelectDisplay('help_type')">
+                                            <span>General Inquiry</span>
+                                        </label>
+                                    </div>
+                                    <div class="multi-select-actions">
+                                        <button type="button" class="multi-select-done" onclick="closeMultiSelect('help_type')">Done</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -250,12 +274,171 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
+        /* Multi-Select Styles */
+        .multi-select-hint {
+            font-size: 13px;
+            color: #64748b;
+            margin: -5px 0 8px 0;
+            font-style: italic;
+        }
+        .multi-select-wrapper {
+            position: relative;
+        }
+        .multi-select-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .multi-select-display:hover {
+            border-color: #cbd5e1;
+        }
+        .multi-select-display.active {
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+        .multi-select-text {
+            color: #64748b;
+            flex-grow: 1;
+        }
+        .multi-select-text.has-selection {
+            color: #1e293b;
+        }
+        .multi-select-arrow {
+            color: #64748b;
+            transition: transform 0.2s ease;
+        }
+        .multi-select-display.active .multi-select-arrow {
+            transform: rotate(180deg);
+        }
+        .multi-select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid var(--primary-red);
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: none;
+            margin-top: 4px;
+        }
+        .multi-select-dropdown.show {
+            display: block;
+        }
+        .multi-select-options {
+            max-height: 240px;
+            overflow-y: auto;
+            padding: 8px 0;
+        }
+        .multi-select-option {
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin: 0;
+        }
+        .multi-select-option:hover {
+            background: #f8fafc;
+        }
+        .multi-select-option input[type="checkbox"] {
+            margin: 0 12px 0 0;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary-red);
+        }
+        .multi-select-option span {
+            color: #1e293b;
+            font-weight: normal;
+        }
+        .multi-select-actions {
+            border-top: 1px solid #e2e8f0;
+            padding: 12px 16px;
+            text-align: right;
+        }
+        .multi-select-done {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .multi-select-done:hover {
+            background: #dc2626;
+        }
+
         @media (max-width: 992px) {
             .contact-grid { grid-template-columns: 1fr; }
         }
     </style>
 
     <script is:inline>
+        // Multi-Select Functions
+        function toggleMultiSelect(fieldId) {
+            var dropdown = document.getElementById(fieldId + '_dropdown');
+            var display = dropdown.parentElement.querySelector('.multi-select-display');
+            var isOpen = dropdown.classList.contains('show');
+            
+            // Close all other dropdowns
+            document.querySelectorAll('.multi-select-dropdown').forEach(function(el) {
+                el.classList.remove('show');
+            });
+            document.querySelectorAll('.multi-select-display').forEach(function(el) {
+                el.classList.remove('active');
+            });
+            
+            if (!isOpen) {
+                dropdown.classList.add('show');
+                display.classList.add('active');
+            }
+        }
+        
+        function closeMultiSelect(fieldId) {
+            var dropdown = document.getElementById(fieldId + '_dropdown');
+            var display = dropdown.parentElement.querySelector('.multi-select-display');
+            dropdown.classList.remove('show');
+            display.classList.remove('active');
+        }
+        
+        function updateMultiSelectDisplay(fieldId) {
+            var wrapper = document.getElementById(fieldId + '_dropdown').parentElement;
+            var textElement = wrapper.querySelector('.multi-select-text');
+            var checkboxes = wrapper.querySelectorAll('input[type="checkbox"]:checked');
+            
+            if (checkboxes.length === 0) {
+                textElement.textContent = 'Please select...';
+                textElement.classList.remove('has-selection');
+            } else if (checkboxes.length === 1) {
+                textElement.textContent = checkboxes[0].nextElementSibling.textContent;
+                textElement.classList.add('has-selection');
+            } else {
+                textElement.textContent = checkboxes.length + ' items selected';
+                textElement.classList.add('has-selection');
+            }
+        }
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.multi-select-wrapper')) {
+                document.querySelectorAll('.multi-select-dropdown').forEach(function(el) {
+                    el.classList.remove('show');
+                });
+                document.querySelectorAll('.multi-select-display').forEach(function(el) {
+                    el.classList.remove('active');
+                });
+            }
+        });
+
         var contactForm = document.getElementById('contactForm');
         var contactFormMsg = document.getElementById('contactFormMsg');
 
@@ -270,12 +453,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 submitBtn.disabled = true;
                 if (contactFormMsg) contactFormMsg.style.display = 'none';
 
+                var helpTypes = [];
+                contactForm.querySelectorAll('input[name="help_type[]"]:checked').forEach(function(cb) {
+                    helpTypes.push(cb.value);
+                });
+
                 var formData = {
                     first_name: contactForm.querySelector('input[name="first_name"]').value,
                     last_name: contactForm.querySelector('input[name="last_name"]').value,
                     email: contactForm.querySelector('input[name="email"]').value,
                     phone: contactForm.querySelector('input[name="phone"]').value,
-                    help_type: contactForm.querySelector('select[name="help_type"]').value,
+                    help_type: helpTypes.join(', '),
                     message: contactForm.querySelector('textarea[name="message"]').value,
                     page: 'contact'
                 };
@@ -288,15 +476,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 .then(function(response) { return response.json(); })
                 .then(function(data) {
                     if (data.success) {
-                        window.dataLayer = window.dataLayer || [];
-                        window.dataLayer.push({
-                            event: 'form_submission',
-                            form_name: 'contact',
-                            insurance_type: '',
-                            contact_method: '',
-                            hear_about: '',
-                            help_type: formData.help_type || ''
-                        });
                         contactFormMsg.style.color = '#10b981';
                         contactFormMsg.textContent = '✓ Your message has been sent! Our team will be in touch shortly.';
                         contactFormMsg.style.display = 'block';
