@@ -472,11 +472,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             
             if (checkbox.checked) {
                 helpOtherDiv.style.display = 'block';
-                helpOtherInput.setAttribute('required', 'required');
             } else {
                 helpOtherDiv.style.display = 'none';
-                helpOtherInput.removeAttribute('required');
-                helpOtherInput.value = '';
+                if (helpOtherInput) helpOtherInput.value = '';
             }
         }
         
@@ -498,6 +496,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         if (contactForm) {
             contactForm.addEventListener('submit', function(e) {
                 e.preventDefault();
+
+                // Custom validation for "Other" fields
+                var helpOtherChecked = contactForm.querySelector('input[name="help_type[]"][value="Other"]:checked');
+                
+                if (helpOtherChecked) {
+                    var helpOtherInput = contactForm.querySelector('input[name="help_other"]');
+                    if (!helpOtherInput || !helpOtherInput.value.trim()) {
+                        if (contactFormMsg) {
+                            contactFormMsg.style.color = '#ef4444';
+                            contactFormMsg.textContent = 'Please specify how we can help you.';
+                            contactFormMsg.style.display = 'block';
+                        }
+                        return;
+                    }
+                }
 
                 var submitBtn = contactForm.querySelector('button[type="submit"]');
                 var originalBtnText = submitBtn.textContent;
@@ -534,6 +547,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                         contactFormMsg.textContent = '✓ Your message has been sent! Our team will be in touch shortly.';
                         contactFormMsg.style.display = 'block';
                         contactForm.reset();
+                        
+                        // Reset multi-select displays
+                        contactForm.querySelectorAll('.multi-select-text').forEach(function(text) {
+                            text.textContent = 'Please select...';
+                            text.classList.remove('has-selection');
+                        });
+                        
+                        // Hide any "Other" fields
+                        var helpOther = document.getElementById('help_other');
+                        if (helpOther) helpOther.style.display = 'none';
                     } else {
                         contactFormMsg.style.color = '#ef4444';
                         contactFormMsg.textContent = data.error || 'Something went wrong. Please try again.';

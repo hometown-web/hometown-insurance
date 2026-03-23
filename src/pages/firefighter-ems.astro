@@ -621,13 +621,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             
             if (checkbox.checked) {
                 otherField.style.display = 'block';
-                if (input) input.setAttribute('required', 'required');
             } else {
                 otherField.style.display = 'none';
-                if (input) { 
-                    input.removeAttribute('required'); 
-                    input.value = ''; 
-                }
+                if (input) input.value = '';
             }
         }
         

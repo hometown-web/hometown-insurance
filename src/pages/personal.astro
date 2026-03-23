@@ -629,13 +629,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             
             if (checkbox.checked) {
                 otherField.style.display = 'block';
-                if (input) input.setAttribute('required', 'required');
             } else {
                 otherField.style.display = 'none';
-                if (input) { 
-                    input.removeAttribute('required'); 
-                    input.value = ''; 
-                }
+                if (input) input.value = '';
             }
         }
         
@@ -645,11 +641,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             
             if (checkbox.checked) {
                 container.style.display = 'block';
-                input.setAttribute('required', 'required');
             } else {
                 container.style.display = 'none';
-                input.removeAttribute('required');
-                input.value = '';
+                if (input) input.value = '';
             }
         }
         
@@ -709,6 +703,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
 
+                    // Custom validation for "Other" fields
+                    var insuranceOtherChecked = form.querySelector('input[name="insurance_type[]"][value="Other"]:checked');
+                    var hearOtherChecked = form.querySelector('input[name="hear_about[]"][value="Other"]:checked');
+                    
+                    if (insuranceOtherChecked) {
+                        var otherDetailsInput = form.querySelector('input[name="other_details"]');
+                        if (!otherDetailsInput || !otherDetailsInput.value.trim()) {
+                            msg.style.color = '#ef4444';
+                            msg.textContent = 'Please specify the "Other" insurance type.';
+                            msg.style.display = 'block';
+                            return;
+                        }
+                    }
+                    
+                    if (hearOtherChecked) {
+                        var hearOtherInput = form.querySelector('input[name="hear_other"]');
+                        if (!hearOtherInput || !hearOtherInput.value.trim()) {
+                            msg.style.color = '#ef4444';
+                            msg.textContent = 'Please specify how you heard about us.';
+                            msg.style.display = 'block';
+                            return;
+                        }
+                    }
+
                     var submitBtn = form.querySelector('button[type="submit"]');
                     var originalBtnText = submitBtn.textContent;
 
@@ -756,6 +774,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                             msg.textContent = '✓ Your request has been sent! Our team will be in touch shortly.';
                             msg.style.display = 'block';
                             form.reset();
+                            
+                            // Reset multi-select displays
+                            form.querySelectorAll('.multi-select-text').forEach(function(text) {
+                                if (text.textContent.includes('insurance')) {
+                                    text.textContent = 'Select insurance types...';
+                                } else {
+                                    text.textContent = 'Please select...';
+                                }
+                                text.classList.remove('has-selection');
+                            });
+                            
+                            // Hide any "Other" fields
+                            form.querySelectorAll('.other-details-container').forEach(function(container) {
+                                container.style.display = 'none';
+                            });
                         } else {
                             msg.style.color = '#ef4444';
                             msg.textContent = data.error || 'Something went wrong. Please try again.';

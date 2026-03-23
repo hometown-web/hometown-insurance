@@ -458,13 +458,9 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
             
             if (checkbox.checked) {
                 modalOtherDiv.style.display = 'block';
-                if (modalOtherInput) modalOtherInput.setAttribute('required', 'required');
             } else {
                 modalOtherDiv.style.display = 'none';
-                if (modalOtherInput) { 
-                    modalOtherInput.removeAttribute('required'); 
-                    modalOtherInput.value = ''; 
-                }
+                if (modalOtherInput) modalOtherInput.value = '';
             }
         }
         
@@ -474,11 +470,9 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
             
             if (checkbox.checked) {
                 modalHearOtherDiv.style.display = 'block';
-                modalHearOtherInput.setAttribute('required', 'required');
             } else {
                 modalHearOtherDiv.style.display = 'none';
-                modalHearOtherInput.removeAttribute('required');
-                modalHearOtherInput.value = '';
+                if (modalHearOtherInput) modalHearOtherInput.value = '';
             }
         }
         
