@@ -255,8 +255,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                         </div>
                     </div>
                     <div id="callback_fields_top" class="callback-fields">
-                        <div class="form-group"><label>Phone Number <span class="req">*</span></label><input type="tel" name="phone" required></div>
-                        <div class="form-group"><label>Best Day & Time <span class="req">*</span></label><input type="text" name="callback_time" required placeholder="e.g. Monday Morning"></div>
+                        <div class="form-group"><label>Phone Number <span class="req">*</span></label><input type="tel" name="phone"></div>
+                        <div class="form-group"><label>Best Day & Time <span class="req">*</span></label><input type="text" name="callback_time" placeholder="e.g. Monday Morning"></div>
                     </div>
                     <div class="form-group">
                         <label>How did you hear about us? <span class="req">*</span></label>
@@ -504,8 +504,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                         </div>
                     </div>
                     <div id="callback_fields_bot" class="callback-fields">
-                        <div class="form-group"><label>Phone Number <span class="req">*</span></label><input type="tel" name="phone" required></div>
-                        <div class="form-group"><label>Best Day & Time <span class="req">*</span></label><input type="text" name="callback_time" required placeholder="e.g. Wednesday Mornings"></div>
+                        <div class="form-group"><label>Phone Number <span class="req">*</span></label><input type="tel" name="phone"></div>
+                        <div class="form-group"><label>Best Day & Time <span class="req">*</span></label><input type="text" name="callback_time" placeholder="e.g. Wednesday Mornings"></div>
                     </div>
                     <div class="form-group">
                         <label>How did you hear about us? <span class="req">*</span></label>
@@ -660,6 +660,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             if (form) {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
+                    
+                    console.log('Form submit event triggered');
 
 
 
@@ -671,38 +673,77 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     submitBtn.disabled = true;
                     msg.style.display = 'none';
 
-                    // Collect form data
-                    var insuranceTypes = [];
-                    form.querySelectorAll('input[name="insurance_type[]"]:checked').forEach(function(cb) {
-                        insuranceTypes.push(cb.value);
-                    });
-                    
-                    var hearAbout = [];
-                    form.querySelectorAll('input[name="hear_about[]"]:checked').forEach(function(cb) {
-                        hearAbout.push(cb.value);
-                    });
-                    
-                    var formData = {
-                        insurance_type: insuranceTypes.join(', '),
-                        full_name: form.querySelector('input[name="full_name"]').value,
-                        email: form.querySelector('input[name="email"]').value,
-                        message: form.querySelector('textarea[name="message"]').value,
-                        contact_method: form.querySelector('input[name="contact_method"]:checked').value,
-                        phone: form.querySelector('input[name="phone"]') ? form.querySelector('input[name="phone"]').value : '',
-                        callback_time: form.querySelector('input[name="callback_time"]') ? form.querySelector('input[name="callback_time"]').value : '',
-                        hear_about: hearAbout.join(', '),
-                        page: 'personal',
-                        form_position: position
-                    };
+                    try {
+                        // Collect form data
+                        var insuranceTypes = [];
+                        form.querySelectorAll('input[name="insurance_type[]"]:checked').forEach(function(cb) {
+                            insuranceTypes.push(cb.value);
+                        });
+                        
+                        var hearAbout = [];
+                        form.querySelectorAll('input[name="hear_about[]"]:checked').forEach(function(cb) {
+                            hearAbout.push(cb.value);
+                        });
+                        
+                        var contactMethodEl = form.querySelector('input[name="contact_method"]:checked');
+                        var contactMethod = contactMethodEl ? contactMethodEl.value : 'Email';
+                        
+                        // Custom validation for callback fields
+                        if (contactMethod === 'Callback') {
+                            var phoneInput = form.querySelector('input[name="phone"]');
+                            var callbackTimeInput = form.querySelector('input[name="callback_time"]');
+                            
+                            if (!phoneInput || !phoneInput.value.trim()) {
+                                msg.style.color = '#ef4444';
+                                msg.textContent = 'Please enter your phone number for callback.';
+                                msg.style.display = 'block';
+                                return;
+                            }
+                            
+                            if (!callbackTimeInput || !callbackTimeInput.value.trim()) {
+                                msg.style.color = '#ef4444';
+                                msg.textContent = 'Please specify your preferred callback time.';
+                                msg.style.display = 'block';
+                                return;
+                            }
+                        }
+                        
+                        var formData = {
+                            insurance_type: insuranceTypes.join(', '),
+                            full_name: form.querySelector('input[name="full_name"]').value,
+                            email: form.querySelector('input[name="email"]').value,
+                            message: form.querySelector('textarea[name="message"]').value,
+                            contact_method: contactMethod,
+                            phone: form.querySelector('input[name="phone"]') ? form.querySelector('input[name="phone"]').value : '',
+                            callback_time: form.querySelector('input[name="callback_time"]') ? form.querySelector('input[name="callback_time"]').value : '',
+                            hear_about: hearAbout.join(', '),
+                            page: 'personal',
+                            form_position: position
+                        };
+                        
+                    } catch (error) {
+                        console.error('Error collecting form data:', error);
+                        msg.style.color = '#ef4444';
+                        msg.textContent = 'Form error: ' + error.message;
+                        msg.style.display = 'block';
+                        return;
+                    }
 
+                    // Debug: Log form data
+                    console.log('Submitting form data:', formData);
+                    
                     // Submit to API
                     fetch('/api/lead', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
                     })
-                    .then(function(response) { return response.json(); })
+                    .then(function(response) { 
+                        console.log('API Response status:', response.status);
+                        return response.json(); 
+                    })
                     .then(function(data) {
+                        console.log('API Response data:', data);
                         if (data.success) {
                             msg.style.color = '#10b981';
                             msg.textContent = '✓ Your request has been sent! Our team will be in touch shortly.';
@@ -724,9 +765,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                             msg.style.display = 'block';
                         }
                     })
-                    .catch(function() {
+                    .catch(function(error) {
+                        console.error('Network/API error:', error);
                         msg.style.color = '#ef4444';
-                        msg.textContent = 'Network error. Please try again.';
+                        msg.textContent = 'Network error: ' + error.message;
                         msg.style.display = 'block';
                     })
                     .finally(function() {
