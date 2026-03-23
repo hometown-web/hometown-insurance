@@ -113,12 +113,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                                             <input type="checkbox" name="help_type[]" value="General Inquiry" onchange="updateMultiSelectDisplay('help_type')">
                                             <span>General Inquiry</span>
                                         </label>
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="help_type[]" value="Other" onchange="updateMultiSelectDisplay('help_type'); toggleHelpOtherMulti(this)">
+                                            <span>Other</span>
+                                        </label>
                                     </div>
                                     <div class="multi-select-actions">
                                         <button type="button" class="multi-select-done" onclick="closeMultiSelect('help_type')">Done</button>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        
+                        <div class="form-group other-details-container" id="help_other" style="display: none;">
+                            <label>Please specify how we can help: <span class="req">*</span></label>
+                            <input type="text" name="help_other" placeholder="Tell us how we can help you...">
                         </div>
 
                         <div class="form-group">
@@ -427,6 +436,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             }
         }
         
+        function toggleHelpOtherMulti(checkbox) {
+            var helpOtherDiv = document.getElementById('help_other');
+            var helpOtherInput = helpOtherDiv.querySelector('input');
+            
+            if (checkbox.checked) {
+                helpOtherDiv.style.display = 'block';
+                helpOtherInput.setAttribute('required', 'required');
+            } else {
+                helpOtherDiv.style.display = 'none';
+                helpOtherInput.removeAttribute('required');
+                helpOtherInput.value = '';
+            }
+        }
+        
         // Close dropdowns when clicking outside
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.multi-select-wrapper')) {
@@ -464,6 +487,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     email: contactForm.querySelector('input[name="email"]').value,
                     phone: contactForm.querySelector('input[name="phone"]').value,
                     help_type: helpTypes.join(', '),
+                    help_other: contactForm.querySelector('input[name="help_other"]').value,
                     message: contactForm.querySelector('textarea[name="message"]').value,
                     page: 'contact'
                 };

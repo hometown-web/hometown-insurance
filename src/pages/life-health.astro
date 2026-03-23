@@ -52,6 +52,109 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         .cta-footer .container { position: relative; z-index: 2; display: flex; justify-content: center; }
         .cta-footer .quote-card { width: 100%; max-width: 480px; }
 
+        /* Multi-Select Styles */
+        .multi-select-hint {
+            font-size: 13px;
+            color: #64748b;
+            margin: -5px 0 8px 0;
+            font-style: italic;
+        }
+        .multi-select-wrapper {
+            position: relative;
+        }
+        .multi-select-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .multi-select-display:hover {
+            border-color: #cbd5e1;
+        }
+        .multi-select-display.active {
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+        .multi-select-text {
+            color: #64748b;
+            flex-grow: 1;
+        }
+        .multi-select-text.has-selection {
+            color: #1e293b;
+        }
+        .multi-select-arrow {
+            color: #64748b;
+            transition: transform 0.2s ease;
+        }
+        .multi-select-display.active .multi-select-arrow {
+            transform: rotate(180deg);
+        }
+        .multi-select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid var(--primary-red);
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: none;
+            margin-top: 4px;
+        }
+        .multi-select-dropdown.show {
+            display: block;
+        }
+        .multi-select-options {
+            max-height: 240px;
+            overflow-y: auto;
+            padding: 8px 0;
+        }
+        .multi-select-option {
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin: 0;
+        }
+        .multi-select-option:hover {
+            background: #f8fafc;
+        }
+        .multi-select-option input[type="checkbox"] {
+            margin: 0 12px 0 0;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary-red);
+        }
+        .multi-select-option span {
+            color: #1e293b;
+            font-weight: normal;
+        }
+        .multi-select-actions {
+            border-top: 1px solid #e2e8f0;
+            padding: 12px 16px;
+            text-align: right;
+        }
+        .multi-select-done {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .multi-select-done:hover {
+            background: #dc2626;
+        }
+
         @media (max-width: 992px) {
             .hero-grid, .content-layout { grid-template-columns: 1fr; }
             .hero-content { margin-top: 0; }
@@ -76,19 +179,60 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <form id="lifeHealthFormTop">
                     <div class="form-group">
                         <label>Insurance Type Interested In <span class="req">*</span></label>
-                        <select name="insurance_type" required onchange="toggleOtherField(this, 'other_details_top')">
-                            <option value="" disabled selected>Select an option...</option>
-                            <option>Life Insurance</option>
-                            <option>Term Life</option>
-                            <option>Whole Life</option>
-                            <option>Individual Health Insurance</option>
-                            <option>Group Health (Business)</option>
-                            <option>Voluntary Benefits (Dental and Vision)</option>
-                            <option>Disability Insurance</option>
-                            <option>Medicare Supplement</option>
-                            <option>Long-Term Care</option>
-                            <option value="Other">Other</option>
-                        </select>
+                        <p class="multi-select-hint">Click all that apply</p>
+                        <div class="multi-select-wrapper">
+                            <div class="multi-select-display" onclick="toggleMultiSelect('insurance_type_top')">
+                                <span class="multi-select-text">Select insurance types...</span>
+                                <i class="fas fa-chevron-down multi-select-arrow"></i>
+                            </div>
+                            <div class="multi-select-dropdown" id="insurance_type_top_dropdown">
+                                <div class="multi-select-options">
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Life Insurance" onchange="updateMultiSelectDisplay('insurance_type_top')">
+                                        <span>Life Insurance</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Term Life" onchange="updateMultiSelectDisplay('insurance_type_top')">
+                                        <span>Term Life</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Whole Life" onchange="updateMultiSelectDisplay('insurance_type_top')">
+                                        <span>Whole Life</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Individual Health Insurance" onchange="updateMultiSelectDisplay('insurance_type_top')">
+                                        <span>Individual Health Insurance</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Group Health (Business)" onchange="updateMultiSelectDisplay('insurance_type_top')">
+                                        <span>Group Health (Business)</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Voluntary Benefits (Dental and Vision)" onchange="updateMultiSelectDisplay('insurance_type_top')">
+                                        <span>Voluntary Benefits (Dental and Vision)</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Disability Insurance" onchange="updateMultiSelectDisplay('insurance_type_top')">
+                                        <span>Disability Insurance</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Medicare Supplement" onchange="updateMultiSelectDisplay('insurance_type_top')">
+                                        <span>Medicare Supplement</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Long-Term Care" onchange="updateMultiSelectDisplay('insurance_type_top')">
+                                        <span>Long-Term Care</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Other" onchange="updateMultiSelectDisplay('insurance_type_top'); toggleOtherFieldMulti(this, 'other_details_top')">
+                                        <span>Other</span>
+                                    </label>
+                                </div>
+                                <div class="multi-select-actions">
+                                    <button type="button" class="multi-select-done" onclick="closeMultiSelect('insurance_type_top')">Done</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="other_details_top" class="other-details-container">
@@ -111,20 +255,49 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     </div>
 
                     <div id="callback_fields_top" class="callback-fields">
-                        <div class="form-group"><label>Phone Number <span class="req">*</span></label><input type="tel" name="phone"></div>
-                        <div class="form-group"><label>Best Day & Time <span class="req">*</span></label><input type="text" name="callback_time" placeholder="e.g. Monday Morning"></div>
+                        <div class="form-group"><label>Phone Number <span class="req">*</span></label><input type="tel" name="phone" required></div>
+                        <div class="form-group"><label>Best Day & Time <span class="req">*</span></label><input type="text" name="callback_time" required placeholder="e.g. Monday Morning"></div>
                     </div>
                     <div class="form-group">
                         <label>How did you hear about us? <span class="req">*</span></label>
-                        <select id="hear_about_top" name="hear_about" required onchange="toggleHearOther(this, 'hear_other_top')">
-                            <option value="" disabled selected>Please select...</option>
-                            <option>Google Search</option>
-                            <option>Facebook / Instagram</option>
-                            <option>Friend or Family Member</option>
-                            <option>Mailing / Flyer</option>
-                            <option>Local Event</option>
-                            <option value="Other">Other</option>
-                        </select>
+                        <p class="multi-select-hint">Click all that apply</p>
+                        <div class="multi-select-wrapper">
+                            <div class="multi-select-display" onclick="toggleMultiSelect('hear_about_top')">
+                                <span class="multi-select-text">Please select...</span>
+                                <i class="fas fa-chevron-down multi-select-arrow"></i>
+                            </div>
+                            <div class="multi-select-dropdown" id="hear_about_top_dropdown">
+                                <div class="multi-select-options">
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="hear_about[]" value="Google Search" onchange="updateMultiSelectDisplay('hear_about_top')">
+                                        <span>Google Search</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="hear_about[]" value="Facebook / Instagram" onchange="updateMultiSelectDisplay('hear_about_top')">
+                                        <span>Facebook / Instagram</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="hear_about[]" value="Friend or Family Member" onchange="updateMultiSelectDisplay('hear_about_top')">
+                                        <span>Friend or Family Member</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="hear_about[]" value="Mailing / Flyer" onchange="updateMultiSelectDisplay('hear_about_top')">
+                                        <span>Mailing / Flyer</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="hear_about[]" value="Local Event" onchange="updateMultiSelectDisplay('hear_about_top')">
+                                        <span>Local Event</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="hear_about[]" value="Other" onchange="updateMultiSelectDisplay('hear_about_top'); toggleHearOtherMulti(this, 'hear_other_top')">
+                                        <span>Other</span>
+                                    </label>
+                                </div>
+                                <div class="multi-select-actions">
+                                    <button type="button" class="multi-select-done" onclick="closeMultiSelect('hear_about_top')">Done</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div id="hear_other_top" class="other-details-container">
                         <div class="form-group">
@@ -168,19 +341,60 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <form id="lifeHealthFormBottom">
                     <div class="form-group">
                         <label>Insurance Type Interested In <span class="req">*</span></label>
-                        <select name="insurance_type" required onchange="toggleOtherField(this, 'other_details_bot')">
-                            <option value="" disabled selected>Select an option...</option>
-                            <option>Life Insurance</option>
-                            <option>Term Life</option>
-                            <option>Whole Life</option>
-                            <option>Individual Health Insurance</option>
-                            <option>Group Health (Business)</option>
-                            <option>Voluntary Benefits (Dental and Vision)</option>
-                            <option>Disability Insurance</option>
-                            <option>Medicare Supplement</option>
-                            <option>Long-Term Care</option>
-                            <option value="Other">Other</option>
-                        </select>
+                        <p class="multi-select-hint">Click all that apply</p>
+                        <div class="multi-select-wrapper">
+                            <div class="multi-select-display" onclick="toggleMultiSelect('insurance_type_bottom')">
+                                <span class="multi-select-text">Select insurance types...</span>
+                                <i class="fas fa-chevron-down multi-select-arrow"></i>
+                            </div>
+                            <div class="multi-select-dropdown" id="insurance_type_bottom_dropdown">
+                                <div class="multi-select-options">
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Life Insurance" onchange="updateMultiSelectDisplay('insurance_type_bottom')">
+                                        <span>Life Insurance</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Term Life" onchange="updateMultiSelectDisplay('insurance_type_bottom')">
+                                        <span>Term Life</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Whole Life" onchange="updateMultiSelectDisplay('insurance_type_bottom')">
+                                        <span>Whole Life</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Individual Health Insurance" onchange="updateMultiSelectDisplay('insurance_type_bottom')">
+                                        <span>Individual Health Insurance</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Group Health (Business)" onchange="updateMultiSelectDisplay('insurance_type_bottom')">
+                                        <span>Group Health (Business)</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Voluntary Benefits (Dental and Vision)" onchange="updateMultiSelectDisplay('insurance_type_bottom')">
+                                        <span>Voluntary Benefits (Dental and Vision)</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Disability Insurance" onchange="updateMultiSelectDisplay('insurance_type_bottom')">
+                                        <span>Disability Insurance</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Medicare Supplement" onchange="updateMultiSelectDisplay('insurance_type_bottom')">
+                                        <span>Medicare Supplement</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Long-Term Care" onchange="updateMultiSelectDisplay('insurance_type_bottom')">
+                                        <span>Long-Term Care</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="insurance_type[]" value="Other" onchange="updateMultiSelectDisplay('insurance_type_bottom'); toggleOtherFieldMulti(this, 'other_details_bot')">
+                                        <span>Other</span>
+                                    </label>
+                                </div>
+                                <div class="multi-select-actions">
+                                    <button type="button" class="multi-select-done" onclick="closeMultiSelect('insurance_type_bottom')">Done</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="other_details_bot" class="other-details-container">
@@ -203,20 +417,49 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     </div>
 
                     <div id="callback_fields_bot" class="callback-fields">
-                        <div class="form-group"><label>Phone Number <span class="req">*</span></label><input type="tel" name="phone"></div>
-                        <div class="form-group"><label>Best Day & Time <span class="req">*</span></label><input type="text" name="callback_time" placeholder="e.g. Wednesday Afternoon"></div>
+                        <div class="form-group"><label>Phone Number <span class="req">*</span></label><input type="tel" name="phone" required></div>
+                        <div class="form-group"><label>Best Day & Time <span class="req">*</span></label><input type="text" name="callback_time" required placeholder="e.g. Wednesday Afternoon"></div>
                     </div>
                     <div class="form-group">
                         <label>How did you hear about us? <span class="req">*</span></label>
-                        <select id="hear_about_bot" name="hear_about" required onchange="toggleHearOther(this, 'hear_other_bot')">
-                            <option value="" disabled selected>Please select...</option>
-                            <option>Google Search</option>
-                            <option>Facebook / Instagram</option>
-                            <option>Friend or Family Member</option>
-                            <option>Mailing / Flyer</option>
-                            <option>Local Event</option>
-                            <option value="Other">Other</option>
-                        </select>
+                        <p class="multi-select-hint">Click all that apply</p>
+                        <div class="multi-select-wrapper">
+                            <div class="multi-select-display" onclick="toggleMultiSelect('hear_about_bottom')">
+                                <span class="multi-select-text">Please select...</span>
+                                <i class="fas fa-chevron-down multi-select-arrow"></i>
+                            </div>
+                            <div class="multi-select-dropdown" id="hear_about_bottom_dropdown">
+                                <div class="multi-select-options">
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="hear_about[]" value="Google Search" onchange="updateMultiSelectDisplay('hear_about_bottom')">
+                                        <span>Google Search</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="hear_about[]" value="Facebook / Instagram" onchange="updateMultiSelectDisplay('hear_about_bottom')">
+                                        <span>Facebook / Instagram</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="hear_about[]" value="Friend or Family Member" onchange="updateMultiSelectDisplay('hear_about_bottom')">
+                                        <span>Friend or Family Member</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="hear_about[]" value="Mailing / Flyer" onchange="updateMultiSelectDisplay('hear_about_bottom')">
+                                        <span>Mailing / Flyer</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="hear_about[]" value="Local Event" onchange="updateMultiSelectDisplay('hear_about_bottom')">
+                                        <span>Local Event</span>
+                                    </label>
+                                    <label class="multi-select-option">
+                                        <input type="checkbox" name="hear_about[]" value="Other" onchange="updateMultiSelectDisplay('hear_about_bottom'); toggleHearOtherMulti(this, 'hear_other_bot')">
+                                        <span>Other</span>
+                                    </label>
+                                </div>
+                                <div class="multi-select-actions">
+                                    <button type="button" class="multi-select-done" onclick="closeMultiSelect('hear_about_bottom')">Done</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div id="hear_other_bot" class="other-details-container">
                         <div class="form-group">
@@ -233,14 +476,94 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
 
     <script is:inline>
-        function toggleCallback(show, id) {
-            var container = document.getElementById('callback_fields_' + id);
-            container.style.display = show ? 'block' : 'none';
-            var inputs = container.querySelectorAll('input[name="phone"], input[name="callback_time"]');
-            inputs.forEach(function(input) {
-                if (show) { input.setAttribute('required', 'required'); }
-                else { input.removeAttribute('required'); input.value = ''; }
+        // Multi-Select Functions
+        function toggleMultiSelect(fieldId) {
+            var dropdown = document.getElementById(fieldId + '_dropdown');
+            var display = dropdown.parentElement.querySelector('.multi-select-display');
+            var isOpen = dropdown.classList.contains('show');
+            
+            // Close all other dropdowns
+            document.querySelectorAll('.multi-select-dropdown').forEach(function(el) {
+                el.classList.remove('show');
             });
+            document.querySelectorAll('.multi-select-display').forEach(function(el) {
+                el.classList.remove('active');
+            });
+            
+            if (!isOpen) {
+                dropdown.classList.add('show');
+                display.classList.add('active');
+            }
+        }
+        
+        function closeMultiSelect(fieldId) {
+            var dropdown = document.getElementById(fieldId + '_dropdown');
+            var display = dropdown.parentElement.querySelector('.multi-select-display');
+            dropdown.classList.remove('show');
+            display.classList.remove('active');
+        }
+        
+        function updateMultiSelectDisplay(fieldId) {
+            var wrapper = document.getElementById(fieldId + '_dropdown').parentElement;
+            var textElement = wrapper.querySelector('.multi-select-text');
+            var checkboxes = wrapper.querySelectorAll('input[type="checkbox"]:checked');
+            
+            if (checkboxes.length === 0) {
+                textElement.textContent = fieldId.includes('insurance_type') ? 'Select insurance types...' : 'Please select...';
+                textElement.classList.remove('has-selection');
+            } else if (checkboxes.length === 1) {
+                textElement.textContent = checkboxes[0].nextElementSibling.textContent;
+                textElement.classList.add('has-selection');
+            } else {
+                textElement.textContent = checkboxes.length + ' items selected';
+                textElement.classList.add('has-selection');
+            }
+        }
+        
+        function toggleOtherFieldMulti(checkbox, fieldId) {
+            var otherField = document.getElementById(fieldId);
+            var input = otherField.querySelector('input');
+            
+            if (checkbox.checked) {
+                otherField.style.display = 'block';
+                if (input) input.setAttribute('required', 'required');
+            } else {
+                otherField.style.display = 'none';
+                if (input) { 
+                    input.removeAttribute('required'); 
+                    input.value = ''; 
+                }
+            }
+        }
+        
+        function toggleHearOtherMulti(checkbox, fieldId) {
+            var container = document.getElementById(fieldId);
+            var input = container.querySelector('input');
+            
+            if (checkbox.checked) {
+                container.style.display = 'block';
+                input.setAttribute('required', 'required');
+            } else {
+                container.style.display = 'none';
+                input.removeAttribute('required');
+                input.value = '';
+            }
+        }
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.multi-select-wrapper')) {
+                document.querySelectorAll('.multi-select-dropdown').forEach(function(el) {
+                    el.classList.remove('show');
+                });
+                document.querySelectorAll('.multi-select-display').forEach(function(el) {
+                    el.classList.remove('active');
+                });
+            }
+        });
+
+        function toggleCallback(show, id) {
+            document.getElementById('callback_fields_' + id).style.display = show ? 'block' : 'none';
         }
 
         function toggleOtherField(selectElement, fieldId) {
@@ -285,8 +608,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     msg.style.display = 'none';
 
                     // Collect form data
+                    var insuranceTypes = [];
+                    form.querySelectorAll('input[name="insurance_type[]"]:checked').forEach(function(cb) {
+                        insuranceTypes.push(cb.value);
+                    });
+                    
+                    var hearAbout = [];
+                    form.querySelectorAll('input[name="hear_about[]"]:checked').forEach(function(cb) {
+                        hearAbout.push(cb.value);
+                    });
+                    
                     var formData = {
-                        insurance_type: form.querySelector('select[name="insurance_type"]').value,
+                        insurance_type: insuranceTypes.join(', '),
                         other_details: form.querySelector('input[name="other_details"]') ? form.querySelector('input[name="other_details"]').value : '',
                         full_name: form.querySelector('input[name="full_name"]').value,
                         email: form.querySelector('input[name="email"]').value,
@@ -294,7 +627,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                         contact_method: form.querySelector('input[name="contact_method"]:checked').value,
                         phone: form.querySelector('input[name="phone"]') ? form.querySelector('input[name="phone"]').value : '',
                         callback_time: form.querySelector('input[name="callback_time"]') ? form.querySelector('input[name="callback_time"]').value : '',
-                        hear_about: form.querySelector('select[name="hear_about"]').value,
+                        hear_about: hearAbout.join(', '),
                         hear_other: form.querySelector('input[name="hear_other"]') ? form.querySelector('input[name="hear_other"]').value : '',
                         page: 'life-health',
                         form_position: position
@@ -309,15 +642,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     .then(function(response) { return response.json(); })
                     .then(function(data) {
                         if (data.success) {
-                            window.dataLayer = window.dataLayer || [];
-                            window.dataLayer.push({
-                                event: 'form_submission',
-                                form_name: formData.page + (formData.form_position ? '-' + formData.form_position : ''),
-                                insurance_type: formData.insurance_type || '',
-                                contact_method: formData.contact_method || '',
-                                hear_about: formData.hear_about || '',
-                                help_type: ''
-                            });
                             msg.style.color = '#10b981';
                             msg.textContent = '✓ Your request has been sent! Our team will be in touch shortly.';
                             msg.style.display = 'block';
