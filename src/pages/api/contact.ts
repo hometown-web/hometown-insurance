@@ -23,34 +23,8 @@ export const POST: APIRoute = async ({ request }) => {
       ${data.phone || ''}, ${data.help_type || ''}, ${data.message || ''}
     )`;
 
-    // Send email notification
-    try {
-      if (import.meta.env.RESEND_API_KEY) {
-        const { Resend } = await import('resend');
-        const resend = new Resend(import.meta.env.RESEND_API_KEY);
-
-        await resend.emails.send({
-          from: 'Hometown Insurance <notifications@hometowninsurance.com>',
-          to: 'service@hometowninsurance.com',
-          subject: `New Contact: ${data.first_name} ${data.last_name}`,
-          html: `
-            <h2>New Contact Form Submission</h2>
-            <hr>
-            <p><strong>Name:</strong> ${data.first_name} ${data.last_name}</p>
-            <p><strong>Email:</strong> ${data.email}</p>
-            <p><strong>Phone:</strong> ${data.phone || '—'}</p>
-            <p><strong>How Can We Help:</strong> ${data.help_type || '—'}</p>
-            <p><strong>Message:</strong> ${data.message || '—'}</p>
-            <hr>
-            <p style="color:#888;font-size:12px;">Submitted via hometowninsurance.com contact page</p>
-          `
-        });
-      } else {
-        console.log('Resend API key not configured, skipping email notification');
-      }
-    } catch (emailErr) {
-      console.error('Email notification failed (contact still saved):', emailErr);
-    }
+    // TODO: Re-enable email notifications once Vercel build issues are resolved
+    console.log('Contact form submitted successfully - email notifications temporarily disabled');
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,

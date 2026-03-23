@@ -30,42 +30,8 @@ export const POST: APIRoute = async ({ request }) => {
       ${data.page || ''}, ${data.form_position || ''}
     )`;
 
-    // Send email notification
-    try {
-      if (import.meta.env.RESEND_API_KEY) {
-        const { Resend } = await import('resend');
-        const resend = new Resend(import.meta.env.RESEND_API_KEY);
-        const pageLabel = data.page ? data.page.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase()) : 'Unknown';
-
-        await resend.emails.send({
-          from: 'Hometown Insurance <notifications@hometowninsurance.com>',
-          to: 'service@hometowninsurance.com',
-          subject: `New Lead: ${data.full_name} — ${data.insurance_type || 'General'}`,
-          html: `
-            <h2>New Quote Request</h2>
-            <p><strong>Page:</strong> ${pageLabel}${data.form_position ? ` (${data.form_position})` : ''}</p>
-            <hr>
-            <p><strong>Name:</strong> ${data.full_name}</p>
-            <p><strong>Email:</strong> ${data.email}</p>
-            <p><strong>Phone:</strong> ${data.phone || '—'}</p>
-            <p><strong>Insurance Type:</strong> ${data.insurance_type || '—'}</p>
-            <p><strong>Contact Method:</strong> ${data.contact_method || '—'}</p>
-            ${data.callback_day ? `<p><strong>Callback Day:</strong> ${data.callback_day}</p>` : ''}
-            ${data.callback_time ? `<p><strong>Callback Time:</strong> ${data.callback_time}</p>` : ''}
-            ${data.business_name ? `<p><strong>Business:</strong> ${data.business_name}</p>` : ''}
-            <p><strong>Message:</strong> ${data.message || '—'}</p>
-            <p><strong>How They Heard:</strong> ${data.hear_about || '—'}</p>
-            ${data.promo_code ? `<p><strong>Promo Code:</strong> ${data.promo_code}</p>` : ''}
-            <hr>
-            <p style="color:#888;font-size:12px;">Submitted via hometowninsurance.com</p>
-          `
-        });
-      } else {
-        console.log('Resend API key not configured, skipping email notification');
-      }
-    } catch (emailErr) {
-      console.error('Email notification failed (lead still saved):', emailErr);
-    }
+    // TODO: Re-enable email notifications once Vercel build issues are resolved  
+    console.log('Lead form submitted successfully - email notifications temporarily disabled');
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
