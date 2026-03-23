@@ -230,7 +230,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                                         <span>Umbrella Liability</span>
                                     </label>
                                     <label class="multi-select-option">
-                                        <input type="checkbox" name="insurance_type[]" value="Other" onchange="updateMultiSelectDisplay('insurance_type_top'); toggleOtherFieldMulti(this, 'other_details_top')">
+                                        <input type="checkbox" name="insurance_type[]" value="Other" onchange="updateMultiSelectDisplay('insurance_type_top')">
                                         <span>Other</span>
                                     </label>
                                 </div>
@@ -240,12 +240,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                             </div>
                         </div>
                     </div>
-                    <div id="other_details_top" class="other-details-container">
-                        <div class="form-group">
-                            <label>Please specify: <span class="req">*</span></label>
-                            <input type="text" name="other_details" placeholder="Enter &quot;Other&quot; details here" required>
-                        </div>
-                    </div>
+
                     <div class="form-group"><label>Full Name <span class="req">*</span></label><input type="text" name="full_name" placeholder="Your Name" required></div>
                     <div class="form-group"><label>Email Address <span class="req">*</span></label><input type="email" name="email" placeholder="email@address.com" required></div>
                     <div class="form-group"><label>Leave a message (optional)</label><textarea name="message" rows="2" placeholder="Tell us more..."></textarea></div>
@@ -293,7 +288,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                                         <span>Local Event</span>
                                     </label>
                                     <label class="multi-select-option">
-                                        <input type="checkbox" name="hear_about[]" value="Other" onchange="updateMultiSelectDisplay('hear_about_top'); toggleHearOtherMulti(this, 'hear_other_top')">
+                                        <input type="checkbox" name="hear_about[]" value="Other" onchange="updateMultiSelectDisplay('hear_about_top')">
                                         <span>Other</span>
                                     </label>
                                 </div>
@@ -301,12 +296,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                                     <button type="button" class="multi-select-done" onclick="closeMultiSelect('hear_about_top')">Done</button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div id="hear_other_top" class="other-details-container">
-                        <div class="form-group">
-                            <label>Please specify how you heard about us: <span class="req">*</span></label>
-                            <input type="text" name="hear_other" placeholder="Enter &quot;Other&quot; details here">
                         </div>
                     </div>
 
@@ -446,7 +435,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                                         <span>Umbrella Liability</span>
                                     </label>
                                     <label class="multi-select-option">
-                                        <input type="checkbox" name="insurance_type[]" value="Other" onchange="updateMultiSelectDisplay('insurance_type_bottom'); toggleOtherFieldMulti(this, 'other_details_bottom')">
+                                        <input type="checkbox" name="insurance_type[]" value="Other" onchange="updateMultiSelectDisplay('insurance_type_bottom')">
                                         <span>Other</span>
                                     </label>
                                 </div>
@@ -454,12 +443,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                                     <button type="button" class="multi-select-done" onclick="closeMultiSelect('insurance_type_bottom')">Done</button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div id="other_details_bottom" class="other-details-container">
-                        <div class="form-group">
-                            <label>Please specify: <span class="req">*</span></label>
-                            <input type="text" name="other_details" placeholder="Enter &quot;Other&quot; details here" required>
                         </div>
                     </div>
                     <div class="form-group"><label>Full Name <span class="req">*</span></label><input type="text" name="full_name" placeholder="Your Name" required></div>
@@ -509,7 +492,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                                         <span>Local Event</span>
                                     </label>
                                     <label class="multi-select-option">
-                                        <input type="checkbox" name="hear_about[]" value="Other" onchange="updateMultiSelectDisplay('hear_about_bottom'); toggleHearOtherMulti(this, 'hear_other_bot')">
+                                        <input type="checkbox" name="hear_about[]" value="Other" onchange="updateMultiSelectDisplay('hear_about_bottom')">
                                         <span>Other</span>
                                     </label>
                                 </div>
@@ -517,12 +500,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                                     <button type="button" class="multi-select-done" onclick="closeMultiSelect('hear_about_bottom')">Done</button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div id="hear_other_bot" class="other-details-container">
-                        <div class="form-group">
-                            <label>Please specify how you heard about us: <span class="req">*</span></label>
-                            <input type="text" name="hear_other" placeholder="Enter &quot;Other&quot; details here">
                         </div>
                     </div>
 
@@ -576,27 +553,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 textElement.textContent = checkboxes.length + ' items selected';
                 textElement.classList.add('has-selection');
             }
-        }
-        
-        function toggleOtherFieldMulti(checkbox, fieldId) {
-            var otherField = document.getElementById(fieldId);
-            var input = otherField.querySelector('input');
-            
-            if (checkbox.checked) {
-                otherField.style.display = 'block';
-            } else {
+        }else {
                 otherField.style.display = 'none';
                 if (input) input.value = '';
             }
-        }
-        
-        function toggleHearOtherMulti(checkbox, fieldId) {
-            var container = document.getElementById(fieldId);
-            var input = container.querySelector('input');
-            
-            if (checkbox.checked) {
-                container.style.display = 'block';
-            } else {
+        }else {
                 container.style.display = 'none';
                 if (input) input.value = '';
             }
@@ -656,31 +617,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             
             if (form) {
                 form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-
-                    // Custom validation for "Other" fields
-                    var insuranceOtherChecked = form.querySelector('input[name="insurance_type[]"][value="Other"]:checked');
-                    var hearOtherChecked = form.querySelector('input[name="hear_about[]"][value="Other"]:checked');
-                    
-                    if (insuranceOtherChecked) {
-                        var otherDetailsInput = form.querySelector('input[name="other_details"]');
-                        if (!otherDetailsInput || !otherDetailsInput.value.trim()) {
-                            msg.style.color = '#ef4444';
-                            msg.textContent = 'Please specify the "Other" insurance type.';
-                            msg.style.display = 'block';
-                            return;
-                        }
-                    }
-                    
-                    if (hearOtherChecked) {
-                        var hearOtherInput = form.querySelector('input[name="hear_other"]');
-                        if (!hearOtherInput || !hearOtherInput.value.trim()) {
-                            msg.style.color = '#ef4444';
-                            msg.textContent = 'Please specify how you heard about us.';
-                            msg.style.display = 'block';
-                            return;
-                        }
-                    }
+                    e.preventDefault();}}
 
                     var submitBtn = form.querySelector('button[type="submit"]');
                     var originalBtnText = submitBtn.textContent;
@@ -704,7 +641,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     var formData = {
                         business_name: form.querySelector('input[name="business_name"]').value,
                         insurance_type: insuranceTypes.join(', '),
-                        other_details: form.querySelector('input[name="other_details"]') ? form.querySelector('input[name="other_details"]').value : '',
                         full_name: form.querySelector('input[name="full_name"]').value,
                         email: form.querySelector('input[name="email"]').value,
                         message: form.querySelector('textarea[name="message"]').value,
@@ -712,7 +648,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                         phone: form.querySelector('input[name="phone"]') ? form.querySelector('input[name="phone"]').value : '',
                         callback_time: form.querySelector('input[name="callback_time"]') ? form.querySelector('input[name="callback_time"]').value : '',
                         hear_about: hearAbout.join(', '),
-                        hear_other: form.querySelector('input[name="hear_other"]') ? form.querySelector('input[name="hear_other"]').value : '',
                         page: 'business',
                         form_position: position
                     };
@@ -740,11 +675,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                                 }
                                 text.classList.remove('has-selection');
                             });
-                            
-                            // Hide any "Other" fields
-                            form.querySelectorAll('.other-details-container').forEach(function(container) {
-                                container.style.display = 'none';
-                            });
                         } else {
                             msg.style.color = '#ef4444';
                             msg.textContent = data.error || 'Something went wrong. Please try again.';
@@ -764,7 +694,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             }
         }
 
-        
         handleBusinessFormSubmit('businessFormTop', 'businessFormTopMsg', 'top');
         handleBusinessFormSubmit('businessFormBottom', 'businessFormBottomMsg', 'bottom');
     </script>
