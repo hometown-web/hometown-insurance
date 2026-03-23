@@ -246,7 +246,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     <div id="other_details_top" class="other-details-container">
                         <div class="form-group">
                             <label>Please specify: <span class="req">*</span></label>
-                            <input type="text" name="other_details" placeholder="Enter &quot;Other&quot; details here">
+                            <input type="text" name="other_details_top" placeholder="Enter &quot;Other&quot; details here">
                         </div>
                     </div>
                     <div class="form-group"><label>Full Name <span class="req">*</span></label><input type="text" name="full_name" placeholder="Your Name" required></div>
@@ -307,7 +307,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     <div id="hear_other_top" class="other-details-container">
                         <div class="form-group">
                             <label>Please specify how you heard about us: <span class="req">*</span></label>
-                            <input type="text" name="hear_other" placeholder="Enter &quot;Other&quot; details here">
+                            <input type="text" name="hear_other_top" placeholder="Enter &quot;Other&quot; details here">
                         </div>
                     </div>
                     <button type="submit" class="btn btn-red" style="width: 100%; margin-top: 10px;">Send Request</button>
@@ -505,7 +505,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     <div id="other_details_bottom" class="other-details-container">
                         <div class="form-group">
                             <label>Please specify: <span class="req">*</span></label>
-                            <input type="text" name="other_details" placeholder="Enter &quot;Other&quot; details here">
+                            <input type="text" name="other_details_bottom" placeholder="Enter &quot;Other&quot; details here">
                         </div>
                     </div>
                     <div class="form-group"><label>Your Full Name <span class="req">*</span></label><input type="text" name="full_name" placeholder="Full Name" required></div>
@@ -566,7 +566,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     <div id="hear_other_bot" class="other-details-container">
                         <div class="form-group">
                             <label>Please specify how you heard about us: <span class="req">*</span></label>
-                            <input type="text" name="hear_other" placeholder="Enter &quot;Other&quot; details here">
+                            <input type="text" name="hear_other_bottom" placeholder="Enter &quot;Other&quot; details here">
                         </div>
                     </div>
                     <button type="submit" class="btn btn-red" style="width: 100%; margin-top: 10px;">Send Request</button>
@@ -708,7 +708,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     var hearOtherChecked = form.querySelector('input[name="hear_about[]"][value="Other"]:checked');
                     
                     if (insuranceOtherChecked) {
-                        var otherDetailsInput = form.querySelector('input[name="other_details"]');
+                        var otherDetailsInput = form.querySelector('input[name*="other_details"]');
                         if (!otherDetailsInput || !otherDetailsInput.value.trim()) {
                             msg.style.color = '#ef4444';
                             msg.textContent = 'Please specify the "Other" insurance type.';
@@ -718,7 +718,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     }
                     
                     if (hearOtherChecked) {
-                        var hearOtherInput = form.querySelector('input[name="hear_other"]');
+                        var hearOtherInput = form.querySelector('input[name*="hear_other"]');
                         if (!hearOtherInput || !hearOtherInput.value.trim()) {
                             msg.style.color = '#ef4444';
                             msg.textContent = 'Please specify how you heard about us.';
@@ -746,9 +746,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                         hearAbout.push(cb.value);
                     });
                     
+                    var otherDetailsInput = form.querySelector('input[name*="other_details"]');
+                    var hearOtherInput = form.querySelector('input[name*="hear_other"]');
+                    
                     var formData = {
                         insurance_type: insuranceTypes.join(', '),
-                        other_details: form.querySelector('input[name="other_details"]') ? form.querySelector('input[name="other_details"]').value : '',
+                        other_details: otherDetailsInput ? otherDetailsInput.value : '',
                         full_name: form.querySelector('input[name="full_name"]').value,
                         email: form.querySelector('input[name="email"]').value,
                         message: form.querySelector('textarea[name="message"]').value,
@@ -756,7 +759,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                         phone: form.querySelector('input[name="phone"]') ? form.querySelector('input[name="phone"]').value : '',
                         callback_time: form.querySelector('input[name="callback_time"]') ? form.querySelector('input[name="callback_time"]').value : '',
                         hear_about: hearAbout.join(', '),
-                        hear_other: form.querySelector('input[name="hear_other"]') ? form.querySelector('input[name="hear_other"]').value : '',
+                        hear_other: hearOtherInput ? hearOtherInput.value : '',
                         page: 'personal',
                         form_position: position
                     };
