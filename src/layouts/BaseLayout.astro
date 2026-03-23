@@ -174,7 +174,7 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                                     <span>Life & Health</span>
                                 </label>
                                 <label class="multi-select-option">
-                                    <input type="checkbox" name="insurance_type[]" value="Other" onchange="updateMultiSelectDisplay('modal_insurance_type'); toggleModalOtherMulti(this)">
+                                    <input type="checkbox" name="insurance_type[]" value="Other" onchange="updateMultiSelectDisplay('modal_insurance_type')">
                                     <span>Other</span>
                                 </label>
                             </div>
@@ -184,10 +184,7 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                         </div>
                     </div>
                 </div>
-                <div class="form-group other-details-box" id="modalOtherDiv" style="display: none;">
-                    <label>Please specify insurance type: <span class="req">*</span></label>
-                    <input type="text" id="modalOtherInput" name="other_insurance" placeholder="Enter &quot;Other&quot; details here" required>
-                </div>
+
                 <div class="form-group">
                     <label>Preferred way for us to reach you? <span class="req">*</span></label>
                     <div class="radio-group">
@@ -232,7 +229,7 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                                     <span>Local Event</span>
                                 </label>
                                 <label class="multi-select-option">
-                                    <input type="checkbox" name="hear_about[]" value="Other" onchange="updateMultiSelectDisplay('modal_hear_about'); toggleModalHearOtherMulti(this)">
+                                    <input type="checkbox" name="hear_about[]" value="Other" onchange="updateMultiSelectDisplay('modal_hear_about')">
                                     <span>Other</span>
                                 </label>
                             </div>
@@ -242,10 +239,7 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                         </div>
                     </div>
                 </div>
-                <div class="form-group other-details-box" id="modalHearOtherDiv" style="display: none;">
-                    <label>Please specify how you heard about us: <span class="req">*</span></label>
-                    <input type="text" id="modalHearOtherInput" name="hear_other" placeholder="Enter &quot;Other&quot; details here">
-                </div>
+
                 <div class="form-group">
                     <label>Promo Code (if any)</label>
                     <input type="text" name="promo_code" placeholder="Enter promo code">
@@ -452,29 +446,7 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
             }
         }
         
-        function toggleModalOtherMulti(checkbox) {
-            var modalOtherDiv = document.getElementById('modalOtherDiv');
-            var modalOtherInput = document.getElementById('modalOtherInput');
-            
-            if (checkbox.checked) {
-                modalOtherDiv.style.display = 'block';
-            } else {
-                modalOtherDiv.style.display = 'none';
-                if (modalOtherInput) modalOtherInput.value = '';
-            }
-        }
-        
-        function toggleModalHearOtherMulti(checkbox) {
-            var modalHearOtherDiv = document.getElementById('modalHearOtherDiv');
-            var modalHearOtherInput = document.getElementById('modalHearOtherInput');
-            
-            if (checkbox.checked) {
-                modalHearOtherDiv.style.display = 'block';
-            } else {
-                modalHearOtherDiv.style.display = 'none';
-                if (modalHearOtherInput) modalHearOtherInput.value = '';
-            }
-        }
+
         
         // Close dropdowns when clicking outside
         document.addEventListener('click', function(e) {
@@ -582,12 +554,10 @@ const { title, description = 'Hometown Insurance Agency - Protecting what matter
                     email: gv(quoteForm, 'input[name="email"]'),
                     phone: gv(quoteForm, 'input[name="phone"]'),
                     insurance_type: insuranceTypes.join(', '),
-                    other_insurance: gv(quoteForm, 'input[name="other_insurance"]'),
                     contact_method: checkedRadio ? checkedRadio.value : 'Email',
                     callback_day: gv(quoteForm, 'select[name="callback_day"]'),
                     callback_time: gv(quoteForm, 'select[name="callback_time"]'),
                     hear_about: hearAbout.join(', '),
-                    hear_other: gv(quoteForm, 'input[name="hear_other"]'),
                     promo_code: gv(quoteForm, 'input[name="promo_code"]'),
                     message: gv(quoteForm, 'textarea[name="message"]'),
                     page: 'quote-modal'
