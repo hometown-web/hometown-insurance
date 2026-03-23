@@ -553,7 +553,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 textElement.textContent = checkboxes.length + ' items selected';
                 textElement.classList.add('has-selection');
             }
-
+        }
         
         // Close dropdowns when clicking outside
         document.addEventListener('click', function(e) {
@@ -604,11 +604,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         }
 
         function handleBusinessFormSubmit(formId, msgId, position) {
+            console.log('Setting up form handler for:', formId);
             var form = document.getElementById(formId);
             var msg = document.getElementById(msgId);
             
             if (form) {
+                console.log('Form found, adding event listener:', formId);
                 form.addEventListener('submit', function(e) {
+                    console.log('Form submit event triggered for:', formId);
                     e.preventDefault();
 
                     var submitBtn = form.querySelector('button[type="submit"]');
@@ -683,6 +686,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                         submitBtn.disabled = false;
                     });
                 });
+            } else {
+                console.error('Form not found:', formId);
             }
         }
 
