@@ -353,6 +353,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             cursor: pointer;
             transition: background-color 0.2s ease;
             margin: 0;
+            text-align: left;
+        }
+        .multi-select-option label {
+            margin: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
         }
         .multi-select-option:hover {
             background: #f8fafc;
@@ -362,10 +369,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             width: 16px;
             height: 16px;
             accent-color: var(--primary-red);
+            flex-shrink: 0;
         }
         .multi-select-option span {
             color: #1e293b;
             font-weight: normal;
+            flex-grow: 1;
+            line-height: 1.5;
         }
         .multi-select-actions {
             border-top: 1px solid #e2e8f0;
@@ -384,6 +394,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         }
         .multi-select-done:hover {
             background: #dc2626;
+        }
+        
+        /* Contact page specific overrides to fix alignment */
+        .contact-card .multi-select-option {
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            margin: 0;
+            text-align: left;
+        }
+        .contact-card .multi-select-option input[type="checkbox"] {
+            margin: 0 12px 0 0 !important;
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+        .contact-card .multi-select-option span {
+            flex-grow: 1;
+            line-height: 1.5;
+            font-weight: normal;
         }
 
         @media (max-width: 992px) {
