@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { neon } from '@neondatabase/serverless';
+import { Resend } from 'resend';
 
 export const prerender = false;
 
@@ -30,8 +31,30 @@ export const POST: APIRoute = async ({ request }) => {
       ${data.page || ''}, ${data.form_position || ''}
     )`;
 
-    // TODO: Re-enable email notifications once Vercel build issues are resolved  
-    console.log('Lead form submitted successfully - email notifications temporarily disabled');
+    // Send email notification via Resend
+    try {
+      const resend = new Resend(import.meta.env.RESEND_API_KEY);
+      await resend.emails.send({
+        from: 'Hometown Insurance <noreply@hometowninsurance.com>',
+        to: 'service@hometowninsurance.com',
+        subject: `New Quote Request from ${data.full_name}`,
+        html: `
+          <h2>New Quote Request</h2>
+          <p><strong>Name:</strong> ${data.full_name}</p>
+          <p><strong>Email:</strong> ${data.email}</p>
+          <p><strong>Phone:</strong> ${data.phone || 'N/A'}</p>
+          <p><strong>Insurance Type:</strong> ${data.insurance_type || 'N/A'}</p>
+          <p><strong>Contact Method:</strong> ${data.contact_method || 'N/A'}</p>
+          ${data.contact_method === 'Callback' ? `<p><strong>Callback Day:</strong> ${data.callback_day || 'N/A'}</p><p><strong>Callback Time:</strong> ${data.callback_time || 'N/A'}</p>` : ''}
+          <p><strong>How They Heard About Us:</strong> ${data.hear_about || 'N/A'}</p>
+          <p><strong>Promo Code:</strong> ${data.promo_code || 'N/A'}</p>
+          <p><strong>Message:</strong> ${data.message || 'N/A'}</p>
+          <p><strong>Page:</strong> ${data.page || 'N/A'}</p>
+        `
+      });
+    } catch (emailErr) {
+      console.error('Resend email error:', emailErr);
+    }
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
