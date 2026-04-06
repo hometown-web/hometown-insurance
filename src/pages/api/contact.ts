@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { neon } from '@neondatabase/serverless';
+import { Resend } from 'resend';
 
 export const prerender = false;
 
@@ -23,8 +24,25 @@ export const POST: APIRoute = async ({ request }) => {
       ${data.phone || ''}, ${data.help_type || ''}, ${data.message || ''}
     )`;
 
-    // TODO: Re-enable email notifications once Vercel build issues are resolved
-    console.log('Contact form submitted successfully - email notifications temporarily disabled');
+    // Send email notification via Resend
+    try {
+      const resend = new Resend(import.meta.env.RESEND_API_KEY);
+      await resend.emails.send({
+        from: 'Hometown Insurance <noreply@hometowninsurance.com>',
+        to: 'service@hometowninsurance.com',
+        subject: `New Contact Form Submission from ${data.first_name} ${data.last_name}`,
+        html: `
+          <h2>New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${data.first_name} ${data.last_name}</p>
+          <p><strong>Email:</strong> ${data.email}</p>
+          <p><strong>Phone:</strong> ${data.phone || 'N/A'}</p>
+          <p><strong>Help Type:</strong> ${data.help_type || 'N/A'}</p>
+          <p><strong>Message:</strong> ${data.message || 'N/A'}</p>
+        `
+      });
+    } catch (emailErr) {
+      console.error('Resend email error:', emailErr);
+    }
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
