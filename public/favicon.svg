@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Background -->
+  <rect width="64" height="64" rx="12" fill="#B5121B"/>
+
+  <!-- Shield -->
+  <path d="M32 10L50 16V30C50 41 42.5 50 32 54C21.5 50 14 41 14 30V16L32 10Z" fill="white"/>
+
+  <!-- Larger "H" Monogram -->
+  <rect x="22" y="22" width="5" height="22" rx="2.5" fill="#B5121B"/>
+  <rect x="37" y="22" width="5" height="22" rx="2.5" fill="#B5121B"/>
+  <rect x="22" y="32" width="20" height="5" rx="2.5" fill="#B5121B"/>
+</svg>
