@@ -2,7 +2,7 @@ backend:
   name: github
   repo: hometown-web/hometown-insurance
   branch: main
-  base_url: /
+  base_url: https://hometowninsurance.com
   auth_endpoint: /oauth
 
 media_folder: public/images/uploads
