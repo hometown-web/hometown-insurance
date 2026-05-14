@@ -1,6 +1,21 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import posts from '../../data/posts.json';
+import { getCollection } from 'astro:content';
+
+const rawPosts = (await getCollection('posts')).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+// Flatten to plain objects so define:vars can serialize them for client-side JS
+const posts = rawPosts.map(p => ({
+  title: p.data.title,
+  slug: p.data.slug,
+  date: p.data.date,
+  author: p.data.author,
+  categories: p.data.categories,
+  excerpt: p.data.excerpt,
+  image: p.data.image,
+}));
 
 const POSTS_PER_PAGE = 12;
 const currentPage = 1;

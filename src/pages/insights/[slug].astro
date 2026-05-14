@@ -1,34 +1,36 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import posts from '../../data/posts.json';
+import { getCollection, render } from 'astro:content';
 
-export function getStaticPaths() {
+export async function getStaticPaths() {
+    const posts = await getCollection('posts');
     return posts.map(post => ({
-        params: { slug: post.slug },
+        params: { slug: post.data.slug },
         props: { post }
     }));
 }
 
 const { post } = Astro.props;
-const d = new Date(post.date);
+const { Content } = await render(post);
+const d = new Date(post.data.date);
 const dateStr = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
-<BaseLayout title={`${post.title} | Hometown Insurance Insights`} description={post.excerpt}>
+<BaseLayout title={`${post.data.title} | Hometown Insurance Insights`} description={post.data.excerpt}>
 
     <!-- Hero -->
     <div class="hero-simple article-hero" style="background-image: url('/images/insights-hero.jpg');">
         <div class="container">
             <div class="article-hero-content">
                 <div class="article-categories">
-                    {post.categories.map(cat => (
+                    {post.data.categories.map(cat => (
                         <span class="category-badge">{cat}</span>
                     ))}
                 </div>
-                <h1>{post.title}</h1>
+                <h1>{post.data.title}</h1>
                 <div class="article-meta">
                     <span><i class="fa-regular fa-calendar"></i> {dateStr}</span>
-                    <span><i class="fa-regular fa-user"></i> {post.author}</span>
+                    <span><i class="fa-regular fa-user"></i> {post.data.author}</span>
                 </div>
             </div>
         </div>
@@ -37,7 +39,7 @@ const dateStr = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', 
     <div class="article-wrapper">
         <div class="container">
             <div class="article-layout">
-                <article class="article-content" set:html={post.content} />
+                <article class="article-content"><Content /></article>
                 <aside class="article-sidebar">
                     <a href="/insights" class="btn btn-white sidebar-back"><i class="fa-solid fa-arrow-left"></i> Back to Insights</a>
                     <div class="sidebar-box">
@@ -48,7 +50,7 @@ const dateStr = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', 
                     <div class="sidebar-box">
                         <h3>Categories</h3>
                         <div class="sidebar-categories">
-                            {post.categories.map(cat => (
+                            {post.data.categories.map(cat => (
                                 <span class="category-badge">{cat}</span>
                             ))}
                         </div>

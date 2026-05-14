@@ -1,0 +1,51 @@
+backend:
+  name: github
+  repo: hometown-web/hometown-insurance
+  branch: main
+  base_url: /
+  auth_endpoint: /oauth
+
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+collections:
+  - name: posts
+    label: Blog Posts
+    folder: src/content/posts
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Slug, name: slug, widget: string }
+      - { label: Date, name: date, widget: datetime }
+      - label: Author
+        name: author
+        widget: select
+        options:
+          - Hometown Insurance
+          - Anthony Sellitti
+          - Joan LaFemina
+          - Ori Preis
+        default: Hometown Insurance
+      - label: Categories
+        name: categories
+        widget: select
+        multiple: true
+        options:
+          - "Business Insurance FAQ's"
+          - FAQ
+          - General Questions
+          - Health
+          - Hometown FireFighters
+          - Hometown Highlight
+          - News
+          - "Personal Insurance FAQ's"
+          - Recipes
+          - Safety
+          - Tips
+          - Video
+      - { label: Excerpt, name: excerpt, widget: text, required: false }
+      - { label: Featured Image, name: image, widget: image, required: false }
+      - { label: Body, name: body, widget: markdown }
