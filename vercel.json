@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/firefighter-discount",
+      "destination": "/firefighter-ems",
+      "permanent": true
+    },
+    {
+      "source": "/firefighter-discount/",
+      "destination": "/firefighter-ems",
+      "permanent": true
+    }
+  ]
+}
